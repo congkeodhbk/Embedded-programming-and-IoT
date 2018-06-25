@@ -7,6 +7,7 @@
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{textcomp}
+\usepackage{hyperref}
 \renewcommand{\familydefault}{\sfdefault}
 \usepackage[left=2cm,right=1.5cm,top=1.5cm,bottom=1.5cm]{geometry}
 
@@ -30,6 +31,7 @@
 \pagenumbering{arabic}
 \title{LẬP TRÌNH NHÚNG}
 \author{Nguyễn Thành Công}
+
 
 \begin{document}
 \maketitle
@@ -112,6 +114,7 @@ Do việc RAM được CPU sử dụng để thực hiện chương trình, đ�
 \end{figure}
 
 	Vậy mỗi ô nhớ sẽ có 2 thông số mà bạn cần quan tâm: địa chỉ (nó ở đâu, địa chỉ có thể là số 8-bit, 16-bit, 32-bit...), và giá trị được lưu (nó bao nhiêu, chỉ là số 8-bit (1 byte) thôi nhé).
+	
 	\begin{figure}[h!]
 	\centering
 	\begin{tikzpicture}[yscale=0.5, xscale=1.5]
@@ -160,13 +163,129 @@ Ngôn ngữ C cung cấp cơ chế tự định nghĩa kiểu dữ liệu để 
 Ví dụ mình có một cái cảm biến có thể đọc về nhiệt độ, độ ẩm và ánh sáng môi trường. Dữ liệu nhiệt độ từ  -20\textdegree{}C đến 100\textdegree{}C, độ ẩm từ 0\% đến 100\%, ánh sáng từ 0 lux đến 50.000 lux. Vậy mình khai báo dữ kiểu dữ liệu env\_t (environment type) như sau: 
 \begin{lstlisting}
 	typedef struct{
-		int8_t temperature;
-		uint8_t humidity;
+		int8_t temp;
+		uint8_t humi;
 		uint16_t lux;
 	}env_t;
 \end{lstlisting}
 \paragraph{}
 Dễ thấy là các kiểu biến bên trong đều chứa đủ khoảng giá trị cần thiết (nếu nhiệt độ vượt quá 127\textdegree{}C thì biến int8\_t không chứa nổi nhé.
 \paragraph{}
-Thực chất kiểu dữ liệu là cách bạn tương tác với một vùng nhớ cho trước. Ví dụ khi khai báo một biến như env\_t evn; chẳng hạn, nó sẽ cung cấp cho bạn 4 ô nhớ liền nhau. Nếu bạn in địa chỉ của biến env ra nó sẽ hiển thị địa chỉ ô nhớ \textit{đầu tiên} của dãy 4 ô nhớ đó. Và kiểu env\_t sẽ cho máy tính biết cách truy cập tới 4 ô nhớ đó như thế nào.%hình minh họa
+Thực chất kiểu dữ liệu là cách bạn tương tác với một vùng nhớ cho trước. Ví dụ khi khai báo một biến như env\_t evn; chẳng hạn, nó sẽ cung cấp cho bạn 4 ô nhớ liền nhau. Nếu bạn in địa chỉ của biến env ra nó sẽ hiển thị địa chỉ ô nhớ \textit{đầu tiên} của dãy 4 ô nhớ đó. Và kiểu env\_t sẽ cho máy tính biết cách truy cập tới 4 ô nhớ đó như thế nào.
+
+\begin{figure}[h!]
+	\centering
+	\begin{tikzpicture}[yscale=0.5, xscale=1.5]
+		\draw [dashed] (0,0) -- (1,0);
+		\draw (1,0) rectangle (2,1);
+		\draw (2,0) rectangle (3,1);
+		\draw (3,0) rectangle (4,1);
+		\draw (4,0) rectangle (5,1);
+		\draw [dashed] (5,0) -- (6,0);
+		
+		\draw (1.1, 1.2) -- (1.9, 1.2);
+		\node [above] at (1.5, 1.1) {temp};
+		
+		\draw (2.1, 1.2) -- (2.9, 1.2);
+		\node [above] at (2.5, 1.1) {humi};
+		
+		\draw (3.1, 1.2) -- (4.9, 1.2);
+		\node [above] at (4, 1.1) {lux};
+		
+	\end{tikzpicture}
+	\caption{Truy cập biến kiểu env\_t} %\label{fig: Dữ liệu trong bộ nhớ}
+\end{figure}
+\paragraph{}
+Đoạn chương trình xem độ dài của kiểu dữ liệu:
+\begin{lstlisting}
+#include <stdio.h>
+#include <stdint.h>
+
+typedef struct{
+	int8_t temp;
+	uint8_t humi;
+	uint16_t lux;
+}env_t;
+
+void main(void) {
+	printf("Size of env_t: %d\n", sizeof(env_t));
+}
+\end{lstlisting}
+\paragraph{}
+Một điểm cần lưu ý là các máy tính thường có cơ chế làm tròn biên kiểu dữ liệu (data structure alignment). Nếu chúng ta khai báo như sau:
+
+\begin{lstlisting}
+typedef struct{
+	int8_t temp;
+	uint16_t lux;
+	uint8_t humi;
+}env_t;
+\end{lstlisting}
+biến lux khai báo ở giữa, thì kiểu dữ liệu env\_t giờ đây có độ dài là 6 byte chứ không phải 4!!!.
+\paragraph{}
+Kiểu biến env\_t giờ có cấu trúc như sau:
+\begin{figure}[h!]
+	\centering
+	\begin{tikzpicture}[yscale=0.5, xscale=1.5]
+		\draw [dashed] (0,0) -- (1,0);
+		\draw (1,0) rectangle (2,1);
+		\draw (2,0) rectangle (3,1);
+		\draw (3,0) rectangle (4,1);
+		\draw (4,0) rectangle (5,1);
+		\draw (5,0) rectangle (6,1);
+		\draw (6,0) rectangle (7,1);
+		\draw [dashed] (7,0) -- (8,0);
+		
+		\draw (1.1, 1.2) -- (1.9, 1.2);
+		\node [above] at (1.5, 1.1) {temp};
+		
+		\draw (2.1, 1.2) -- (2.9, 1.2);
+		\node [above] at (2.5, 1.1) {padding};
+		
+		\draw (3.1, 1.2) -- (4.9, 1.2);
+		\node [above] at (4, 1.1) {lux};
+		
+		\draw (5.1, 1.2) -- (5.9, 1.2);
+		\node [above] at (5.5, 1.1) {humi};
+		
+		\draw (6.1, 1.2) -- (6.9, 1.2);
+		\node [above] at (6.5, 1.1) {padding};
+	\end{tikzpicture}
+	\caption{Truy cập biến kiểu env\_t} %\label{fig: Dữ liệu trong bộ nhớ}
+\end{figure}
+\paragraph{}
+Hai ô nhớ tên padding được thêm vào để tăng hiệu suất việc đọc ghi dữ liệu trong máy tính hiện đại. Các bạn quan tâm thì có thể tìm hiểu thêm. Ta có thể tránh nó bằng cách khai báo như sau: trong DevC++ thì bạn khai báo \textit{\#pragma pack(1)} trước khi khai báo biến dữ liệu, còn trong KeilC thì khai báo kiểu:
+
+\begin{lstlisting}
+typedef __packed struct{
+	int8_t temp;
+	uint16_t lux;
+	uint8_t humi;
+}env_t;
+\end{lstlisting}
+mỗi khi khai báo một kiểu biến nào đó.
+
+\paragraph{}
+Ngoài ra còn một số kiểu enum và union mà các bạn hỏi giáo sư gu gồ hen.
+
+\section{Con trỏ}
+\paragraph{}
+Có thể nói con trỏ là công cụ lợi hại nhất của C, bạn khó mà giỏi C nếu bỏ qua con trỏ được. Bản chất của con trỏ (chưa nói đến con trỏ hàm) là trỏ tới một vùng nhớ nào đó và tương tác với vùng nhớ đó. Chương trình ví dụ về con trỏ:
+\begin{lstlisting}
+#include <stdio.h>
+#include <stdint.h>
+
+int main(void) {
+	uint16_t a=0;
+	uint16_t *pa;
+	pa=&a;
+	printf("a addr: 0x%08x\n", &a);
+	printf("a addr: 0x%08x\n", pa);
+}
+\end{lstlisting}
+
+hai lần printf sẽ cho ra kết quả như nhau vì đã gán địa chỉ của a cho pa.
+\paragraph{}
+Lưu ý là bạn không cần quan tâm địa chỉ thật của a (có dạng số hex như 0x0012) chỉ cần khai báo biến a, nó sẽ nằm đâu đó trong RAM (nếu RAM còn trống) và có phép lấy địa chỉ \&a.
+
 \end{document}
