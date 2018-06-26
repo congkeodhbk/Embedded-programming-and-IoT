@@ -59,7 +59,8 @@ Tóm lại: \textit{Lập trình nhúng là viết chương trình điều khi�
 		\paragraph{}
 	Tóm lại: \textit{bạn không thể đọc sách học bơi là biết bơi, không thể đọc kiếm phổ là thành cao thủ.}
 	\section{Về phần cứng để demo}
-	Trong phần này mình sẽ sử dụng kit STM32F4 Discovery để thực hành, phần mềm KeilC v5 để code cho nó. Bạn nên mua một cái kit, học cách sử dụng STM32CubeMX và làm quen với thư viện HAL (trên youtube có kênh Học ARM hướng dẫn khá đầy đủ phần này). Ngoài ra phần thiên về lập trình không cần phần cứng sẽ sử dụng chương trình DevC++ (nhớ tạo project C, không cần C++), những cái cơ bản các bạn nên tự tìm hiểu nhé, vì những cái đó tài liệu nó rất nhiều, và bạn cũng có thể tự mò cho quen.
+	\paragraph{}
+	Trong phần này mình sẽ sử dụng kit STM32F4 Discovery để thực hành, phần mềm KeilC v5 để code cho nó. Bạn nên mua một cái kit, học cách sử dụng STM32CubeMX và làm quen với thư viện HAL (trên youtube có kênh Học ARM hướng dẫn khá đầy đủ phần này). Mà nói trước là việc tự học là rất quan trọng. Bạn có thể được dạy một vài loại phần cứng như tiva, 8051 hoặc pic nhưng không có nghĩa là bạn phải xài cái đó hoài. Bạn có thể dùng bất cứ loại nào nếu chịu tìm hiểu. Ngoài ra phần thiên về lập trình không cần phần cứng sẽ sử dụng chương trình DevC++ (nhớ tạo project C, không cần C++), những cái cơ bản các bạn nên tự tìm hiểu nhé, vì những cái đó tài liệu nó rất nhiều, và bạn cũng có thể tự mò cho quen.
 	\section{Về Tiếng Anh, vâng tiếng Anh...}
 		\paragraph{}
 	Mấy ngành khác thì mình không rành chứ mà làm nhúng mà bạn không biết Tiếng Anh là tự níu chân mình lại. Vì mỗi linh kiện điện tử đều kèm theo một cái bảng thông tin đặc tính là datasheet, cái nào phức tạp thì sẽ kèm theo một cái hướng dẫn sử dụng là user manual. Và tất nhiên 96.69\% chúng được viết bằng tiếng Anh, còn lại là tiếng Trung Quốc. Và tin buồn là code trong lập trình nhúng đều biết bằng tiếng Anh, tin buồn hơn nữa là tài liệu, sách hướng dẫn, các diễn đàn sử dụng tiếng Anh rất nhiều và nhiều cái rất hay.
@@ -326,10 +327,11 @@ Khi sử dụng đến con trỏ, bạn cần có \textbf{tư duy ở ô nhớ} 
 \chapter{Debug}
 \paragraph{}
 Khi viết một chương trình thì nhất có công cụ để theo dõi coi code của bạn nó đang làm cái gì ở trỏng. Nếu ở lập trình C thuần túy bằng cái IDE như DevC++ hoặc Visual Studio thì bạn chỉ cần gọi hàm printf ra và in cái gì trong đó bạn muốn. Còn trong lập trình nhúng thì con MCU của bạn nó chạy chứ không phải CPU của máy tính. Muốn MCU in ra được những dòng chữ lên màn hình desktop thì cần theo quy trình sau: MCU truyền qua uart, qua một module chuyển uart-usb đã cắm vào máy tính, một chương trình đọc cổng COM trên máy tính và hiển thị chuỗi kí tự nhận được.
-
+\paragraph{}
+Còn nhiều cách debug xịn hơn, như debug onchip trong keilC mà mình chưa rành nên để khi nào rành rồi viết sau.
 \chapter{Coding style}
-\section{Các biến số}
-\section{Các hàm số}
+	\section{Các biến số}
+	\section{Các hàm số}
 \chapter{Quản lý phiên bản: GIT}
 \chapter{Viết thư viện}
 \chapter{Blocking vs Non-blocking}
