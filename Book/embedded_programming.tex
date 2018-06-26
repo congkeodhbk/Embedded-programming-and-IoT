@@ -59,10 +59,10 @@ Tóm lại: \textit{Lập trình nhúng là viết chương trình điều khi�
 		\paragraph{}
 	Tóm lại: \textit{bạn không thể đọc sách học bơi là biết bơi, không thể đọc kiếm phổ là thành cao thủ.}
 	\section{Về phần cứng để demo}
-	Trong phần này mình sẽ sử dụng kit STM32F4 Discovery để thực hành, ngoài ra phần thiên về lập trình không cần phần cứng sẽ sử dụng chương trình DevC++, những cái cơ bản các bạn nên tự tìm hiểu nhé, vì những cái đó tài liệu nó rất nhiều, và bạn cũng có thể tự mò để thể hiện bản lĩnh.
-	\section{Về Tiếng Anh, vâng Tiếng Anh...}
+	Trong phần này mình sẽ sử dụng kit STM32F4 Discovery để thực hành, phần mềm KeilC v5 để code cho nó. Bạn nên mua một cái kit, học cách sử dụng STM32CubeMX và làm quen với thư viện HAL (trên youtube có kênh Học ARM hướng dẫn khá đầy đủ phần này). Ngoài ra phần thiên về lập trình không cần phần cứng sẽ sử dụng chương trình DevC++ (nhớ tạo project C, không cần C++), những cái cơ bản các bạn nên tự tìm hiểu nhé, vì những cái đó tài liệu nó rất nhiều, và bạn cũng có thể tự mò cho quen.
+	\section{Về Tiếng Anh, vâng tiếng Anh...}
 		\paragraph{}
-	Mấy ngành khác thì mình không rành chứ mà làm nhúng mà bạn không biết Tiếng Anh là tự níu chân mình lại. Vì mỗi linh kiện điện tử đều kèm theo một cái bảng thông tin đặc tính là datasheet, cái nào phức tạp thì sẽ kèm theo một cái hướng dẫn sử dụng là user manual. Và tất nhiên 96.69\% chúng được viết bằng tiếng anh, còn lại là tiếng Trung Quốc. Và tin buồn là code trong lập trình nhúng đều biết bằng tiếng anh, tin buồn hơn nữa là tài liệu, sách hướng dẫn, các diễn đàn sử dụng Tiếng Anh rất nhiều và nhiều cái rất hay.
+	Mấy ngành khác thì mình không rành chứ mà làm nhúng mà bạn không biết Tiếng Anh là tự níu chân mình lại. Vì mỗi linh kiện điện tử đều kèm theo một cái bảng thông tin đặc tính là datasheet, cái nào phức tạp thì sẽ kèm theo một cái hướng dẫn sử dụng là user manual. Và tất nhiên 96.69\% chúng được viết bằng tiếng Anh, còn lại là tiếng Trung Quốc. Và tin buồn là code trong lập trình nhúng đều biết bằng tiếng Anh, tin buồn hơn nữa là tài liệu, sách hướng dẫn, các diễn đàn sử dụng tiếng Anh rất nhiều và nhiều cái rất hay.
 		\paragraph{}
 	Tóm lại là không biết nó thì công việc của bạn bị cản trở rất nhiều, phụ thuộc rất nhiều vào google dịch củ chuối. Hãy dừng một bước để học tiếng anh và tiến 3 bước trong con đường sự nghiệp. Chí ít bạn phải đọc được datasheet mà không cần tra quá nhiều từ, đọc được cuốn sách như clean code chẳng hạn, hoặc viết email cho thằng bán linh kiện ở Trung Quốc vì kiểu gì sau này bạn cũng đặt hàng ở bên đó.
 		\paragraph{}
@@ -287,5 +287,51 @@ int main(void) {
 hai lần printf sẽ cho ra kết quả như nhau vì đã gán địa chỉ của a cho pa.
 \paragraph{}
 Lưu ý là bạn không cần quan tâm địa chỉ thật của a (có dạng số hex như 0x0012) chỉ cần khai báo biến a, nó sẽ nằm đâu đó trong RAM (nếu RAM còn trống) và có phép lấy địa chỉ \&a.
+\paragraph{}
+Một con trỏ cần 2 thông tin sau để có thể hoạt động được: địa chỉ và kiểu dữ liệu nó sẽ trỏ tới. Như chương trình trên thì dòng số 6 sẽ cấp cho con trỏ kiểu dữ liệu, dòng số 7 cấp địa chỉ. 2 yếu tố trên giúp bạn có thể đi đến vùng nhớ mà bạn quan tâm sau đó có thể truy cập vùng nhớ đó theo cách bạn muốn.
+\paragraph{}
+Một lưu ý là ngôn ngữ C đồng nhất giữa mảng và con trỏ. Ví dụ mình khai báo mảng uint32\_t arr[4], thì \textit{arr} là địa chỉ của phần tử đầu tiên của mảng, hay arr=\&arr[0] (cùng 1 địa chỉ), *arr=arr[0] (cùng 1 giá trị). Giả sử arr là địa chỉ 0x0010 thì arr+1 sẽ là địa chỉ của arr[1] có địa chỉ là 0x0014 (không phải 0x0011 he, đo mỗi biến có 4 ô nhớ, kiểm tra lại bằng DevC++).
+\section{Stack và Heap}
+Bộ nhớ RAM được chia ra 2 thành phần, chúng đều để thực thi chương trình nhưng theo một cách khác nhau.
+\section{Ví dụ về truyền nhận uart}
+\paragraph{}
+Để biết con trỏ nó lợi hại như thế nào thì các bạn hãy xem ví dụ về truyền nhận uart. Trước khi vào phần này bạn nên tham khảo ví dụ về truyền nhận uart cho kit stm32f4 trên kênh youtube của Học ARM để biết sơ sơ về nó thế nào.
+\paragraph{}
+Các hàm truyền nhận dữ liệu uart thường có cấu trúc như sau:
+\begin{lstlisting}
+uart_transmit(uint8_t *data, uint16_t size);
+uart_receive(uint8_t *data, uint16_t size);
+\end{lstlisting}
+\paragraph{}
+Trong hàm uart\_transmit, tham số *data là ô nhớ đầu tiên trong chuỗi ô nhớ liên tiếp mà bạn muốn gửi đi. Còn trong hàm uart\_receive, tham số *data là ô nhớ đầu tiên của vùng nhớ mà bạn sẽ cất dữ liệu nhận được vào đấy (địa chỉ bộ đệm).
+\paragraph{}
+Mình ví dụ chương trình sau: một MCU đọc cảm biến môi trường, lưu vào biến env (khai báo ở trên), rồi truyền qua đường uart về một MCU khác để xử lý (các bạn làm mấy cái IOT hay gặp cái này).
+\paragraph{}
+Các hàm truyền nhận uart được xây dựng sẵn thì không quan tâm bạn truyền kiểu dữ liệu gì đi, nó chỉ cần biết địa chỉ ô nhớ đầu tiên và số lượng ô nhớ mà bạn muốn truyền, sau đó lần lượt truyền đi \textit{giá trị} của từng ô nhớ này.
+\paragraph{}
+Vậy giờ mình cần gửi một biến env (khi đã nhập dữ liệu cho biến này) đi thì cần làm thế nào để hai hàm kia có thể truyền một kiểu env\_t đi trong khi hàm truyền nhận uart chỉ nhận vào là kiểu uint8\_t?
+\paragraph{}
+Cách giải quyết của mình là thế này, tạo một con trỏ kiểu uint8\_t và cấp cho nó địa chỉ của biến env.
+\begin{lstlisting}
+env_t evn; //env.temp=10; env.humi=70, env.lux=1000;
+uint8_t *pe;
+pe=(uint8_t *)&evn;
+uart_send(pe, sizeof(env_t));
+\end{lstlisting}
+\paragraph{}
+Câu lệnh dòng số 4, \textit{pe=(uint8\_t *)\&evn} có 2 phần: đầu tiên là \&evn, lấy địa chỉ của biến env tạo thành một con trỏ tạm thời kiểu evn\_t, sau đó ép kiểu con trỏ (uint8\_t *) này thành uint8\_t và gán cho pe. Vậy pe là một con trỏ kiểu uint8\_t và có địa chỉ của biến env, sau đó mình dùng hàm uart truyền đi 4 ô nhớ bắt đầu từ ô nhớ này. Mấy bạn chưa quen thì nên ngâm cứu kĩ chỗ này nhé :)))
+\paragraph{}
+Khi sử dụng đến con trỏ, bạn cần có \textbf{tư duy ở ô nhớ} (chứ không phải kiểu dữ liệu) thì việc sử dụng con trỏ sẽ đơn giản hơn rất nhiều. Ví dụ như trong hàm truyền uart, với kiểu uint8\_t đại diện cho ô nhớ, và hai tham số *data và size, có ý nói là hãy đưa tôi địa chỉ ô nhớ đầu tiên và số lượng, tôi sẽ truyền cái đống đó đi cho bạn.
+\paragraph{}
+\chapter{Debug}
+\paragraph{}
+Khi viết một chương trình thì nhất có công cụ để theo dõi coi code của bạn nó đang làm cái gì ở trỏng. Nếu ở lập trình C thuần túy bằng cái IDE như DevC++ hoặc Visual Studio thì bạn chỉ cần gọi hàm printf ra và in cái gì trong đó bạn muốn. Còn trong lập trình nhúng thì con MCU của bạn nó chạy chứ không phải CPU của máy tính. Muốn MCU in ra được những dòng chữ lên màn hình desktop thì cần theo quy trình sau: MCU truyền qua uart, qua một module chuyển uart-usb đã cắm vào máy tính, một chương trình đọc cổng COM trên máy tính và hiển thị chuỗi kí tự nhận được.
+
+\chapter{Coding style}
+\section{Các biến số}
+\section{Các hàm số}
+\chapter{Quản lý phiên bản: GIT}
+\chapter{Viết thư viện}
+\chapter{Blocking vs Non-blocking}
 
 \end{document}
