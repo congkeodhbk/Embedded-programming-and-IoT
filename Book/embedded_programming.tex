@@ -55,7 +55,7 @@ Tóm lại: \textit{Lập trình nhúng là viết chương trình điều khi�
 		\paragraph{}
 	Ngôn ngữ C cho phép tương tác rất mạnh tới phần cứng, mạnh thế nào thì hồi sau sẽ rõ, thế nên nó thường được lựa chọn trong các dự án lâp trình nhúng. Ngoài ra có thể dùng C++ và Java nhưng mình ít xài chúng nên không đề cập ở đây.
 		\paragraph{}
-	Việc học C cơ bản mình sẽ không đề cập tới vì tài liệu nó nhiều lắm, các bạn có để xem và làm vài bài tập sử dụng được ngôn ngữ này. Lưu ý là ranh giới giữa việc Biết và Sử Dụng Được ngôn ngữ C là việc bạn có làm bài tập hay không nhé. Về cú pháp thì nó quanh đi quẩn lại chỉ là khai báo biến, rồi mấy vòng lặp for, while hoặc rẽ nhánh if, else chẳng hạn, nhưng Kỹ Năng sử dụng C để giải quyết một vấn đề thì cần nhiều bài tập để trau dồi.
+	Việc học C cơ bản mình sẽ không đề cập tới vì tài liệu nó nhiều lắm, các bạn có để xem và làm vài bài tập sử dụng được ngôn ngữ này. Lưu ý là ranh giới giữa việc \textbf{biết} và \textbf{sử dụng được} ngôn ngữ C là việc bạn có làm bài tập hay không nhé. Về cú pháp thì nó quanh đi quẩn lại chỉ là khai báo biến, rồi mấy vòng lặp for, while hoặc rẽ nhánh if, else chẳng hạn, nhưng \textbf{kỹ năng} sử dụng C để giải quyết một vấn đề thì cần nhiều bài tập để trau dồi.
 		\paragraph{}
 	Tóm lại: \textit{bạn không thể đọc sách học bơi là biết bơi, không thể đọc kiếm phổ là thành cao thủ.}
 	\section{Về phần cứng để demo}
@@ -114,7 +114,7 @@ Do việc RAM được CPU sử dụng để thực hiện chương trình, đ�
 	\caption{Bộ nhớ địa chỉ 16-bit} 
 \end{figure}
 
-	Vậy mỗi ô nhớ sẽ có 2 thông số mà bạn cần quan tâm: địa chỉ (nó ở đâu, địa chỉ có thể là số 8-bit, 16-bit, 32-bit...), và giá trị được lưu (nó bao nhiêu, chỉ là số 8-bit (1 byte) thôi nhé).
+	Vậy mỗi ô nhớ sẽ có 2 thông số mà bạn cần quan tâm: địa chỉ (nó ở đâu, địa chỉ có thể là số 8-bit, 16-bit, 32-bit...), và giá trị được lưu (nó bao nhiêu, chỉ là số 8-bit (1 byte) thôi).
 	
 	\begin{figure}[h!]
 	\centering
@@ -170,9 +170,9 @@ Ví dụ mình có một cái cảm biến có thể đọc về nhiệt độ, 
 	}env_t;
 \end{lstlisting}
 \paragraph{}
-Dễ thấy là các kiểu biến bên trong đều chứa đủ khoảng giá trị cần thiết (nếu nhiệt độ vượt quá 127\textdegree{}C thì biến int8\_t không chứa nổi nhé.
+Dễ thấy là các kiểu biến bên trong đều chứa đủ khoảng giá trị cần thiết (nếu nhiệt độ vượt quá 127\textdegree{}C thì biến int8\_t không chứa được, phải chọn kiểu khác).
 \paragraph{}
-Thực chất kiểu dữ liệu là cách bạn tương tác với một vùng nhớ cho trước. Ví dụ khi khai báo một biến như env\_t evn; chẳng hạn, nó sẽ cung cấp cho bạn 4 ô nhớ liền nhau. Nếu bạn in địa chỉ của biến env ra nó sẽ hiển thị địa chỉ ô nhớ \textit{đầu tiên} của dãy 4 ô nhớ đó. Và kiểu env\_t sẽ cho máy tính biết cách truy cập tới 4 ô nhớ đó như thế nào.
+Thực chất kiểu dữ liệu là cách bạn tương tác với một vùng nhớ cho trước. Ví dụ khi khai báo một biến như \textit{env\_t evn;} chẳng hạn, nó sẽ cung cấp cho bạn 4 ô nhớ liền nhau. Nếu bạn in địa chỉ của biến env ra nó sẽ hiển thị địa chỉ ô nhớ \textbf{đầu tiên} của dãy 4 ô nhớ đó. Và kiểu env\_t sẽ cho máy tính biết cách truy cập tới 4 ô nhớ đó như thế nào.
 
 \begin{figure}[h!]
 	\centering
@@ -252,7 +252,7 @@ Kiểu biến env\_t giờ có cấu trúc như sau:
 		\draw (6.1, 1.2) -- (6.9, 1.2);
 		\node [above] at (6.5, 1.1) {padding};
 	\end{tikzpicture}
-	\caption{Truy cập biến kiểu env\_t} %\label{fig: Dữ liệu trong bộ nhớ}
+	\caption{Truy cập biến kiểu env\_t} 
 \end{figure}
 \paragraph{}
 Hai ô nhớ tên padding được thêm vào để tăng hiệu suất việc đọc ghi dữ liệu trong máy tính hiện đại. Các bạn quan tâm thì có thể tìm hiểu thêm. Ta có thể tránh nó bằng cách khai báo như sau: trong DevC++ thì bạn khai báo \textit{\#pragma pack(1)} trước khi khai báo biến dữ liệu, còn trong KeilC thì khai báo kiểu:
@@ -292,9 +292,8 @@ Lưu ý là bạn không cần quan tâm địa chỉ thật của a (có dạng
 Một con trỏ cần 2 thông tin sau để có thể hoạt động được: địa chỉ và kiểu dữ liệu nó sẽ trỏ tới. Như chương trình trên thì dòng số 6 sẽ cấp cho con trỏ kiểu dữ liệu, dòng số 7 cấp địa chỉ. 2 yếu tố trên giúp bạn có thể đi đến vùng nhớ mà bạn quan tâm sau đó có thể truy cập vùng nhớ đó theo cách bạn muốn.
 \paragraph{}
 Một lưu ý là ngôn ngữ C đồng nhất giữa mảng và con trỏ. Ví dụ mình khai báo mảng uint32\_t arr[4], thì \textit{arr} là địa chỉ của phần tử đầu tiên của mảng, hay arr=\&arr[0] (cùng 1 địa chỉ), *arr=arr[0] (cùng 1 giá trị). Giả sử arr là địa chỉ 0x0010 thì arr+1 sẽ là địa chỉ của arr[1] có địa chỉ là 0x0014 (không phải 0x0011 he, đo mỗi biến có 4 ô nhớ, kiểm tra lại bằng DevC++).
-\section{Stack và Heap}
-Bộ nhớ RAM được chia ra 2 thành phần, chúng đều để thực thi chương trình nhưng theo một cách khác nhau.
 \section{Ví dụ về truyền nhận uart}
+
 \paragraph{}
 Để biết con trỏ nó lợi hại như thế nào thì các bạn hãy xem ví dụ về truyền nhận uart. Trước khi vào phần này bạn nên tham khảo ví dụ về truyền nhận uart cho kit stm32f4 trên kênh youtube của Học ARM để biết sơ sơ về nó thế nào.
 \paragraph{}
@@ -305,30 +304,32 @@ uart_receive(uint8_t *data, uint16_t size);
 \end{lstlisting}
 \paragraph{}
 Trong hàm uart\_transmit, tham số *data là ô nhớ đầu tiên trong chuỗi ô nhớ liên tiếp mà bạn muốn gửi đi. Còn trong hàm uart\_receive, tham số *data là ô nhớ đầu tiên của vùng nhớ mà bạn sẽ cất dữ liệu nhận được vào đấy (địa chỉ bộ đệm).
+\subsection{Truyền uart}
 \paragraph{}
 Mình ví dụ chương trình sau: một MCU đọc cảm biến môi trường, lưu vào biến env (khai báo ở trên), rồi truyền qua đường uart về một MCU khác để xử lý (các bạn làm mấy cái IOT hay gặp cái này).
+
 \paragraph{}
-Các hàm truyền nhận uart được xây dựng sẵn thì không quan tâm bạn truyền kiểu dữ liệu gì đi, nó chỉ cần biết địa chỉ ô nhớ đầu tiên và số lượng ô nhớ mà bạn muốn truyền, sau đó lần lượt truyền đi \textit{giá trị} của từng ô nhớ này.
-\paragraph{}
-Vậy giờ mình cần gửi một biến env (khi đã nhập dữ liệu cho biến này) đi thì cần làm thế nào để hai hàm kia có thể truyền một kiểu env\_t đi trong khi hàm truyền nhận uart chỉ nhận vào là kiểu uint8\_t?
+Vậy giờ mình cần gửi một biến env (khi đã nhập dữ liệu cho biến này) đi thì cần làm thế nào để hàm truyền kia có thể truyền một kiểu env\_t đi trong khi hàm truyền nhận uart chỉ nhận vào là kiểu uint8\_t?
 \paragraph{}
 Cách giải quyết của mình là thế này, tạo một con trỏ kiểu uint8\_t và cấp cho nó địa chỉ của biến env.
 \begin{lstlisting}
 env_t evn; //env.temp=10; env.humi=70, env.lux=1000;
 uint8_t *pe;
 pe=(uint8_t *)&evn;
-uart_send(pe, sizeof(env_t));
+uart_transmit(pe, sizeof(env_t));
 \end{lstlisting}
 \paragraph{}
 Câu lệnh dòng số 4, \textit{pe=(uint8\_t *)\&evn} có 2 phần: đầu tiên là \&evn, lấy địa chỉ của biến env tạo thành một con trỏ tạm thời kiểu evn\_t, sau đó ép kiểu con trỏ (uint8\_t *) này thành uint8\_t và gán cho pe. Vậy pe là một con trỏ kiểu uint8\_t và có địa chỉ của biến env, sau đó mình dùng hàm uart truyền đi 4 ô nhớ bắt đầu từ ô nhớ này. Mấy bạn chưa quen thì nên ngâm cứu kĩ chỗ này nhé :)))
 \paragraph{}
-Khi sử dụng đến con trỏ, bạn cần có \textbf{tư duy ở ô nhớ} (chứ không phải kiểu dữ liệu) thì việc sử dụng con trỏ sẽ đơn giản hơn rất nhiều. Ví dụ như trong hàm truyền uart, với kiểu uint8\_t đại diện cho ô nhớ, và hai tham số *data và size, có ý nói là hãy đưa tôi địa chỉ ô nhớ đầu tiên và số lượng, tôi sẽ truyền cái đống đó đi cho bạn.
+Khi sử dụng đến con trỏ, bạn cần có \textbf{tư duy ở ô nhớ} (chứ không phải kiểu dữ liệu) thì việc sử dụng con trỏ sẽ đơn giản hơn rất nhiều. Ví dụ như trong hàm truyền uart, với kiểu uint8\_t đại diện cho ô nhớ, và hai tham số *data và size, có ý nói là hãy đưa tôi địa chỉ ô nhớ đầu tiên và số lượng cần truyền, tôi sẽ truyền cái đống đó đi cho bạn.
+\subsection{Nhận uart}
 \paragraph{}
-\chapter{Debug}
+\section{Debug}
 \paragraph{}
-Khi viết một chương trình thì nhất có công cụ để theo dõi coi code của bạn nó đang làm cái gì ở trỏng. Nếu ở lập trình C thuần túy bằng cái IDE như DevC++ hoặc Visual Studio thì bạn chỉ cần gọi hàm printf ra và in cái gì trong đó bạn muốn. Còn trong lập trình nhúng thì con MCU của bạn nó chạy chứ không phải CPU của máy tính. Muốn MCU in ra được những dòng chữ lên màn hình desktop thì cần theo quy trình sau: MCU truyền qua uart, qua một module chuyển uart-usb đã cắm vào máy tính, một chương trình đọc cổng COM trên máy tính và hiển thị chuỗi kí tự nhận được.
+Khi viết một chương trình thì nhất thiết phải có công cụ để theo dõi coi code của bạn nó đang làm cái gì ở trỏng. Nếu ở lập trình C thuần túy bằng cái IDE như DevC++ hoặc Visual Studio thì bạn chỉ cần gọi hàm printf ra và in cái gì trong đó bạn muốn. Còn trong lập trình nhúng thì con MCU của bạn nó chạy chứ không phải CPU của máy tính. Muốn MCU in ra được những dòng chữ lên màn hình desktop thì cần theo quy trình sau: MCU truyền qua uart, qua một module chuyển uart-usb đã cắm vào máy tính, một chương trình đọc cổng COM trên máy tính và hiển thị chuỗi kí tự nhận được.
 \paragraph{}
 Còn nhiều cách debug xịn hơn, như debug onchip trong keilC mà mình chưa rành nên để khi nào rành rồi viết sau.
+\paragraph{}
 \chapter{Coding style}
 	\section{Các biến số}
 	\section{Các hàm số}
