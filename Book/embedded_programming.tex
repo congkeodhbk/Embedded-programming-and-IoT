@@ -7,7 +7,8 @@
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{textcomp}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
+
 \renewcommand{\familydefault}{\sfdefault}
 \usepackage[left=2cm,right=1.5cm,top=1.5cm,bottom=1.5cm]{geometry}
 
@@ -324,6 +325,90 @@ Câu lệnh dòng số 4, \textit{pe=(uint8\_t *)\&evn} có 2 phần: đầu ti�
 Khi sử dụng đến con trỏ, bạn cần có \textbf{tư duy ở ô nhớ} (chứ không phải kiểu dữ liệu) thì việc sử dụng con trỏ sẽ đơn giản hơn rất nhiều. Ví dụ như trong hàm truyền uart, với kiểu uint8\_t đại diện cho ô nhớ, và hai tham số *data và size, có ý nói là hãy đưa tôi địa chỉ ô nhớ đầu tiên và số lượng cần truyền, tôi sẽ truyền cái đống đó đi cho bạn.
 \subsection{Nhận uart}
 \paragraph{}
+Phía nhận muốn nhận được dữ liệu thì trước tiên phải khai báo một bộ đệm, sau đó gọi hàm uart\_receive() trỏ tới bộ đệm này và chờ dữ liệu đến.
+\begin{lstlisting}
+#define MAX_BUFF 10
+uint8_t uart_buffer[MAX_BUFF];
+uart_receive(uart_buffer, sizeof(env_t));
+\end{lstlisting}
+\paragraph{}
+Lưu ý là số lượng ô nhớ của bộ đệm phải lớn hớn hoặc bằng số lượng trong một lần truyền, nếu không chương trình sẽ lỗi. Câu lệnh số 1 để định nghĩa số lượng và để lên trên cùng của trang để sau này sửa lại số lượng cho phù hợp (cỡ như chương trình của bạn 1000 dòng mà nhét thẳng số 10 vô khai báo mảng luôn mai mốt tìm lại đuối).
+\paragraph{}
+Rồi, sau khi nhận được dữ liệu, việc của bạn là đọc dữ liệu và hiển thị lên màn hình lcd hoặc cất đâu đó. Ta tiến hành ép kiểu một lần nữa.
+\begin{lstlisting}
+env_t *p_env;
+p_env = (env_t *)uart_buffer;
+printf("Temperature: %d\n", p_env->temp);
+printf("Humidity: %d\n", p_env->humi);
+printf("Lux: %d\n", p_env->lux);
+\end{lstlisting}
+\paragraph{}
+Như vậy là cùng nhiêu đó ô nhớ nhưng \textbf{cách nhìn các ô nhớ đó} khác nhau với những kiểu dữ liệu khác nhau. Việc ép kiểu không làm thay đổi nội dung của ô nhớ vật lý (nó vẫn là cái đống 00 11 đó thôi), nhưng nó thay đổi cách bạn đọc nó.
+\begin{figure}[h!]
+	\centering
+	\begin{tikzpicture}[yscale=0.5, xscale=1.5]
+		\draw [dashed] (0,0) -- (1,0);
+		\draw (1,0) rectangle (2,1);
+		\draw (2,0) rectangle (3,1);
+		\draw (3,0) rectangle (4,1);
+		\draw (4,0) rectangle (5,1);
+		\draw (5,0) rectangle (6,1);
+		\draw [dashed] (6,0) -- (7,0);
+		
+		\draw (1.1, 1.2) -- (1.9, 1.2);
+		\node [above] at (1.5, 1) {i8\_t};
+		\draw (1.5,2.3)--(3,3);		
+		
+		\draw (2.1, 1.2) -- (2.9, 1.2);
+		\node [above] at (2.5, 1) {u8\_t};
+		\draw (2.5,2.3)--(3,3);		
+		
+		\draw (3.1, 1.2) -- (4.9, 1.2);
+		\node [above] at (4, 1) {u16\_t};
+		\draw (4,2.3)--(3,3);	
+		
+		\node [above] at (3, 3) {*p\_env};
+		
+		\draw (1.1, -0.2) --(1.9,-0.2);
+		\node [below] at (1.5, -0.2) {u8\_t};
+		\draw (1.5, -1.5) -- (3.5,-3);
+
+		\draw (2.1, -0.2) --(2.9,-0.2);
+		\node [below] at (2.5, -0.2) {u8\_t};
+		\draw (2.5, -1.5) -- (3.5,-3);
+
+		\draw (3.1, -0.2) --(3.9,-0.2);
+		\node [below] at (3.5, -0.2) {u8\_t};
+		\draw (3.5, -1.5) -- (3.5,-3);
+
+		\draw (4.1, -0.2) --(4.9,-0.2);
+		\node [below] at (4.5, -0.2) {u8\_t};
+		\draw (4.5, -1.5) -- (3.5,-3);
+
+		\draw (5.1, -0.2) --(5.9,-0.2);
+		\node [below] at (5.5, -0.2) {u8\_t};
+		\draw (5.5, -1.5) -- (3.5,-3);
+		
+		\node [below] at (3.5, -3) {uart\_buffer[]};
+		
+	\end{tikzpicture}
+	\caption{Buffer v.s env\_t.}
+\end{figure}
+\paragraph{}
+Rồi đến đây các bạn có thể cảm nhận được sức mạnh của con trỏ rồi, bạn có thể \textbf{chạm} đến bất cứ vùng nhớ nào và truy xuất theo \textbf{kiểu} mà bạn muốn.
+Thiệc là dễ quá chừng :))
+\paragraph{}
+Lưu ý: bộ đêm là nơi dữ liệu đến và đi liên tục, nó là bến đỗ chứ không phải là chỗ chứa dữ liệu. Nên cất vào đâu đấy rồi hãy xử lý gì đó tiếp theo.
+\begin{lstlisting}
+env_t *p_env;
+p_env = (env_t *)uart_buffer;
+env_t recv_env=*p_env;
+printf("Temperature: %d\n",  recv_env.temp);
+printf("Humidity: %d\n",  recv_env.humi);
+printf("Lux: %d\n",  recv_env.lux);
+\end{lstlisting}
+\paragraph{}
+Câu lệnh 2 cất data nhận được vào biến recv\_env (received env), biến này nằm đâu đó trong bộ nhớ rồi chứ không còn trong bộ đệm nữa, dữ liệu mới ập đến có thể ghi đè lên bộ đệm. 
 \section{Debug}
 \paragraph{}
 Khi viết một chương trình thì nhất thiết phải có công cụ để theo dõi coi code của bạn nó đang làm cái gì ở trỏng. Nếu ở lập trình C thuần túy bằng cái IDE như DevC++ hoặc Visual Studio thì bạn chỉ cần gọi hàm printf ra và in cái gì trong đó bạn muốn. Còn trong lập trình nhúng thì con MCU của bạn nó chạy chứ không phải CPU của máy tính. Muốn MCU in ra được những dòng chữ lên màn hình desktop thì cần theo quy trình sau: MCU truyền qua uart, qua một module chuyển uart-usb đã cắm vào máy tính, một chương trình đọc cổng COM trên máy tính và hiển thị chuỗi kí tự nhận được.
@@ -331,8 +416,177 @@ Khi viết một chương trình thì nhất thiết phải có công cụ để
 Còn nhiều cách debug xịn hơn, như debug onchip trong keilC mà mình chưa rành nên để khi nào rành rồi viết sau.
 \paragraph{}
 \chapter{Coding style}
-	\section{Các biến số}
-	\section{Các hàm số}
+\paragraph{}
+Coding style là gì? Nếu như bạn thấy code của bạn rối tung rối mù, đọc nhức cả mắt, lấy code của thằng bạn đọc để fix bug cho nó mà đọc muốn rớt con mắt ra ngoài, hay thêm một tính năng mới rồi okie, đập đi hết cái mớ bạn code rồi xây lại.
+\paragraph{}
+Và coding style giúp bạn giải quyết mấy chuyện đó, tuyệt vời!!! Và làm sao mà nó có thể làm được vậy?
+\paragraph{}
+Có 3 yêu cầu chính mà người lập trình cần đáp ứng cho chương trình: chạy được, dễ thay đổi, dễ hiểu.
+\begin{itemize}
+  \item Chạy được: Tất nhiên là mọi người đều hướng tới mục tiêu này, không chạy được thì có code cũng như không.
+  \item Dễ thay đổi: yếu tố chạy được là đáp ứng được tiêu chí đề ra. Nhưng mà với lập trình thực tế thì các tiêu chí đó liêu tục bị thay đổi. Giống như việc ông sếp thấy phương án này chua ăn quá nên đổi qua cái kia, ông khách hàng thì muốn thêm tính năng này, đề xuất cái kia. Ví dụ như bạn đi, làm một cái xe nhỏ nhỏ dò line, làm xong rồi muốn gắn cái camera vô xử lý ảnh cho chạy, làm xong rồi nữa thì muốn gắn thêm đèn chớp chớp cho vui chẳng hạn. Hoặc mục tiêu bạn đâu thực hiện xong rồi mà thấy nó chạy chưa ngon, muốn viết lại xíu để nâng cấp firmware lên, giờ nhìn vô cái đống bùng nhùng kia hông lẽ đập đi xây lại?
+	\item Dễ hiểu: vì các dự án thực tế đều cần làm nhóm cả. Bạn sử dụng code của người khác để viết thêm, người sau này sẽ dùng code của bạn thể phát triển, nâng cấp bảo trì chẳng hạn. Hoặc chính bạn sau một thời gian đọc lại code của mình có khi không biết ngày xưa mình vẽ bùa gì trong đây nữa. Nên code phải viết làm sao cho người khác có thể đọc được (tất nhiên thằng đó nó phải được được xíu, đừng có gà quá).
+\end{itemize}
+\section{Moudule hóa}
+\paragraph{}
+Mọi hệ thống lớn đều hợp thành từ những thành phần nhỏ, hãy chia nhỏ chương trình ra thành các module, file có chức năng khác nhau để dễ quản lý.
+\begin{figure}[h!]
+\centering
+ \includegraphics[width=0.6\linewidth]{module.png}
+ \caption{Module hóa trong KeilC}
+\end{figure}
+\paragraph{}
+Bạn có thể thấy trong Keil C khi mới generate từ CubeMX ra có chứa các thư mục, mỗi thư mục là một nhóm chức năng và mỗi chức năng là môt file .c khác nhau. Ngoài ra nó còn lưu đường dẫn đến cái file header .h. Bạn vào Project -> Options for Target...->C/C++ -> Include Paths, để xem các đường dẫn này.
+\paragraph{}
+Mình từng gặp mấy bạn mới code viết tất cả mọi thứ vào hàm main (kinh dị) từ đọc cảm biến, đọc nút nhấn, điều khiển động cơ... Bạn nên viết hoặc sử dụng thư viện cho mỗi loại phần cứng đó, rồi trong hàm main chỉ gọi hàm trong thư viện đó ra.
+\paragraph{}
+Một nguyên tắc để code bạn dễ đọc: trong một trang ít code thôi, và chúng liên quan tới nhau, không thể viết thư viện điều khiển động cơ và đọc nút nhấn vô chung một chỗ được.
+\section{Gọi hàm từ thư viện}
+\paragraph{}
+Mỗi một thư viện thì thường có 2 file chính, file source code \textit{.c} và file header \textit{.h}.File \textit{.c} thì để bạn viết code trong đó rồi, còn file \textit{.h} sẽ là bảng mô tả những gì mà file \textit{.c} có thể làm, nó khai báo các hàm mà các module khác có thể gọi để sử dụng thư viện này. Hay nói cách khác thì file \textit{.h} sẽ là trung gian của giữa nơi gọi hàm và nơi thực thi hàm.
+\paragraph{}
+Bạn vào file main.c trong một project, ấn chuột phải vào hàm và chọn Go To Definition Of... để đến nơi hàm đó được định nghĩa (trong file .c), chọn Go To Reference To... để đến nơi hàm đó được khai báo (trong file .h).
+\newpage
+\section{Cấu trúc hàm main và cách gọi hàm}
+\paragraph{}
+Hàm main thường có cấu trúc là khởi tạo và vòn lặp chương trình chính. Tương tự như arduino nó setup() và loop().
+\begin{lstlisting}
+void main(void)
+{
+	system_init();
+	
+	while(1)
+	{
+		//Do what you want
+	}
+}
+
+\end{lstlisting}
+\paragraph{}
+Ví dụ như mình viết một chương trình đọc cảm biến và 10 phút gửi về một lần. Thì mình sẽ viết như sau:
+\begin{lstlisting}
+void main(void)
+{
+	system_init();
+	
+	while(1)
+	{
+		read_sensor();
+		send_data();
+		delay(10_minutes);
+	}
+}
+\end{lstlisting}
+\paragraph{}
+Bạn thấy không, chương trình mình viết nó y chang những gì mình nói. Còn việc các hàm đọc cảm biến read\_sensor() hoặc gửi dữ liệu về send\_data\_to\_master\_mcu() nó ra sao trong đó thì viết ở chỗ khác. Đừng nhét mọi thứ mà bạn có thể viết ra vào đây, làm ơn!!!
+\paragraph{}
+Có một khái niệm về \textbf{mức trừu tượng}. Ví dụ như hàm đọc cảm biến read\_sensor có thể bao gồm 3 hàm thế này:
+\begin{lstlisting}
+void read_sensor(void)
+{
+	request_sensor_data();
+	wait_for_sensor_data();
+	save_sensor_data();
+}
+\end{lstlisting}
+đầu tiên ra lệnh cho cảm biến, sau đó chờ và khi dữ liệu về thì cất đâu đó. Bạn có thể thấy mức trừu tượng của hàm read\_sensor sẽ cao hơn 3 hàm trong đó vì nó bao hàm 3 cái hàm này. Hàm read\_sensor thì có mức trừu tượng bằng với hàm 2 hàm còn lại trong vòng while(1) của hàm main vì đây là 3 bước tuần tự nhau trong một công việc.
+\paragraph{}
+Nói tóm lại hãy phân thứ bậc cho các hàm (như mô hình đa cấp ấy :) và khi một hàm gọi các hàm con thì nhớ rằng các hàm con nên có cùng mức trừu tượng với nhau.
+\begin{figure}[h!]
+	\centering
+	\begin{tikzpicture}[yscale=0.5, xscale=1.5]
+	\node [left] at (0, 0) {main()};
+
+	\draw (0,0) -- (1, 2);
+	\node [right] at (1,2) {read\_sensor()};
+		\draw (2.7,2) -- (4, 3);
+		\node [right] at (4,3) {request\_sensor\_data()};
+		\draw (2.7,2) -- (4, 2);
+		\node [right] at (4,2) {wait\_for\_sensor\_data()};
+		\draw (2.7,2) -- (4, 1);
+		\node [right] at (4,1) {save\_sensor\_data()};
+	\draw (0,0) -- (1, 0);
+	\node [right] at (1,0) {send\_data()};
+		\draw (2.5,0) -- (3.5, 0);
+		\node [right] at (3.5,0) {begin\_transmission()};
+		\draw (2.5,0) -- (3.5,-1);
+		\node [right] at (3.5, -1) {transmit\_data()};
+		\draw (2.5,0) -- (3.5, -2);
+		\node [right] at (3.5, -2) {end\_transmission()};
+
+	\draw (0,0) -- (1, -2);
+	\node [right] at (1,-2) {delay()};
+	
+		
+	\end{tikzpicture}
+	\caption{Mô hình đa cấp.}
+\end{figure}
+\paragraph{}
+Nhớ là hông phải mình làm màu mà viết tên hàm tiếng Anh đâu, vì tiếng Việt không dấu nó như teencode vậy đọc không nổi, mà nhiều khi hiểu lộn nghĩa :).
+\section{Cách hàm số}
+\paragraph{}
+Việc phát minh ra các hàm con là phát minh vĩ đại như phát minh ra cái máy tính vậy. Nếu không có hàm con thì bạn tưởng tượng viết chương trình một lèo từ đầu tới cuối xem.
+\paragraph{}
+Vậy nên để đạt hiệu quả thì cần có những lưu ý sau:
+\subsection{Đặt tên hàm}
+\paragraph{}
+Tên hàm được đặt để cho biết cái \textbf{hàm con đó nó làm cái gì}. Ví dụ như read\_sensor() chẳng hạn, dù bạn chưa biết cảm biến loại gì và đọc nó như thế nào nhưng cũng hiểu sơ sơ về mục đích gọi hàm.
+\paragraph{}
+Và hàm \textbf{chỉ làm những gì mà tên hàm nói đến, không hơn không kém}. Trong khi viết code thì mọi thứ nên được viết tường minh ra. Ví dụ như hàm gọi hàm send\_data() để truyền dữ liệu về, nếu khi truyền xong muốn xóa dữ liệu cũ đi thì gọi hàm delete\_data() sau khi gọi hàm send\_data().
+\begin{lstlisting}
+while(1)
+{
+	read_sensor();
+	send_data();
+	delete_data();
+	delay(10_minutes);
+}
+\end{lstlisting}
+Không nên nhét hàm delete\_data() vào bên trong send\_data() như muốn hiểu ngầm "gửi xong rồi xóa nó đi chứ để làm gì". Vì nhiều khi có việc cần đến nó.
+\paragraph{}
+Một vài ví dụ như khi viết vội có bạn đặt tên hàm kiểu ham\_a(), ham\_b(), hoặc func\_1(), func\_2(), mai mốt đọc lại xỉu.
+\paragraph{}
+Việc bạn đặt tên hàm rồi sau thấy củ chuối quá thì cũng đừng ngại đổi lại nhé, mình nhiều khi cũng phải đổi 2-3 lần mới được cái tên vừa ý.
+\subsection{Độ dài của hàm}
+\paragraph{}
+Nguyên tắc để dễ code dễ đọc: code ngắn thôi, với lại tên hàm đặt đúng với yêu cầu. 
+\paragraph{}
+Một số hàm chỉ hoạt động tốt nếu nó đủ dài, cắt ngắn lại thành ra dở. Tuy nhiên đa số các trường hợp bạn có thể cắt một hàm dài bất tận ra thành các hàm nhỏ, như chia giai đoạn ra, rồi đặt tên hàm theo các giai đoạn của chương trình. Rất thường xuyên hàm viết ra để gọi có một lần, nó không có tác dụng là tránh lặp lại code như mục đích sinh ra hàm ban đầu, nó chỉ có tác dụng làm chương trình bạn gọn gàng hơn, dễ đọc hơn.
+\paragraph{}
+Còn độ dài của nó bao nhiêu là vừa. Cái này bạn phải làm rồi rút ra kinh nghiệm cho bản thân. Với mình thì dài dưới 10 dòng là okie nhất, trên 20 dòng thì nên cắt nó đi.
+\subsection{Truyền tham số}
+\paragraph{}
+Tham số là nơi giao tiếp của hàm này với hàm kia. Mà nói chung là một hàm khai báo tham số đầu vào cũng ít thôi. Bạn viết một hàm với yêu cầu truyền 5 cái thông số đầu vào thì làm sao bạn nhớ được thứ tự của tham số đó mà truyền cho đúng?
+\subsection{Bảo vệ hàm số}
+\paragraph{}
+Giả sử bạn viết một hàm chia a cho b như sau:
+\begin{lstlisting}
+float a_divide_b(int a, int b)
+{
+	return (float)a/b;
+}
+\end{lstlisting}
+
+\paragraph{}
+Rồi bỗng một ngày đẹp trời, một thanh niên lấy hàm bạn viết ra, rồi xài như sau: float result = a\_divide\_b(2, 0). Xong biên dịch thì không báo lỗi nhưng mà chạy cái nó xịt khói. Đây là lỗi chia cho 0, thành ra nó không tính được và chạy loạn xạ.
+\paragraph{}
+Thế nên với mỗi chương trình có truyền tham số vào, hãy nhớ là kiểm tra coi nó có hợp lệ hay không, nếu tính toán thì tham số đưa vào có thuộc tập xác định hay không... Bởi vì bạn sẽ không biết sau này người dùng hàm sẽ truyền cái gì vào trong đó nên phải kiểm tra lại. Nguyên tắc kiểm tra là : không tin cha con thằng nào cả. Đừng hi vọng họ sẽ truyền vào tham số hợp lệ, thường thì họ chả quan tâm đâu. Nên nhớ đầu vào hợp lệ thì mới thực thi hàm.
+\paragraph{}
+Hàm có kiểm tra tham số đầu vào:
+\begin{lstlisting}
+float a_divide_b(int a, int b)
+{
+	if(b==0){
+		//printf("Divided by 0 error\n");
+		return 0;
+	}
+	return (float)a/b;
+}
+\end{lstlisting}
+
+
+\section{Các biến số}
+
 \chapter{Quản lý phiên bản: GIT}
 \chapter{Viết thư viện}
 \chapter{Blocking vs Non-blocking}
