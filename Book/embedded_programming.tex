@@ -56,12 +56,14 @@ Tóm lại: \textit{Lập trình nhúng là viết chương trình điều khi�
 		\paragraph{}
 	Ngôn ngữ C cho phép tương tác rất mạnh tới phần cứng, mạnh thế nào thì hồi sau sẽ rõ, thế nên nó thường được lựa chọn trong các dự án lâp trình nhúng. Ngoài ra có thể dùng C++ và Java nhưng mình ít xài chúng nên không đề cập ở đây.
 		\paragraph{}
-	Việc học C cơ bản mình sẽ không đề cập tới vì tài liệu nó nhiều lắm, các bạn có để xem và làm vài bài tập sử dụng được ngôn ngữ này. Lưu ý là ranh giới giữa việc \textbf{biết} và \textbf{sử dụng được} ngôn ngữ C là việc bạn có làm bài tập hay không nhé. Về cú pháp thì nó quanh đi quẩn lại chỉ là khai báo biến, rồi mấy vòng lặp for, while hoặc rẽ nhánh if, else chẳng hạn, nhưng \textbf{kỹ năng} sử dụng C để giải quyết một vấn đề thì cần nhiều bài tập để trau dồi.
+	Việc học C cơ bản mình sẽ không đề cập tới vì tài liệu nó nhiều lắm, các bạn có để xem và làm vài bài tập sử dụng được ngôn ngữ này. Lưu ý là ranh giới giữa việc \textbf{biết} và \textbf{sử dụng được} ngôn ngữ C là việc bạn có làm bài tập hay không. Về cú pháp thì nó quanh đi quẩn lại chỉ là khai báo biến, rồi mấy vòng lặp for, while hoặc rẽ nhánh if, else chẳng hạn, nhưng \textbf{kỹ năng} sử dụng C để giải quyết một vấn đề thì cần nhiều bài tập để trau dồi.
 		\paragraph{}
 	Tóm lại: \textit{bạn không thể đọc sách học bơi là biết bơi, không thể đọc kiếm phổ là thành cao thủ.}
 	\section{Về phần cứng để demo}
 	\paragraph{}
-	Trong phần này mình sẽ sử dụng kit STM32F4 Discovery để thực hành, phần mềm KeilC v5 để code cho nó. Bạn nên mua một cái kit, học cách sử dụng STM32CubeMX và làm quen với thư viện HAL (trên youtube có kênh Học ARM hướng dẫn khá đầy đủ phần này). Mà nói trước là việc tự học là rất quan trọng. Bạn có thể được dạy một vài loại phần cứng như tiva, 8051 hoặc pic nhưng không có nghĩa là bạn phải xài cái đó hoài. Bạn có thể dùng bất cứ loại nào nếu chịu tìm hiểu. Ngoài ra phần thiên về lập trình không cần phần cứng sẽ sử dụng chương trình DevC++ (nhớ tạo project C, không cần C++), những cái cơ bản các bạn nên tự tìm hiểu nhé, vì những cái đó tài liệu nó rất nhiều, và bạn cũng có thể tự mò cho quen.
+	Trong phần này mình sẽ sử dụng 2 con Arduino Mega để demo cho nhanh. Bạn nên mua để dành nháp một vài cái project nào đấy. Mà thiệt tình thì nên hạn chế sử dụng Arduino vì nó làm bạn có thói quen sử dụng thư viện chùa với lại chẳng biết gì mấy về phần cứng, đến lúc Arduino chưa có thư viện thì không biết phải viết thế nào. Bạn có thể tìm hiểu các loại chip khác như STM32 (nó rất mạnh trong tầm giá của nó), PIC(nó bền và ổn định) hay xài kit Tiva cũng được. Ngoài ra phần thiên về lập trình không cần phần cứng sẽ sử dụng chương trình DevC++ (nhớ tạo project C, không cần C++), những cái cơ bản các bạn nên tự tìm hiểu, vì những cái đó tài liệu nó rất nhiều, và bạn cũng có thể tự mò cho quen.
+	\paragraph{}
+	\textit{Arduino là món mì ăn liền, sử dụng nó nhanh chóng nhưng nó cũng đầy điểm yếu.}
 	\section{Về Tiếng Anh, vâng tiếng Anh...}
 		\paragraph{}
 	Mấy ngành khác thì mình không rành chứ mà làm nhúng mà bạn không biết Tiếng Anh là tự níu chân mình lại. Vì mỗi linh kiện điện tử đều kèm theo một cái bảng thông tin đặc tính là datasheet, cái nào phức tạp thì sẽ kèm theo một cái hướng dẫn sử dụng là user manual. Và tất nhiên 96.69\% chúng được viết bằng tiếng Anh, còn lại là tiếng Trung Quốc. Và tin buồn là code trong lập trình nhúng đều biết bằng tiếng Anh, tin buồn hơn nữa là tài liệu, sách hướng dẫn, các diễn đàn sử dụng tiếng Anh rất nhiều và nhiều cái rất hay.
@@ -73,22 +75,18 @@ Tóm lại: \textit{Lập trình nhúng là viết chương trình điều khi�
 
 	\chapter{Ngôn ngữ C trong lập trình nhúng}
 	\paragraph{}
-Hãy nhớ là bạn làm vài bài tập về ngôn ngữ C rồi hãy đọc phần này nhé.
-	\paragraph{}
-Có cuốn sách hay mà bạn có thể kiếm là Nhập Môn Lập Trình của trường Khoa Học Tự Nhiên (sách bìa màu đen ấy).\\
+Hãy nhớ là bạn làm vài bài tập về ngôn ngữ C rồi hãy đọc phần này nhé!!!. Có mấy cuốn sách mà mình để ở mục tham khảo, bạn cũng nên xem coi mặt mũi tụi nó thế nào.
 	\section{Cơ bản về chương trình.}
 	\paragraph{} 
 Đại khái thì việc lập trình là chỉ cho cái máy biết bạn muốn nó làm cái gì.
 	\paragraph{}
-Khi bạn viết chương trình, bên dịch thì máy tính sẽ biên dịch code của bạn (người hiểu được) thành mã máy (máy hiểu được) bao gồm các lệnh mà vi điều khiển sẽ thực và khi nạp xuống cho vi điều khiển thì chương trình sẽ được lưu ở ROM (bộ nhớ chương trình). CPU sẽ đọc lệnh từ bộ nhớ chương trình rồi thực thi. Lưu ý là CPU chỉ đọc thôi nhé, nó không được phép ghi gì vào bộ nhớ chương trình. Nó không thể cãi lệnh bạn! Thế nên bộ nhớ chương trình có tên là bộ nhớ chỉ đọc (Read-only memory, ROM). Nó vẫn còn đấy khi mất điện.
+Khi bạn viết chương trình, bên dịch thì máy tính sẽ biên dịch code của bạn (người hiểu được) thành mã máy (máy hiểu được) bao gồm các lệnh mà vi điều khiển sẽ thực và khi nạp xuống cho vi điều khiển thì chương trình sẽ được lưu ở ROM (bộ nhớ chương trình). CPU sẽ đọc lệnh từ bộ nhớ chương trình rồi thực thi. Lưu ý là CPU chỉ đọc thôi, nó không được phép ghi gì vào bộ nhớ chương trình. Nó không thể cãi lệnh bạn! Thế nên bộ nhớ chương trình có tên là bộ nhớ chỉ đọc (Read-only memory, ROM). Nó vẫn còn đấy khi mất điện.
 	\paragraph{}
 Còn bộ nhớ RAM là để phục vụ cho chương trình được thực thi.
 	\paragraph{}
 Ví dụ như bạn khai báo biến int a=0; thì biến a sẽ được lưu trong RAM. Sau đó có lệnh a=a+1; CPU sẽ lấy biến a từ trong RAM ra, thực hiện phép tính rồi lại lưu vào chỗ cũ.
 	\paragraph{}
-Do việc RAM được CPU sử dụng để thực hiện chương trình, đọc ghi liên tục nên nó gọi là bộ nhớ truy cập ngẫu nhiên (Random-access Memory) hay nói cách khác CPU đươc toàn quyền sử dụng bộ nhớ RAM (không như việc chỉ được quyền đọc từ ROM thôi nhé).
-
-
+Do việc RAM được CPU sử dụng để thực hiện chương trình, đọc ghi liên tục nên nó gọi là bộ nhớ truy cập ngẫu nhiên (Random-access Memory) CPU đươc toàn quyền sử dụng bộ nhớ này. Khi mất điện thì chương trình phải chạy lại từ đầu nên những gì được lưu trong làm là không cần thiết và bị xóa trắng. Có một số chip có một vùng RAM nhỏ được nuôi bằng pin để lưu một vài thông số quan trọng, khi có điện lại thì chương trình đọc các thông số đó ra và chạy tiếp. Ví dụ như một dây chuyền sản xuất, nó phải lưu lại vị trí của dây chuyền để khi có điện lại thì nó chạy luôn được ngay.
 
 	\section{Về cách tổ chức bộ nhớ}
 	\paragraph{}
@@ -138,8 +136,7 @@ Do việc RAM được CPU sử dụng để thực hiện chương trình, đ�
 \end{figure}
 
 	\paragraph{}
-	Chip STM32 là vi điều khiển 32-bit nhưng nó chỉ có vài kbyte bộ nhớ RAM nên dãy địa chỉ RAM có thể được đánh dấu từ 0x00000000 đến 0x0000FFFF chẳng hạn. Nếu bạn muốn ghi vào địa chỉ 0xF0000000 thì nó sẽ biến mất hoặc báo lỗi không biết trước được.
-	\paragraph{}
+
 	Đoạn chương trình để xem địa chỉ trong DevC++:\*
 \begin{lstlisting}
 	#include <stdio.h>
@@ -256,7 +253,7 @@ Kiểu biến env\_t giờ có cấu trúc như sau:
 	\caption{Truy cập biến kiểu env\_t} 
 \end{figure}
 \paragraph{}
-Hai ô nhớ tên padding được thêm vào để tăng hiệu suất việc đọc ghi dữ liệu trong máy tính hiện đại. Các bạn quan tâm thì có thể tìm hiểu thêm. Ta có thể tránh nó bằng cách khai báo như sau: trong DevC++ thì bạn khai báo \textit{\#pragma pack(1)} trước khi khai báo biến dữ liệu, còn trong KeilC thì khai báo kiểu:
+Hai ô nhớ tên padding được thêm vào để tăng hiệu suất việc đọc ghi dữ liệu trong máy tính hiện đại. Các bạn quan tâm thì có thể tìm hiểu thêm. Ta có thể tránh nó bằng cách khai báo như sau: trong DevC++ thì bạn khai báo \textit{\#pragma pack(1)} trước khi khai báo biến dữ liệu, còn trong nếu sử dụng KeilC cho chip STM32 hoặc kit Tiva thì khai báo kiểu:
 
 \begin{lstlisting}
 typedef __packed struct{
@@ -265,7 +262,7 @@ typedef __packed struct{
 	uint8_t humi;
 }env_t;
 \end{lstlisting}
-mỗi khi khai báo một kiểu biến nào đó.
+mỗi khi khai báo một kiểu biến nào đó. Trong Arduino thì mình không thấy nó có cơ chế này.
 
 \paragraph{}
 Ngoài ra còn một số kiểu enum và union mà các bạn hỏi giáo sư gu gồ hen.
@@ -290,13 +287,13 @@ hai lần printf sẽ cho ra kết quả như nhau vì đã gán địa chỉ c�
 \paragraph{}
 Lưu ý là bạn không cần quan tâm địa chỉ thật của a (có dạng số hex như 0x0012) chỉ cần khai báo biến a, nó sẽ nằm đâu đó trong RAM (nếu RAM còn trống) và có phép lấy địa chỉ \&a.
 \paragraph{}
-Một con trỏ cần 2 thông tin sau để có thể hoạt động được: địa chỉ và kiểu dữ liệu nó sẽ trỏ tới. Như chương trình trên thì dòng số 6 sẽ cấp cho con trỏ kiểu dữ liệu, dòng số 7 cấp địa chỉ. 2 yếu tố trên giúp bạn có thể đi đến vùng nhớ mà bạn quan tâm sau đó có thể truy cập vùng nhớ đó theo cách bạn muốn.
+Một con trỏ cần 2 thông tin sau để có thể hoạt động được: \textbf{địa chỉ} và \textbf{kiểu dữ liệu} nó sẽ trỏ tới. Như chương trình trên thì dòng số 6 sẽ cấp cho con trỏ kiểu dữ liệu, dòng số 7 cấp địa chỉ. 2 yếu tố trên giúp bạn có thể đi đến vùng nhớ mà bạn quan tâm sau đó có thể truy cập vùng nhớ đó theo cách bạn muốn.
 \paragraph{}
 Một lưu ý là ngôn ngữ C đồng nhất giữa mảng và con trỏ. Ví dụ mình khai báo mảng uint32\_t arr[4], thì \textit{arr} là địa chỉ của phần tử đầu tiên của mảng, hay arr=\&arr[0] (cùng 1 địa chỉ), *arr=arr[0] (cùng 1 giá trị). Giả sử arr là địa chỉ 0x0010 thì arr+1 sẽ là địa chỉ của arr[1] có địa chỉ là 0x0014 (không phải 0x0011 he, đo mỗi biến có 4 ô nhớ, kiểm tra lại bằng DevC++).
 \section{Ví dụ về truyền nhận uart}
 
 \paragraph{}
-Để biết con trỏ nó lợi hại như thế nào thì các bạn hãy xem ví dụ về truyền nhận uart. Trước khi vào phần này bạn nên tham khảo ví dụ về truyền nhận uart cho kit stm32f4 trên kênh youtube của Học ARM để biết sơ sơ về nó thế nào.
+Để biết con trỏ nó lợi hại như thế nào thì các bạn hãy xem ví dụ về truyền nhận uart.
 \paragraph{}
 Các hàm truyền nhận dữ liệu uart thường có cấu trúc như sau:
 \begin{lstlisting}
@@ -320,7 +317,7 @@ pe=(uint8_t *)&evn;
 uart_transmit(pe, sizeof(env_t));
 \end{lstlisting}
 \paragraph{}
-Câu lệnh dòng số 4, \textit{pe=(uint8\_t *)\&evn} có 2 phần: đầu tiên là \&evn, lấy địa chỉ của biến env tạo thành một con trỏ tạm thời kiểu evn\_t, sau đó ép kiểu con trỏ (uint8\_t *) này thành uint8\_t và gán cho pe. Vậy pe là một con trỏ kiểu uint8\_t và có địa chỉ của biến env, sau đó mình dùng hàm uart truyền đi 4 ô nhớ bắt đầu từ ô nhớ này. Mấy bạn chưa quen thì nên ngâm cứu kĩ chỗ này nhé :)))
+Câu lệnh dòng số 4, \textit{pe=(uint8\_t *)\&evn} có 2 phần: đầu tiên là \&evn, lấy địa chỉ của biến env tạo thành một con trỏ tạm thời kiểu evn\_t, sau đó ép kiểu con trỏ (uint8\_t *) này thành uint8\_t và gán cho pe. Vậy pe là một con trỏ kiểu uint8\_t và có địa chỉ của biến env, sau đó mình dùng hàm uart truyền đi 4 ô nhớ bắt đầu từ ô nhớ này. Mấy bạn chưa quen thì nên ngâm cứu kĩ chỗ này :)))
 \paragraph{}
 Khi sử dụng đến con trỏ, bạn cần có \textbf{tư duy ở ô nhớ} (chứ không phải kiểu dữ liệu) thì việc sử dụng con trỏ sẽ đơn giản hơn rất nhiều. Ví dụ như trong hàm truyền uart, với kiểu uint8\_t đại diện cho ô nhớ, và hai tham số *data và size, có ý nói là hãy đưa tôi địa chỉ ô nhớ đầu tiên và số lượng cần truyền, tôi sẽ truyền cái đống đó đi cho bạn.
 \subsection{Nhận uart}
@@ -334,13 +331,18 @@ uart_receive(uart_buffer, sizeof(env_t));
 \paragraph{}
 Lưu ý là số lượng ô nhớ của bộ đệm phải lớn hớn hoặc bằng số lượng trong một lần truyền, nếu không chương trình sẽ lỗi. Câu lệnh số 1 để định nghĩa số lượng và để lên trên cùng của trang để sau này sửa lại số lượng cho phù hợp (cỡ như chương trình của bạn 1000 dòng mà nhét thẳng số 10 vô khai báo mảng luôn mai mốt tìm lại đuối).
 \paragraph{}
-Rồi, sau khi nhận được dữ liệu, việc của bạn là đọc dữ liệu và hiển thị lên màn hình lcd hoặc cất đâu đó. Ta tiến hành ép kiểu một lần nữa.
+Rồi, sau khi nhận được dữ liệu, việc của bạn là đọc dữ liệu và hiển thị lên màn hình lcd hoặc cất đâu đó. Ta tiến hành ép kiểu một lần nữa
 \begin{lstlisting}
 env_t *p_env;
 p_env = (env_t *)uart_buffer;
+
+\end{lstlisting}
+để có được con trỏ kiểu env\_t và trỏ đến vùng nhớ ta vừa nhận được. Sau đó ta có thể sử dụng con trỏ này.
+\begin{lstlisting}
 printf("Temperature: %d\n", p_env->temp);
 printf("Humidity: %d\n", p_env->humi);
 printf("Lux: %d\n", p_env->lux);
+
 \end{lstlisting}
 \paragraph{}
 Như vậy là cùng nhiêu đó ô nhớ nhưng \textbf{cách nhìn các ô nhớ đó} khác nhau với những kiểu dữ liệu khác nhau. Việc ép kiểu không làm thay đổi nội dung của ô nhớ vật lý (nó vẫn là cái đống 00 11 đó thôi), nhưng nó thay đổi cách bạn đọc nó.
@@ -398,7 +400,7 @@ Như vậy là cùng nhiêu đó ô nhớ nhưng \textbf{cách nhìn các ô nh�
 Rồi đến đây các bạn có thể cảm nhận được sức mạnh của con trỏ rồi, bạn có thể \textbf{chạm} đến bất cứ vùng nhớ nào và truy xuất theo \textbf{kiểu} mà bạn muốn.
 Thiệc là dễ quá chừng :))
 \paragraph{}
-Lưu ý: bộ đêm là nơi dữ liệu đến và đi liên tục, nó là bến đỗ chứ không phải là chỗ chứa dữ liệu. Nên cất vào đâu đấy rồi hãy xử lý gì đó tiếp theo.
+Lưu ý: bộ đêm là nơi dữ liệu đến và đi liên tục, nó là bến đỗ chứ không phải là chỗ chứa dữ liệu. Dữ liệu mới ập đến có thể ghi đè lên dữ liệu cũ. Nên cất vào đâu đấy rồi hãy xử lý gì đó tiếp theo.
 \begin{lstlisting}
 env_t *p_env;
 p_env = (env_t *)uart_buffer;
@@ -407,13 +409,15 @@ printf("Temperature: %d\n",  recv_env.temp);
 printf("Humidity: %d\n",  recv_env.humi);
 printf("Lux: %d\n",  recv_env.lux);
 \end{lstlisting}
-\paragraph{}
-Câu lệnh 2 cất data nhận được vào biến recv\_env (received env), biến này nằm đâu đó trong bộ nhớ rồi chứ không còn trong bộ đệm nữa, dữ liệu mới ập đến có thể ghi đè lên bộ đệm. 
 \section{Debug}
 \paragraph{}
 Khi viết một chương trình thì nhất thiết phải có công cụ để theo dõi coi code của bạn nó đang làm cái gì ở trỏng. Nếu ở lập trình C thuần túy bằng cái IDE như DevC++ hoặc Visual Studio thì bạn chỉ cần gọi hàm printf ra và in cái gì trong đó bạn muốn. Còn trong lập trình nhúng thì con MCU của bạn nó chạy chứ không phải CPU của máy tính. Muốn MCU in ra được những dòng chữ lên màn hình desktop thì cần theo quy trình sau: MCU truyền qua uart, qua một module chuyển uart-usb đã cắm vào máy tính, một chương trình đọc cổng COM trên máy tính và hiển thị chuỗi kí tự nhận được.
 \paragraph{}
-Còn nhiều cách debug xịn hơn, như debug onchip trong keilC mà mình chưa rành nên để khi nào rành rồi viết sau.
+Trên board Arduino có sẵ bộ chuyển usb-uart rồi, thường là cổng uart 0 (Serial 0). Code để demo mình đã để sẵn trên \textit{\url{https://github.com/congkeodhbk/Lap_trinh_nhung}}. 
+\paragraph{}
+Có 2 board, một cái nạp chương trình transmit và một cái nạp receive. Chương trình transmit liên tục gửi biến về. Còn receive thì đọc và hiển thị kết quả. Tuy nhiên bên receive nó hơi phứ tạp xíu. Giả sử mình nhận mà không biết thằng gửi sẽ gửi bao nhiêu byte thì sao? Vậy mình sẽ sử dụng cách đại khái là khi nó đang nhận mà không thấy dữ liệu đến nữa trong vòng 20 mili giây thì nó hiểu là đã nhận xong. Các bạn đọc code rồi mò coi cắm chân cẳng thế nào để cái đứa nói chuyện được với nhau. Và xa hơn bạn thử lấy môt cái chip khác, như stm32f4 chẳng hạn, viết chương trình tương tự code transmit và gửi cho Arduino receive nhận xem nó có chạy không. Và xa tới đầu hẻm nữa thì viết tất cả mọi thứ lên chip khác, cả thư viện debug của mình.
+\paragraph{}
+Còn nhiều cách debug xịn hơn, như làm thế nào sử dụng lệnh tương tự scanf trong C lên board Arduino, bạn nhập lệnh trên màn hình console của máy tính và chuyển xuống Arduino, tùy mỗi lệnh bạn nhập mà nó chạy những kịch bản khác nhau.
 \paragraph{}
 \chapter{Coding style}
 \paragraph{}
@@ -431,6 +435,7 @@ Có 3 yêu cầu chính mà người lập trình cần đáp ứng cho chương
 Có thể khẳng định thế này, lập trình không có khó, ngồi fix bug mới mệt. Thế nên việc có coding style sẽ làm cho cuộc sống của bạn dễ chịu hơn rất nhiều. Ngoài việc chịu khó ngồi code là còn phải đọc sách hoặc thỉnh giáo cách sư phụ để làm thế nào cho công việc nó hiệu quả hơn.
 \paragraph{}
 Rồi đến một ngày bạn sẽ thấy ngồi viết code cũng giống như viết văn xuôi vậy.
+\newpage
 \section{Moudule hóa}
 \paragraph{}
 Mọi hệ thống lớn đều hợp thành từ những thành phần nhỏ, hãy chia nhỏ chương trình ra thành các module, file có chức năng khác nhau để dễ quản lý.
@@ -440,22 +445,33 @@ Mọi hệ thống lớn đều hợp thành từ những thành phần nhỏ, h
  \caption{Module hóa trong KeilC}
 \end{figure}
 \paragraph{}
-Bạn có thể thấy trong Keil C khi mới generate từ CubeMX ra có chứa các thư mục, mỗi thư mục là một nhóm chức năng và mỗi chức năng là môt file .c khác nhau. Ngoài ra nó còn lưu đường dẫn đến cái file header .h. Bạn vào Project -> Options for Target...->C/C++ -> Include Paths, để xem các đường dẫn này.
+Còn trong Arduino thì hơi củ chuối hơn xíu, bạn phải bỏ toàn bộ file vô cùng thư mục với file .ino. Nếu có rất nhiều file thì nhìn sẽ rối. 
+\begin{figure}[h!]
+\centering
+ \includegraphics[width=1\linewidth]{arduino_folder.png}
+ \caption{Thư mục Arduion}
+\end{figure}
+\paragraph{}
+Nhưng cũng tạm ổn. Và đây là thành quả
+\begin{figure}[h!]
+\centering
+ \includegraphics[width=0.8\linewidth]{arduino.png}
+ \caption{Module hóa trong Arduino}
+\end{figure}
 \paragraph{}
 Mình từng gặp mấy bạn mới code viết tất cả mọi thứ vào hàm main (kinh dị) từ đọc cảm biến, đọc nút nhấn, điều khiển động cơ... Bạn nên viết hoặc sử dụng thư viện cho mỗi loại phần cứng đó, rồi trong hàm main chỉ gọi hàm trong thư viện đó ra.
 \paragraph{}
-Nguyên tắc để chia module: module A có thể biết module B làm được \textbf{cái gì} nhưng nó không biết module B làm điều đó \textbf{như thế nào}. Ví dụ bạn sử dụng hàm uart\_transmit() biết chắc chắn nó sẽ chuyển dữ liệu đi cho bạn nhưng bạn không cần biết nó chuyển đi như thế nào. A giao việc cho B theo phương thức quy định sẵn và chấm hết. B có thể báo về cho A một số trạng thái như công việc có thành công hay không, hoặc thất bại do nguyên nhân gì.
+Nguyên tắc để chia module: module A có thể biết module B làm được \textbf{cái gì} nhưng nó không biết module B làm điều đó \textbf{như thế nào}. Ví dụ bạn sử dụng hàm \textit{Serial.write()} trong Arduino chẳng hạn, bạn biết chắc chắn nó sẽ chuyển dữ liệu đi cho bạn nhưng bạn không cần biết nó chuyển đi như thế nào. A giao việc cho B theo phương thức quy định sẵn và chấm hết. B có thể báo về cho A một số trạng thái như công việc có thành công hay không, hoặc thất bại do nguyên nhân gì.
 \paragraph{}
-Yêu cầu như trên làm tăng tính độc lập cho các module với nhau, làm cho cả chương trình trở nên rõ ràng hơn. Ví dụ khi lỗi xảy ra, bạn có thể biết được ở A hay B gây ra lỗi, khoanh vùng lỗi nhỏ hơn để dễ kiếm hơn. Khi bạn muốn nâng cấp B để nó chạy nhanh hơn, những chương trình ở A viết sử dụng hàm mà B cung cấp sẽ vẫn hoạt động bình thường, không phải sửa lại mọi thứ. Giống như module uart của thư viện HAL vẫn thường xuyên được cập nhật, nhưng chương trình của bạn vẫn sử dụng được module đó mà không cần phải chỉnh sửa gì.
+Yêu cầu như trên làm tăng tính độc lập cho các module với nhau, làm cho cả chương trình trở nên rõ ràng hơn. Ví dụ khi lỗi xảy ra, bạn có thể biết được ở A hay B gây ra lỗi, khoanh vùng lỗi nhỏ hơn để dễ kiếm hơn. Khi bạn muốn nâng cấp B để nó chạy nhanh hơn, những chương trình ở A viết sử dụng hàm mà B cung cấp sẽ vẫn hoạt động bình thường, không phải sửa lại mọi thứ. Các thư viện trong Arduino vẫn thường xuyên được cập nhật nhưng chương trình bạn viết vẫn chạy được là vì lí do này.
 
 \section{Gọi hàm từ thư viện}
 \paragraph{}
-Mỗi một thư viện thì thường có 2 file chính, file source code \textit{.c} và file header \textit{.h}.File \textit{.c} thì để bạn viết code trong đó rồi, còn file \textit{.h} sẽ là bảng mô tả những gì mà file \textit{.c} có thể làm, nó khai báo các hàm mà các module khác có thể gọi để sử dụng thư viện này. Hay nói cách khác thì file \textit{.h} sẽ là trung gian của giữa nơi gọi hàm và nơi thực thi hàm.
+Mỗi một thư viện thì thường có 2 file chính, file source code \textit{.c} (hoặc \textit{.cpp}) và file header \textit{.h}.File \textit{.c} thì để bạn viết code trong đó rồi, còn file \textit{.h} sẽ là bảng mô tả những gì mà file \textit{.c} có thể làm, nó khai báo các hàm mà các module khác có thể gọi để sử dụng thư viện này. Hay nói cách khác thì file \textit{.h} sẽ là trung gian của giữa nơi gọi hàm và nơi thực thi hàm.
+
+\section{Cấu trúc chương trình chính và cách gọi hàm}
 \paragraph{}
-Bạn vào file main.c trong một project, ấn chuột phải vào hàm và chọn Go To Definition Of... để đến nơi hàm đó được định nghĩa (trong file .c), chọn Go To Reference To... để đến nơi hàm đó được khai báo (trong file .h).
-\section{Cấu trúc hàm main và cách gọi hàm}
-\paragraph{}
-Hàm main thường có cấu trúc là khởi tạo và vòn lặp chương trình chính. Tương tự như arduino nó setup() và loop().
+Hàm main trong chương trình chính thường có cấu trúc là khởi tạo và vòng lặp chương trình. 
 \begin{lstlisting}
 void main(void)
 {
@@ -466,7 +482,19 @@ void main(void)
 		//Do what you want
 	}
 }
+\end{lstlisting}
+\paragraph{}
+Tương tự như arduino nó có setup() và loop().
+\begin{lstlisting}
+void setup() {
+  // put your setup code here, to run once:
 
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+}
 \end{lstlisting}
 \paragraph{}
 Ví dụ như mình viết một chương trình đọc cảm biến và 10 phút gửi về một lần. Thì mình sẽ viết như sau:
@@ -552,7 +580,7 @@ Không nên nhét hàm delete\_data() vào bên trong send\_data() như muốn h
 \paragraph{}
 Một vài ví dụ như khi viết vội có bạn đặt tên hàm kiểu ham\_a(), ham\_b(), hoặc func\_1(), func\_2(), mai mốt đọc lại xỉu.
 \paragraph{}
-Việc bạn đặt tên hàm rồi sau thấy củ chuối quá thì cũng đừng ngại đổi lại nhé, mình nhiều khi cũng phải đổi 2-3 lần mới được cái tên vừa ý.
+Việc bạn đặt tên hàm rồi sau thấy củ chuối quá thì cũng đừng ngại đổi lại, mình nhiều khi cũng phải đổi 2-3 lần mới được cái tên vừa ý.
 \subsection{Độ dài của hàm}
 \paragraph{}
 Nguyên tắc để dễ code dễ đọc: code ngắn thôi, với lại tên hàm đặt đúng với yêu cầu. 

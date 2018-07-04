@@ -15,11 +15,17 @@ void setup() {
     debug("Hello world\n");
 }
 
-env_t env;
-void loop() {
-    env.temp+=1;
+static env_t env;
+void read_sensor(void){
+	  env.temp+=1;
     env.humi+=2;
     env.lux+=3;
-    Serial1.write((uint8_t *)&env, sizeof(env_t)); //uart_transmit
+}
+void send_data(void){
+	Serial1.write((uint8_t *)&env, sizeof(env_t)); //uart_transmit
+}
+void loop() {
+	  read_sensor();
+    send_data();
     delay(1000);
 }
