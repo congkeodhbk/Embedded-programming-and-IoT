@@ -6,6 +6,7 @@
 #define RECEIVER Serial1
 #define INPUT_TIMEOUT 20 //milli second
 uint8_t rx_buffer[10];
+
 typedef struct {
     uint8_t temp;
     uint8_t humi;
@@ -14,10 +15,14 @@ typedef struct {
 
 
 enum{
-    WAITING,
-    RECEIVING,
+    WAITING=0,
+    RECEIVING=1,
 };
-
+/**************************************************************/
+// uart_get_input: wait for serial input data, 
+// return size of the received array if it wait more than INPUT_TIMEOUT
+// for next byte.
+/*************************************************************/
 int uart_get_input()
 {
     static uint8_t state=WAITING;
