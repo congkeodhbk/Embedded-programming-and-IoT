@@ -449,7 +449,7 @@ Còn trong Arduino thì hơi củ chuối hơn xíu, bạn phải bỏ toàn b�
 \begin{figure}[h!]
 \centering
  \includegraphics[width=1\linewidth]{arduino_folder.png}
- \caption{Thư mục Arduion}
+ \caption{Thư mục Arduino}
 \end{figure}
 \paragraph{}
 Nhưng cũng tạm ổn. Và đây là thành quả
@@ -467,7 +467,7 @@ Yêu cầu như trên làm tăng tính độc lập cho các module với nhau, 
 
 \section{Gọi hàm từ thư viện}
 \paragraph{}
-Mỗi một thư viện thì thường có 2 file chính, file source code \textit{.c} (hoặc \textit{.cpp}) và file header \textit{.h}.File \textit{.c} thì để bạn viết code trong đó rồi, còn file \textit{.h} sẽ là bảng mô tả những gì mà file \textit{.c} có thể làm, nó khai báo các hàm mà các module khác có thể gọi để sử dụng thư viện này. Hay nói cách khác thì file \textit{.h} sẽ là trung gian của giữa nơi gọi hàm và nơi thực thi hàm.
+Mỗi một thư viện thì thường có 2 file chính, file source code \textit{.c} (hoặc \textit{.cpp}) và file header \textit{.h}. File \textit{.c} thì để bạn viết code trong đó rồi, còn file \textit{.h} sẽ là bảng mô tả những gì mà file \textit{.c} có thể làm, nó khai báo các hàm mà các module khác có thể gọi để sử dụng thư viện này. Hay nói cách khác thì file \textit{.h} sẽ là trung gian của giữa nơi gọi hàm và nơi thực thi hàm.
 
 \section{Cấu trúc chương trình chính và cách gọi hàm}
 \paragraph{}
@@ -566,7 +566,7 @@ Vậy nên để đạt hiệu quả thì cần có những lưu ý sau:
 \paragraph{}
 Tên hàm được đặt để cho biết cái \textbf{hàm con đó nó làm cái gì}. Ví dụ như read\_sensor() chẳng hạn, dù bạn chưa biết cảm biến loại gì và đọc nó như thế nào nhưng cũng hiểu sơ sơ về mục đích gọi hàm.
 \paragraph{}
-Và hàm \textbf{chỉ làm những gì mà tên hàm nói đến, không hơn không kém}. Mỗi hàm nên chỉ thực hiện một chức năng duy nhất. Trong khi viết code thì mọi thứ nên được viết tường minh ra. Ví dụ như hàm gọi hàm send\_data() để truyền dữ liệu về, nếu khi truyền xong muốn xóa dữ liệu cũ đi thì gọi hàm delete\_data() sau khi gọi hàm send\_data().
+Và hàm \textbf{nên chỉ thực hiện một chức năng duy nhất}. Nó chỉ làm những gì mà tên hàm nói đến, không hơn không kém. Trong khi viết code thì mọi thứ nên được viết tường minh ra. Ví dụ như hàm gọi hàm send\_data() để truyền dữ liệu về, nếu khi truyền xong muốn xóa dữ liệu cũ đi thì gọi hàm delete\_data() sau khi gọi hàm send\_data().
 \begin{lstlisting}
 while(1)
 {

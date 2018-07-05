@@ -413,11 +413,11 @@ printf("Lux: %d\n",  recv_env.lux);
 \paragraph{}
 Khi viết một chương trình thì nhất thiết phải có công cụ để theo dõi coi code của bạn nó đang làm cái gì ở trỏng. Nếu ở lập trình C thuần túy bằng cái IDE như DevC++ hoặc Visual Studio thì bạn chỉ cần gọi hàm printf ra và in cái gì trong đó bạn muốn. Còn trong lập trình nhúng thì con MCU của bạn nó chạy chứ không phải CPU của máy tính. Muốn MCU in ra được những dòng chữ lên màn hình desktop thì cần theo quy trình sau: MCU truyền qua uart, qua một module chuyển uart-usb đã cắm vào máy tính, một chương trình đọc cổng COM trên máy tính và hiển thị chuỗi kí tự nhận được.
 \paragraph{}
-Trên board Arduino có sẵ bộ chuyển usb-uart rồi, thường là cổng uart 0 (Serial 0). Code để demo mình đã để sẵn trên \textit{\url{https://github.com/congkeodhbk/Lap_trinh_nhung}}. 
+Trên board Arduino có sẵn bộ chuyển usb-uart rồi, thường là cổng uart 0 (Serial 0). Code để demo mình đã để sẵn trên \textit{\url{https://github.com/congkeodhbk/Lap_trinh_nhung}}. 
 \paragraph{}
-Có 2 board, một cái nạp chương trình transmit và một cái nạp receive. Chương trình transmit liên tục gửi biến về. Còn receive thì đọc và hiển thị kết quả. Tuy nhiên bên receive nó hơi phứ tạp xíu. Giả sử mình nhận mà không biết thằng gửi sẽ gửi bao nhiêu byte thì sao? Vậy mình sẽ sử dụng cách đại khái là khi nó đang nhận mà không thấy dữ liệu đến nữa trong vòng 20 mili giây thì nó hiểu là đã nhận xong. Các bạn đọc code rồi mò coi cắm chân cẳng thế nào để cái đứa nói chuyện được với nhau. Và xa hơn bạn thử lấy môt cái chip khác, như stm32f4 chẳng hạn, viết chương trình tương tự code transmit và gửi cho Arduino receive nhận xem nó có chạy không. Và xa tới đầu hẻm nữa thì viết tất cả mọi thứ lên chip khác, cả thư viện debug của mình.
+Có 2 board, một cái nạp chương trình transmit và một cái nạp receive. Chương trình transmit liên tục gửi biến về. Còn receive thì đọc và hiển thị kết quả. Tuy nhiên bên receive nó hơi phức tạp xíu. Giả sử mình nhận mà không biết thằng gửi sẽ gửi bao nhiêu byte thì sao? Vậy mình sẽ sử dụng cách đại khái là khi nó đang nhận mà không thấy dữ liệu đến nữa trong vòng 20 mili giây thì nó hiểu là đã nhận xong. Các bạn đọc code rồi mò coi cắm chân cẳng thế nào để cái đứa nói chuyện được với nhau. Và xa hơn bạn thử lấy môt cái chip khác, như stm32f4 chẳng hạn, viết chương trình tương tự code transmit và gửi cho Arduino receive nhận xem nó có chạy không. Và xa tới đầu hẻm nữa thì viết tất cả mọi thứ lên chip khác, cả thư viện debug của mình.
 \paragraph{}
-Còn nhiều cách debug xịn hơn, như làm thế nào sử dụng lệnh tương tự scanf trong C lên board Arduino, bạn nhập lệnh trên màn hình console của máy tính và chuyển xuống Arduino, tùy mỗi lệnh bạn nhập mà nó chạy những kịch bản khác nhau.
+Trong thư viện trên mới chỉ có hàm debug() tương đương với printf() trong C, còn nhiều cách debug xịn hơn, như làm thế nào sử dụng lệnh tương tự scanf trong C lên board Arduino, bạn nhập lệnh trên màn hình console của máy tính và chuyển xuống Arduino, tùy mỗi lệnh bạn nhập mà nó chạy những kịch bản khác nhau.
 \paragraph{}
 \chapter{Coding style}
 \paragraph{}
@@ -449,7 +449,7 @@ Còn trong Arduino thì hơi củ chuối hơn xíu, bạn phải bỏ toàn b�
 \begin{figure}[h!]
 \centering
  \includegraphics[width=1\linewidth]{arduino_folder.png}
- \caption{Thư mục Arduion}
+ \caption{Thư mục Arduino}
 \end{figure}
 \paragraph{}
 Nhưng cũng tạm ổn. Và đây là thành quả
@@ -467,7 +467,7 @@ Yêu cầu như trên làm tăng tính độc lập cho các module với nhau, 
 
 \section{Gọi hàm từ thư viện}
 \paragraph{}
-Mỗi một thư viện thì thường có 2 file chính, file source code \textit{.c} (hoặc \textit{.cpp}) và file header \textit{.h}.File \textit{.c} thì để bạn viết code trong đó rồi, còn file \textit{.h} sẽ là bảng mô tả những gì mà file \textit{.c} có thể làm, nó khai báo các hàm mà các module khác có thể gọi để sử dụng thư viện này. Hay nói cách khác thì file \textit{.h} sẽ là trung gian của giữa nơi gọi hàm và nơi thực thi hàm.
+Mỗi một thư viện thì thường có 2 file chính, file source code \textit{.c} (hoặc \textit{.cpp}) và file header \textit{.h}. File \textit{.c} thì để bạn viết code trong đó rồi, còn file \textit{.h} sẽ là bảng mô tả những gì mà file \textit{.c} có thể làm, nó khai báo các hàm mà các module khác có thể gọi để sử dụng thư viện này. Hay nói cách khác thì file \textit{.h} sẽ là trung gian của giữa nơi gọi hàm và nơi thực thi hàm.
 
 \section{Cấu trúc chương trình chính và cách gọi hàm}
 \paragraph{}
@@ -566,7 +566,7 @@ Vậy nên để đạt hiệu quả thì cần có những lưu ý sau:
 \paragraph{}
 Tên hàm được đặt để cho biết cái \textbf{hàm con đó nó làm cái gì}. Ví dụ như read\_sensor() chẳng hạn, dù bạn chưa biết cảm biến loại gì và đọc nó như thế nào nhưng cũng hiểu sơ sơ về mục đích gọi hàm.
 \paragraph{}
-Và hàm \textbf{chỉ làm những gì mà tên hàm nói đến, không hơn không kém}. Mỗi hàm nên chỉ thực hiện một chức năng duy nhất. Trong khi viết code thì mọi thứ nên được viết tường minh ra. Ví dụ như hàm gọi hàm send\_data() để truyền dữ liệu về, nếu khi truyền xong muốn xóa dữ liệu cũ đi thì gọi hàm delete\_data() sau khi gọi hàm send\_data().
+Và hàm \textbf{nên chỉ thực hiện một chức năng duy nhất}. Nó chỉ làm những gì mà tên hàm nói đến, không hơn không kém. Trong khi viết code thì mọi thứ nên được viết tường minh ra. Ví dụ như hàm gọi hàm send\_data() để truyền dữ liệu về, nếu khi truyền xong muốn xóa dữ liệu cũ đi thì gọi hàm delete\_data() sau khi gọi hàm send\_data().
 \begin{lstlisting}
 while(1)
 {
