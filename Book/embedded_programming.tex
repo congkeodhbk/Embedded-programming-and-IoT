@@ -3,6 +3,7 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{tikz}
+\usetikzlibrary{arrows,automata,shapes.geometric}
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{listings}
@@ -28,6 +29,11 @@
 	%commentstyle=\color{green},
 	%keywordstyle=\color{blue}
 }
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=2cm, minimum height=0.25,text centered, draw=black]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black]
+\tikzstyle{process} = [rectangle, minimum width=2cm, minimum height=0.25, text centered, draw=black]
+\tikzstyle{decision} = [diamond, minimum width=2cm, minimum height=0.25, text centered, draw=black]
+\tikzstyle{arrow} = [thick,->,>=stealth]
 \pagenumbering{gobble}
 \pagenumbering{arabic}
 \title{LẬP TRÌNH NHÚNG}
@@ -317,7 +323,7 @@ pe=(uint8_t *)&evn;
 uart_transmit(pe, sizeof(env_t));
 \end{lstlisting}
 \paragraph{}
-Câu lệnh dòng số 4, \textit{pe=(uint8\_t *)\&evn} có 2 phần: đầu tiên là \&evn, lấy địa chỉ của biến env tạo thành một con trỏ tạm thời kiểu evn\_t, sau đó ép kiểu con trỏ (uint8\_t *) này thành uint8\_t và gán cho pe. Vậy pe là một con trỏ kiểu uint8\_t và có địa chỉ của biến env, sau đó mình dùng hàm uart truyền đi 4 ô nhớ bắt đầu từ ô nhớ này. Mấy bạn chưa quen thì nên ngâm cứu kĩ chỗ này :)))
+Câu lệnh dòng số 4, \textit{pe=(uint8\_t *)\&evn} có 2 phần: đầu tiên là \&evn, lấy địa chỉ của biến env tạo thành một con trỏ tạm thời kiểu evn\_t, sau đó ép kiểu con trỏ (uint8\_t *) và gán cho pe. Vậy pe là một con trỏ kiểu uint8\_t và có địa chỉ của biến env, sau đó mình dùng hàm uart truyền đi 4 ô nhớ bắt đầu từ ô nhớ này. Mấy bạn chưa quen thì nên ngâm cứu kĩ chỗ này :)))
 \paragraph{}
 Khi sử dụng đến con trỏ, bạn cần có \textbf{tư duy ở ô nhớ} (chứ không phải kiểu dữ liệu) thì việc sử dụng con trỏ sẽ đơn giản hơn rất nhiều. Ví dụ như trong hàm truyền uart, với kiểu uint8\_t đại diện cho ô nhớ, và hai tham số *data và size, có ý nói là hãy đưa tôi địa chỉ ô nhớ đầu tiên và số lượng cần truyền, tôi sẽ truyền cái đống đó đi cho bạn.
 \subsection{Nhận uart}
@@ -465,10 +471,6 @@ Nguyên tắc để chia module: module A có thể biết module B làm đượ
 \paragraph{}
 Yêu cầu như trên làm tăng tính độc lập cho các module với nhau, làm cho cả chương trình trở nên rõ ràng hơn. Ví dụ khi lỗi xảy ra, bạn có thể biết được ở A hay B gây ra lỗi, khoanh vùng lỗi nhỏ hơn để dễ kiếm hơn. Khi bạn muốn nâng cấp B để nó chạy nhanh hơn, những chương trình ở A viết sử dụng hàm mà B cung cấp sẽ vẫn hoạt động bình thường, không phải sửa lại mọi thứ. Các thư viện trong Arduino vẫn thường xuyên được cập nhật nhưng chương trình bạn viết vẫn chạy được là vì lí do này.
 
-\section{Gọi hàm từ thư viện}
-\paragraph{}
-Mỗi một thư viện thì thường có 2 file chính, file source code \textit{.c} (hoặc \textit{.cpp}) và file header \textit{.h}. File \textit{.c} thì để bạn viết code trong đó rồi, còn file \textit{.h} sẽ là bảng mô tả những gì mà file \textit{.c} có thể làm, nó khai báo các hàm mà các module khác có thể gọi để sử dụng thư viện này. Hay nói cách khác thì file \textit{.h} sẽ là trung gian của giữa nơi gọi hàm và nơi thực thi hàm.
-
 \section{Cấu trúc chương trình chính và cách gọi hàm}
 \paragraph{}
 Hàm main trong chương trình chính thường có cấu trúc là khởi tạo và vòng lặp chương trình. 
@@ -512,7 +514,7 @@ void main(void)
 }
 \end{lstlisting}
 \paragraph{}
-Bạn thấy không, chương trình mình viết nó y chang những gì mình nói. Còn việc các hàm đọc cảm biến read\_sensor() hoặc gửi dữ liệu về send\_data\_to\_master\_mcu() nó ra sao trong đó thì viết ở chỗ khác. Đừng nhét mọi thứ mà bạn có thể viết ra vào đây, làm ơn!!!
+Bạn thấy không, chương trình mình viết nó y chang những gì mình nói. Còn việc các hàm đọc cảm biến read\_sensor() hoặc gửi dữ liệu về send\_data() nó ra sao trong đó thì viết ở chỗ khác. Đừng nhét mọi thứ mà bạn có thể viết ra vào đây, làm ơn!!!
 \paragraph{}
 Có một khái niệm về \textbf{mức trừu tượng}. Ví dụ như hàm đọc cảm biến read\_sensor có thể bao gồm 3 hàm thế này:
 \begin{lstlisting}
@@ -576,7 +578,9 @@ while(1)
 	delay(10_minutes);
 }
 \end{lstlisting}
-Không nên nhét hàm delete\_data() vào bên trong send\_data() như muốn hiểu ngầm "gửi xong rồi xóa nó đi chứ để làm gì". Vì nhiều khi có việc cần đến nó.
+Không nên nhét hàm delete\_data() vào bên trong send\_data() như muốn hiểu ngầm "gửi xong rồi xóa nó đi chứ để làm gì". Vì nhiều khi có việc cần đến nó. Việc viết tường mình, tránh những chỗ hiểu ngầm sẽ giúp người đọc nắm đủ các bước thực hiện của bạn. Hãy viết theo kiểu cho một người chưa biết gì về chương trình của bạn đọc. Và đặc biệt tránh kiểu viết trẻ trâu thích thể hiện, viết đoạn code thật ngầu, thật nhỏ xíu mà vẫn chạy ngon. Sau này chỉ khổ cho mấy người phải đọc lại nó.
+\paragraph{}
+Hàm được thực thi càng chính xác với cái tên của nó bao nhiêu thì code của bạn sẽ càng dễ đọc bấy nhiêu. 
 \paragraph{}
 Một vài ví dụ như khi viết vội có bạn đặt tên hàm kiểu ham\_a(), ham\_b(), hoặc func\_1(), func\_2(), mai mốt đọc lại xỉu.
 \paragraph{}
@@ -590,7 +594,8 @@ Một số hàm chỉ hoạt động tốt nếu nó đủ dài, cắt ngắn l�
 Còn độ dài của nó bao nhiêu là vừa. Cái này bạn phải làm rồi rút ra kinh nghiệm cho bản thân. Với mình thì dài dưới 10 dòng là okie nhất, trên 20 dòng thì nên cắt nó đi.
 \subsection{Truyền tham số}
 \paragraph{}
-Tham số là nơi giao tiếp của hàm này với hàm kia. Mà nói chung là một hàm khai báo tham số đầu vào cũng ít thôi. Bạn viết một hàm với yêu cầu truyền 5 cái thông số đầu vào thì làm sao bạn nhớ được thứ tự của tham số đó mà truyền cho đúng?
+Tham số là nơi giao tiếp của hàm này với hàm kia. Nó là nơi giao thương nên giống như cái chợ vậy, rất nhiều vấn đề phát sinh. Mà nói chung là một hàm nên hạn chế các tham số đầu vào, chỉ giữ lại nhưng tham số tối quan trọng. Bạn viết một hàm với yêu cầu truyền 5 cái thông số đầu vào thì làm sao bạn nhớ được thứ tự của tham số đó mà truyền cho đúng?
+%viet tiep
 \subsection{Bảo vệ hàm số}
 \paragraph{}
 Giả sử bạn viết một hàm chia a cho b như sau:
@@ -602,7 +607,7 @@ float a_divide_b(int a, int b)
 \end{lstlisting}
 
 \paragraph{}
-Rồi bỗng một ngày đẹp trời, một thanh niên lấy hàm bạn viết ra, rồi xài như sau: float result = a\_divide\_b(2, 0). Xong biên dịch thì không báo lỗi nhưng mà chạy cái nó xịt khói. Đây là lỗi chia cho 0, thành ra nó không tính được và chạy loạn xạ.
+Rồi bỗng một ngày đẹp trời, một thanh niên lấy hàm bạn viết ra, rồi xài như sau: \textit{float result = a\_divide\_b(2, 0)}. Xong biên dịch thì không báo lỗi nhưng mà chạy cái nó xịt khói. Đây là lỗi chia cho 0, thành ra nó không tính được và chạy loạn xạ.
 \paragraph{}
 Thế nên với mỗi chương trình có truyền tham số vào, hãy nhớ là kiểm tra coi nó có hợp lệ hay không, nếu tính toán thì tham số đưa vào có thuộc tập xác định hay không... Bởi vì bạn sẽ không biết sau này người dùng hàm sẽ truyền cái gì vào trong đó nên phải kiểm tra lại. Nguyên tắc kiểm tra là : không tin cha con thằng nào cả. Đừng hi vọng họ sẽ truyền vào tham số hợp lệ, thường thì họ chả quan tâm đâu. Nên nhớ kiểm tra đầu vào hợp lệ thì mới thực thi hàm.
 \paragraph{}
@@ -621,15 +626,315 @@ float a_divide_b(int a, int b)
 \section{Các biến số}
 \paragraph{}
 Tất nhiên là khi lập trình bạn đều phải khai báo biến. Cho nên là sử dụng các biến số cẩn.
+
+\section{Chú thích}
+\paragraph{}
+Chú thích (comment) tưởng đơn giản nhưng lại là thành phần hại não trong khi viết chương trình. Bạn có thể thấy trong C thì chú thích đi sau dấu // hoặc /* */. Tại sao nó hại não. Vì nếu chú thích đúng cách thì chương trình rất dễ đọc và người khác (ngay cả bạn nữa) cũng nắm được đại ý nhanh chóng. Nhưng khổ cái là chương trình thay đổi liên tục, mà hễ thay đổi thì chỉnh sửa code lại thôi, không ai chịu sửa lại chú thích làm chi (vì sửa code không cũng đuối rồi). Nên làm cho người đọc tưởng là mình hiểu rồi nhưng một hồi đọc tới code thì thấy nó sai sai.
+\paragraph{}
+Thế nên cách chú thích tốt nhất là hạn chế nó hết mức có thể. Sử dụng tên hàm, tên biến như là một loại chú thích hiệu quả hơn.
+\paragraph{}
+Tất nhiên là bạn không nên bỏ hẳn nó đi, vì nếu sử dụng nó đúng cách thì nó đem lại hiệu quả rất nhiều. Các chương trình thường đặt chú thích lên đầu trang để giải thích khái quát coi chương trình đó đùng để làm gì. Trong file \textit{.h}, các chú thích được đặt trước tên hàm giải thích công dụng của hàm đó, để người sử dụng có thể sử dụng luôn thư viện mà không cần phải đọc tới file code. Đôi khi những đoạn code khó đọc, tính logic cao thì nên có chú thích để giải thích coi ý tưởng đằng sau đoạn code đó là gì, nó giải quyết vấn đề gì.
+\section{Tái cấu trúc}
+\paragraph{}
+Tái cấu trúc (refactoring) hiểu nôm na là làm cho chương trình của bạn đẹp trai hơn. Sau một hồi viết cật lực, nạp xuống và chạy được rồi, sửa lỗi lặt vặt được hết thì đến lúc bạn nên làm lại cho chương trình nó dễ đọc hơn và dễ sửa hơn.
 \section{Lưu đồ giải thuật}
 \paragraph{}
-Có bạn nào viết lưu đồ giải thuật ra rồi mới code không, hay toàn làm ngược lại, code rồi mới viết lưu đồ ra cho có rồi đem nộp?
+Có bạn nào viết lưu đồ giải thuật (flowchart) ra rồi mới code không, hay toàn làm ngược lại, code rồi mới viết lưu đồ ra cho có rồi đem nộp?
 \paragraph{}
-Lưu đồ giải thuật là cách của bạn giải quyết một vấn đề. Nó khiến bạn phải suy nghĩ, cân đong đo đếm đủ thứ.
+Lưu đồ giải thuật thường viết khi bạn thực hiện một đoạn chương trình khó, nặng tính logic. Còn thông thường thì không cần nó làm chi. Hồi sinh viên viết mấy đoạn dễ ẹc nên không bao giờ mình viết lưu đồ ra, có viết thì để làm báo cáo thôi. Giờ đi làm gặp những thứ chua ăn hơn, nếu không viết nó ra thì không biết code thế nào cho đúng. 
 \paragraph{}
-Ví dụ mình làm một cái điều khiển mực nước của một cái bể thế này.
+Và lưu đồ giải thuật sẽ tập cho bạn thói quen suy nghĩ trước khi làm, chứ không phải là làm theo cảm tính rồi ngồi sửa. Hãy nhớ code chỉ là một phần của sản phẩm bạn tạo ra, hãy dành thời gian suy nghĩ về cấu trúc của sản phẩm, thiết kế từng module rồi vẽ lưu đồ nếu cần. Đó là bước bạn làm cho ý tưởng của bạn nó rõ ràng, cách diễn đạt được mạch lạc. Cuối cùng là chỉ cho cái máy hiểu bạn muốn nó làm cái chi (là viết chương trình đó). Đừng cắm đầu code khi bạn còn chưa biết bạn sẽ làm cái gì nữa.
+\paragraph{}
+Rồi một ví dụ về bên nhận dữ liệu uart (lại là uart). Bên nhận thì nhìn chung không biết thằng phát sẽ phát bao nhiêu, nó không biết bao giờ sẽ kết thúc cái chuỗi mà nó đang nhận. Vậy làm thế nào để khi bên phát hết phát thì bên thu sẽ biết mà còn đi làm cái khác?
+\paragraph{}
+Có rất nhiều cách. Như người ta có thể chuyển dữ liệu sang chỗi json (đại khái toàn là chuỗi kí tự mã ASCII và dữ liệu không bao giờ có kí tự kết thúc chuỗi '\textbackslash0') và sau đó thêm kí tự '\textbackslash0' vào cuối chuỗi, bên nhận nhận được kí tự này và báo về chương trình chính đã nhận xong. Nhưng ở đây mình sử dụng cách đơn giản hơn, nếu nó đang nhận dữ liệu và đột nhiên không nhận được nữa trong vòng 20 mili giây thì nó sẽ báo là nhận xong rồi.
+\paragraph{}
+Rồi viết ra yêu cầu của chương trình rồi giờ tới thiết kế. Bạn tự làm thử xem :)))
+\paragraph{}
+Theo yêu cầu thì bộ truyền nhận sẽ có 2 trạng thái: WAITING (đang chờ dữ liệu, kí hiệu WAIT=0) và RECEIVING (đang nhận, kí hiệu RECV=1). Khi mới khởi tạo thì nó sẽ có trạng thái đang chờ. Khi nhận được thông báo có dữ liệu đến thì nó sẽ chuyển qua trạng thái đang nhận. Nhận xong thì trở về WAITING.
+\begin{figure}[h!]
+	\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=5cm,
+                    semithick]
+
+  \node[initial,state] (A)                    	{$WAIT$};
+  \node[state]         (B) [right of=A] 		{$RECV$};
+
+  \path (A) edge [bend left]            node {data} (B)
+        (B) edge [loop above] 			node {data} (B)
+            edge [bend left]            node {timeout} (A);
+ 
+\end{tikzpicture}
+\caption{Lưu đồ máy trạng thái.}
+
+\end{figure}
+\paragraph{}
+Trên là lưu đồ đơn giản nhất. Trong chương trình mình sẽ viết theo kiểu non-blocking, tức là không có sử dụng hàm delay() mà chương trình sẽ liên tục kiểm tra ngõ vào. Tài nguyên có hạn nên bạn không nên phung phí nó mà sử dụng hàm delay(), chương trình sẽ đứng nguyên một chỗ. Có thời gian thì mình sẽ viết chi tiết hơn.
+\paragraph{}
+Rồi giờ tới lưu đồ cho anh kia.
+\begin{figure}
+\centering
+\begin{tikzpicture}[node distance=2cm]
+
+\node (start) [startstop] {Begin};
+\node (dec1) [decision, below of=start, yshift=-0.5cm] {state=0?};
+\draw [arrow] (start) -- (dec1);
+
+\node (dec2) [decision, left of=dec1, xshift=-1cm] {data?};
+\draw [arrow] (dec1) -- node [above] {Y} (dec2);
+
+\node (dec3) [decision, right of=dec1, xshift=1cm] {data?};
+\draw [arrow] (dec1) -- node [above] {N} (dec3);
+
+\node (pro1) [process, right of=dec3, xshift=1cm] {get data?};
+\draw [arrow] (dec3) -- node [above] {Y} (pro1);
+\node (dec4) [decision, below of=dec3, yshift=-0.5cm] {timeout?};
+\draw [arrow] (dec3) -- node [right] {N} (dec4);
+
+
+\node (stop) [startstop, below of=start, yshift=-10cm ] {End};
+\draw [arrow] (pro1) |-  (stop);
+%\node (pro2a) [process, below of=dec1, yshift=-0.5cm] {Process 2a};
+%\node (stop) [startstop, below of=out1] {Stop};
+%\draw [arrow] (start) -- node [right] (dec1);
+
+\end{tikzpicture}
+\caption{Lưu đồ giải thuật.}
+\end{figure}
+
+
+\paragraph{}
+
 
 \chapter{Viết thư viện}
+\paragraph{}
+Nếu bạn đi theo con đường lập trình chuyên nghiệp thì bạn phải chuẩn bị cho mình một bộ thư viện để khi cần thì có thể lôi ra sử dụng. Trên Arduino được hỗ trợ rất nhiều nhưng không có nghĩ là đúng và  đủ. Tất cả thư viện đó đều có thể có lỗi và đôi khi có những thư viện chưa được hỗ trợ. Hoặc trường hợp thường gặp như thư viện của cảm biến DHT11 đã có trên Arduino nhưng dự án của bạn lại sử dụng chip khác thì cần biết làm sao để chuyển từ thư viện Arduino sang loại chip mà bạn đang sử dụng.
+\paragraph{}
+Trên Arduino thư viện được viết bằng C++ nhưng mà mình sẽ hướng dẫn bạn viết bằng C, vì nó dễ hơn. Sau này rành rồi thì bạn cũng nên tự học C++ vì nó có nhiều chiêu hay hơn C (nó hơn hai đấu cộng lận đó).
+\section{Cấu trúc thư viện}
+\paragraph{}
+Một thư viện có thể có rất nhiều file trong đó. Nhưng cơ bản thì nó có 2 file chính: file code \textit{.c} và file header \textit{.h}. File code thì tất nhiên là để viết code rồi. Nhưng mà có ai sử dụng thư viện mà lôi code ra đọc từ đầu đến cuối rồi mới sử dụng đâu. Đó là lí do sinh ra file \textit{.h}. Nó là nơi \textbf{khai báo hàm}, bao gồm các hàm mà trong thư viện mà bạn có thể xài, các cấu trúc dữ liệu... và đặc biệt là phải có các đoạn hướng dẫn sử dụng, để người dùng chỉ cần đọc hướng dẫn thôi là sử dụng được cái thư viện đó rồi. Cho nên thư viện của bạn viết, ngoài đáp ứng 3 tiêu chí chạy được, dễ thay đổi, dễ hiểu ra, còn thêm một yêu cầu cho thư viện là dễ sử dụng nữa.
+\paragraph{}
+Đối với Arduino thì bạn cần đặt 2 file này vào cùng thư mục của với file .ino, còn như sử dụng các chip khác thì mỗi thư viện cần có một thư mục riêng.
+\paragraph{}
+Một ví dụ về thư viện:
+\begin{lstlisting}
+//file example.h
+#ifndef _EXAMPLE_H
+	#define _EXAMPLE_H
+
+	//Initiate example library 
+	void example_init(void);
+
+	//Example function
+	void example_function(void);
+
+#endif
+\end{lstlisting}
+
+\begin{lstlisting}
+//file example.c
+#include "example.h"
+
+void example_init(void){
+	//do something
+}
+
+void example_function(void){
+	//do something
+}
+
+\end{lstlisting}
+
+\paragraph{}
+Lưu ý: đoạn macro
+\begin{lstlisting}
+//file example.h
+#ifndef _EXAMPLE_H
+	#define _EXAMPLE_H
+	.
+	.
+	.
+#endif
+\end{lstlisting}
+Là rất quan trọng, mỗi file \textit{.h} nên có một đoạn này, và \_EXAMPLE\_H thay đổi tùy theo tên hàm của bạn.
+\paragraph{}
+Có thể giải thích như sau: trong C nó có một bộ tiền xử lý (preprocessor), là trước khi biên dịch code của bạn thì nó sẽ làm việc của cái bộ tiền xử lý này trước. Cặp khai báo \#ifndef \#endif sẽ đi chung với nhau. Đoạn khai báo trên có nghĩa là: Nếu chưa định nghĩa \_EXAMPLE\_H thì định nghĩa \_EXAMPLE\_H và mấy cái bên dưới, cho tới chỗ \#endif thì dừng.
+\paragraph{}
+Giả sử mình có file a.h , b.h được khai báo như sau:
+
+\begin{lstlisting}
+//file a.h
+int A=0;
+\end{lstlisting}
+\begin{lstlisting}
+//file b.h
+#include "a.h"
+int B=0;
+\end{lstlisting}
+và có thêm một file c.h
+\begin{lstlisting}
+//file c.h
+#include "a.h"
+#include "b.h"
+int C=0;
+\end{lstlisting}
+bạn có thể thấy, khi c \textit{\#include "a.h"} thì nó đã khai báo một biến A trong đó rồi. Khi c \textit{\#include "b.h"} thì nó khai báo tiếp 2 biến A, B nữa, vậy biến A được khai báo 2 lần và sẽ gây lỗi.
+\paragraph{}
+Tất nhiên là bạn không nên khai báo biến trong file \textit{.h}, nhưng ở đây là ví dụ về trường hợp sẽ sinh ra lỗi. Nếu sử dụng cặp khai báo  \#ifndef \#endif thì sẽ giải quyết được chuyện này. 
+\begin{lstlisting}
+//file a.h
+#ifndef _A_H
+	#define _A_H
+	int A=0;
+#endif
+\end{lstlisting}
+\begin{lstlisting}
+//file b.h
+#ifndef _B_H
+	#define _B_H
+	#include "a.h"
+	int B=0;
+#endif
+\end{lstlisting}
+
+khi c \textit{\#include "a.h"} thì nó sẽ khai báo biến A và định nghĩa chuỗi \_A\_H (định nghĩa này là ghi nhận nó đã từng xuất hiện trên đời). Khi c \textit{\#include "b.h"}, thì đầu tiên b.h sẽ  \textit{\#include "a.h"}, nhưng nó thấy \_A\_H đã từng xuất hiện rồi nên không khai báo phần bên dưới nữa. Rồi cuối cùng nó chỉ định khai báo biến B thôi.
+\paragraph{}
+Tóm lại là đoạn macro đó giúp bạn không bị khai báo lại khi mà \textit{\#include} chồng chéo nhiều thư viện khác nhau.
+\paragraph{}
+Một lưu ý khác là thư viện C của bạn có thể được sử dụng bởi một chương trình C++, nên cách viết để C++ có thể đọc nó như sau:
+\begin{lstlisting}
+//file example.h
+#ifndef _EXAMPLE_H
+	#define _EXAMPLE_H
+	
+	#ifdef __cplusplus
+ 		extern "C" {
+	#endif
+
+	//Initiate example library 
+	void example_init(void);
+
+	//Example function
+	void example_function(void);
+	
+	#ifdef __cplusplus
+	}
+	#endif
+	
+#endif
+\end{lstlisting}
+hãy làm quen với bộ tiền xử lý vì nó được sử dụng nhiều lắm.
+\section{Viết thư viện theo phong cách OOP}
+\paragraph{}
+Rồi, sau khi bạn có thói quen chia chương trình thành cách file thư viện nhỏ rồi, không còn nhét mọi thư vôi main.c nữa thì bạn có thể đến bước này.
+\paragraph{}
+Lập trình hướng đối tượng (OOP) là một bước tiến của lập trình cấu trúc ( ngôn ngữ C là hướng cấu trúc, C++ là hướng đối tượng). OOP có nhiều ưu điểm hơn, sử dụng được cho những chương trình lớn hơn. C không phải là ngôn ngữ hướng đối tượng nhưng bạn có thể bắt chước phong cách OOP và cuộc sống sẽ dễ dàng hơn.
+\paragraph{}
+Bạn hoàn toàn có thể sử dụng C++ cho Arduino nhưng các chip khác thường vẫn sử dụng C, và bạn làm việc với C một thời gian mà chuyển lên C++ mới thấy nó rất phê, giống như chuyển từ assemply qua C vậy. Còn mà xài C++ ngay từ đầu luôn thì nó cũng thường thôi.
+\paragraph{}
+Vào vấn đề chính. Mình muốn viến thư viện điều khiển một cái relay (rờ le). Bình thường thì nó tắt. Khi nào bạn muốn bật nó lên thì ngoài gọi lệnh như turn\_relay\_on() ra bạn còn phải truyền thời gian khi nào nó tắt nữa, không để nó chạy hoài, vì nhiều khi relay đang kéo tải công suất lớn như máy bơm hay đèn gì đấy. Và tất nhiên là có thể dừng nó bất kì lúc nào và điều khiển một lúc nhiều relay khác nhau.
+\paragraph{}
+Trước tiên là khai báo một struct cho mỗi relay:
+\begin{lstlisting}
+//relay.h
+
+//low active or high active
+#define ON HIGH
+#define OFF LOW
+typedef struct{
+	uint8_t pin;
+	uint8_t state;
+	uint32_t on_state_begin;
+	uint32_t on_state_timeout;
+}relay_t;
+\end{lstlisting}
+\textit{pin} là xem relay đó nối với chân nào của Arduino, state là trạng thái nó đang ON hay OFF, \textit{on\_state\_begin} là thời điểm bắt đầu ON, còn \textit{on\_state\_timeout} là thời gian ON của nó, hết cái đó nó sẽ tắt.
+\paragraph{}
+Sau đó sẽ khai báo các hàm sử dụng struct này:
+\begin{lstlisting}
+//relay.h
+//initiate relay first
+void relay_init(relay_t *relay, uint8_t pin);
+void turn_relay_on(relay_t *relay, uint32_t timeout);
+void turn_relay_off(relay_t *relay);
+//return true if relay high state timeout
+bool is_relay_on_state_timeout(relay_t *relay);
+\end{lstlisting}
+\paragraph{}
+Và rồi trong chương trình chính mình sẽ sử dụng nó như sau.
+\begin{lstlisting}
+
+#include "relay.h"
+
+relay_t relay;
+
+void setup(){
+	relay_init(&relay, 5); //pin 5 control this relay
+	delay(1000);
+	turn_relay_on(&relay, 1000);
+}
+
+void loop(){
+	if(is_relay_on_state_timeout(&relay)){
+		turn_relay_off(&relay);
+	}
+}
+
+\end{lstlisting}
+\paragraph{}
+Chương trình chính ở setup() sẽ bật relay đó lên và trong loop() liên tục hỏi coi nó có timeout chưa, nếu có thì tắt relay đó đi. Lưu ý là hàm is\_relay\_on\_state\_timeout() chỉ trả về true nếu relay đó đang ON và đã hết thời gian, trả về false nếu đang OFF hoặc chưa timeout.
+\paragraph{}
+Bạn hoàn toàn có thể khai báo một mảng relay\_t relay[8] để điều khiển một lúc 8 cái relay. Mỗi cái cần một lần khởi tạo và gắn chân riêng, con trỏ truyền vào có thể là \&relay[0] để điều khiển relay số 0.
+\paragraph{}
+Cái tinh thần của OOP trong đây là bạn khai báo một biến (coi nó như một đối tượng), rồi sau đó không động chạm gì đến thành phần bên trong của biến đó mà chỉ sử dụng các hàm được khai báo sẵn để tương tác với biến đó. Các thành phần bên trong biến sẽ được truy cập tại thư viện. 
+\paragraph{}
+Viết thư viện theo kiểu này sẽ đảm bảo bao đóng của dữ liệu để đối tượng nó được an toàn. Như bạn thấy biến state trong kiểu relay\_t là một biến nội bộ lưu lại trạng thái của relay. Như hàm turn\_relay\_on() sẽ có lệnh digitalWrite(pin, ON) và gán biến state=ON bên trong. Nếu bạn tự tiện gán relay.state=OFF trong chương trình chính thì sẽ bị lỗi (xem code bên dưới).
+\paragraph{}
+Việc bao đóng dữ liệu sẽ giúp các module độc lập hơn. Bạn không cần quan tâm trong biến relay\_t có cái gì ở trỏng. Chỉ cần khai báo, rồi gọi hàm truyền nó vào. Như vậy nó đảm bảo được nguyên tắc A biết B làm được cái gì chứ không biết B làm điều đó như thế nào.
+
+\paragraph{}
+Sau đây là phần code cho relay đó:
+\begin{lstlisting}
+//relay.c
+void relay_init(relay_t *relay, uint8_t pin)
+{
+	relay->pin=pin;
+	pinMode(relay->pin, OUTPUT);
+	digitalWrite(relay->pin, OFF);
+	relay->state=OFF
+}
+
+void turn_relay_on(relay_t *relay, uint32_t timeout)
+{
+	digitalWrite(relay->pin, ON);
+	relay->state=ON;
+	relay->on_state_begin=millis();
+	relay->on_state_timeout=timeout;
+}
+
+void turn_relay_off(relay_t *relay)
+{
+	digitalWrite(relay->pin, OFF);
+	relay->state=OFF;
+}
+
+bool is_relay_on_state_timeout(relay_t *relay)
+{
+	if(relay->state==ON) 
+	{
+		if((millis() - relay->on_state_begin)\
+						 > relay->on_state_timeout)
+			return true; //return and exit
+	}
+	return false;
+}
+
+\end{lstlisting}
+\paragraph{}
+Tất nhiên là mình viết sơ sơ để các bạn dễ đọc thôi, còn nhiều cái khác để làm cho thư viện này chạy ổn. Như kiểu người ta chưa init nó lên mà đã gọi hàm ON OFF thì phải làm sao? Haha, tới đây bạn sẽ phát hiện là trong relay.c sửa tá lả làm bên trong chương trình chính không sửa gì vẫn chạy được. Bạn có thể không cần phải điều khiển relay thật luôn mà nháp trước với một con led cũng được.
+\paragraph{}
+Hãy nghiên cứu phần này để cuộc sống nó dễ chịu hơn.
 \chapter{Quản lý phiên bản: GIT}
 
 \chapter{Blocking vs Non-blocking}
