@@ -310,7 +310,7 @@ uart_receive(uint8_t *data, uint16_t size);
 Trong hàm uart\_transmit, tham số *data là ô nhớ đầu tiên trong chuỗi ô nhớ liên tiếp mà bạn muốn gửi đi. Còn trong hàm uart\_receive, tham số *data là ô nhớ đầu tiên của vùng nhớ mà bạn sẽ cất dữ liệu nhận được vào đấy (địa chỉ bộ đệm).
 \subsection{Truyền uart}
 \paragraph{}
-Mình ví dụ chương trình sau: một MCU đọc cảm biến môi trường, lưu vào biến env (khai báo ở trên), rồi truyền qua đường uart về một MCU khác để xử lý (các bạn làm mấy cái IOT hay gặp cái này).
+Mình ví dụ chương trình sau: một MCU đọc cảm biến môi trường, lưu vào biến env (khai báo ở trên), rồi truyền qua đường uart về một MCU khác để xử lý.
 
 \paragraph{}
 Vậy giờ mình cần gửi một biến env (khi đã nhập dữ liệu cho biến này) đi thì cần làm thế nào để hàm truyền kia có thể truyền một kiểu env\_t đi trong khi hàm truyền nhận uart chỉ nhận vào là kiểu uint8\_t?
@@ -323,7 +323,7 @@ pe=(uint8_t *)&evn;
 uart_transmit(pe, sizeof(env_t));
 \end{lstlisting}
 \paragraph{}
-Câu lệnh dòng số 4, \textit{pe=(uint8\_t *)\&evn} có 2 phần: đầu tiên là \&evn, lấy địa chỉ của biến env tạo thành một con trỏ tạm thời kiểu evn\_t, sau đó ép kiểu con trỏ (uint8\_t *) và gán cho pe. Vậy pe là một con trỏ kiểu uint8\_t và có địa chỉ của biến env, sau đó mình dùng hàm uart truyền đi 4 ô nhớ bắt đầu từ ô nhớ này. Mấy bạn chưa quen thì nên ngâm cứu kĩ chỗ này :)))
+Câu lệnh dòng số 3, \textit{pe=(uint8\_t *)\&evn} có 2 phần: đầu tiên là \&evn, lấy địa chỉ của biến env tạo thành một con trỏ tạm thời kiểu evn\_t, sau đó ép kiểu con trỏ (uint8\_t *) và gán cho pe. Vậy pe là một con trỏ kiểu uint8\_t và có địa chỉ của biến env, sau đó mình dùng hàm uart truyền đi 4 ô nhớ bắt đầu từ ô nhớ này. Mấy bạn chưa quen thì nên ngâm cứu kĩ chỗ này :)))
 \paragraph{}
 Khi sử dụng đến con trỏ, bạn cần có \textbf{tư duy ở ô nhớ} (chứ không phải kiểu dữ liệu) thì việc sử dụng con trỏ sẽ đơn giản hơn rất nhiều. Ví dụ như trong hàm truyền uart, với kiểu uint8\_t đại diện cho ô nhớ, và hai tham số *data và size, có ý nói là hãy đưa tôi địa chỉ ô nhớ đầu tiên và số lượng cần truyền, tôi sẽ truyền cái đống đó đi cho bạn.
 \subsection{Nhận uart}
@@ -451,7 +451,11 @@ Mọi hệ thống lớn đều hợp thành từ những thành phần nhỏ, h
  \caption{Module hóa trong KeilC}
 \end{figure}
 \paragraph{}
-Còn trong Arduino thì hơi củ chuối hơn xíu, bạn phải bỏ toàn bộ file vô cùng thư mục với file .ino. Nếu có rất nhiều file thì nhìn sẽ rối. 
+Trong keilC, các file có chức năng tương đương nhau được gộp vào các thư mục.
+
+\paragraph{}
+Còn trong Arduino thì hơi củ chuối hơn xíu, bạn phải bỏ toàn bộ file vô cùng thư mục với file .ino. Nếu có rất nhiều file thì nhìn sẽ rối.
+\newpage 
 \begin{figure}[h!]
 \centering
  \includegraphics[width=1\linewidth]{arduino_folder.png}
