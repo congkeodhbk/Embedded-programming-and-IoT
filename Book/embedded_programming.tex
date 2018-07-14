@@ -1,6 +1,7 @@
 \documentclass[12pt,a5paper]{book}
 \usepackage[utf8]{vietnam}
 \usepackage{amsmath}
+\usepackage{verbatim}
 \usepackage{amsfonts}
 \usepackage{tikz}
 \usetikzlibrary{arrows,automata,shapes.geometric}
@@ -36,7 +37,7 @@
 \tikzstyle{arrow} = [thick,->,>=stealth]
 \pagenumbering{gobble}
 \pagenumbering{arabic}
-\title{LẬP TRÌNH NHÚNG}
+\title{LẬP TRÌNH NHÚNG: chuyện chưa kể}
 \author{Nguyễn Thành Công}
 
 
@@ -96,7 +97,7 @@ Do việc RAM được CPU sử dụng để thực hiện chương trình, đ�
 
 	\section{Về cách tổ chức bộ nhớ}
 	\paragraph{}
-	Thông thường thì đơn vị nhỏ nhất của bộ nhớ là byte (mà mình hay gọi là ô nhớ), mỗi byte đươc đánh một địa chỉ. Nếu vi xử lý 8-bit thì nó có thể quản lý 256 byte bộ nhớ, vi xử lý 16-bit thì có thể quản lý 64kbyte, còn 32-bit thì có thể quản lý tới 4Gbyte bộ nhớ. 
+	Thông thường thì đơn vị nhỏ nhất của bộ nhớ là byte (mà mình hay gọi là ô nhớ), mỗi byte đươc đánh một địa chỉ. Tùy số lượng bit của bus địa chỉ mà quyết định xem nó có thể quản lý bao nhiêu ô nhớ. Nếu bus địa chỉ 8-bit thì nó có thể quản lý 256 byte bộ nhớ, bus địa chỉ 16-bit thì có thể quản lý 64kbyte, còn 32-bit thì có thể quản lý tới 4Gbyte bộ nhớ. 
 	
 \begin{figure}[h!]
 	\centering
@@ -403,10 +404,64 @@ Như vậy là cùng nhiêu đó ô nhớ nhưng \textbf{cách nhìn các ô nh�
 	\caption{Buffer v.s env\_t.}
 \end{figure}
 \paragraph{}
-Rồi đến đây các bạn có thể cảm nhận được sức mạnh của con trỏ rồi, bạn có thể \textbf{chạm} đến bất cứ vùng nhớ nào và truy xuất theo \textbf{kiểu} mà bạn muốn.
-Thiệc là dễ quá chừng :))
+Rồi đến đây các bạn có thể cảm nhận được sức mạnh của con trỏ rồi, bạn có thể \textbf{chạm} đến bất cứ vùng nhớ nào và truy xuất theo \textbf{kiểu} mà bạn muốn. Thiệc là dễ quá chừng :))
 \paragraph{}
-Lưu ý: bộ đêm là nơi dữ liệu đến và đi liên tục, nó là bến đỗ chứ không phải là chỗ chứa dữ liệu. Dữ liệu mới ập đến có thể ghi đè lên dữ liệu cũ. Nên cất vào đâu đấy rồi hãy xử lý gì đó tiếp theo.
+Có một cách hiểu khác thế này, mỗi khi khai báo một con trỏ với một kiểu dữ liệu nào đấy, bạn đang khai báo một cái mặt nạ, hay một cái cách để khai thác dữ liệu.
+\begin{figure}[h!]
+	\centering
+	\begin{tikzpicture}[yscale=0.5, xscale=1.5]
+
+		\draw (1.1, 1.2) -- (1.9, 1.2);
+		\node [above] at (1.5, 1) {i8\_t};
+		\draw (1.5,2.3)--(3,3);		
+		
+		\draw (2.1, 1.2) -- (2.9, 1.2);
+		\node [above] at (2.5, 1) {u8\_t};
+		\draw (2.5,2.3)--(3,3);		
+		
+		\draw (3.1, 1.2) -- (4.9, 1.2);
+		\node [above] at (4, 1) {u16\_t};
+		\draw (4,2.3)--(3,3);	
+		
+		\node [above] at (3, 3) {*p\_env};
+
+	\end{tikzpicture}
+	\caption{The mask}
+\end{figure}
+\paragraph{}
+Bạn chưa thể đọc được dữ liệu nào cả vì mới chỉ khai báo cái cách truy cập dữ liệu thôi. Còn khi cấp địa chỉ cho con trỏ thì bạn đang ráp cái mặt nạ đó vào một hàng ô nhớ liên tục và sau có thể truy cập các ô nhớ đó theo cách này (hình 2.7).
+
+\begin{figure}[h!]
+	\centering
+	\begin{tikzpicture}[yscale=0.5, xscale=1.5]
+		\draw [dashed] (0,0) -- (1,0);
+		\draw (1,0) rectangle (2,1);
+		\draw (2,0) rectangle (3,1);
+		\draw (3,0) rectangle (4,1);
+		\draw (4,0) rectangle (5,1);
+		\draw (5,0) rectangle (6,1);
+		\draw [dashed] (6,0) -- (7,0);
+		
+		\draw (1.1, 1.2) -- (1.9, 1.2);
+		\node [above] at (1.5, 1) {i8\_t};
+		\draw (1.5,2.3)--(3,3);		
+		
+		\draw (2.1, 1.2) -- (2.9, 1.2);
+		\node [above] at (2.5, 1) {u8\_t};
+		\draw (2.5,2.3)--(3,3);		
+		
+		\draw (3.1, 1.2) -- (4.9, 1.2);
+		\node [above] at (4, 1) {u16\_t};
+		\draw (4,2.3)--(3,3);	
+		
+		\node [above] at (3, 3) {*p\_env};
+		
+	\end{tikzpicture}
+	\caption{The mask and the data.}
+\end{figure}
+\newpage
+\paragraph{}
+Lưu ý: bộ đêm là nơi dữ liệu đến và đi liên tục, nó là bến đỗ chứ không phải là chỗ chứa dữ liệu. Dữ liệu mới ập đến có thể ghi đè lên dữ liệu cũ. Nên cất vào đâu đấy rồi hãy xử lý gì đó tiếp theo
 \begin{lstlisting}
 env_t *p_env;
 p_env = (env_t *)uart_buffer;
@@ -415,6 +470,7 @@ printf("Temperature: %d\n",  recv_env.temp);
 printf("Humidity: %d\n",  recv_env.humi);
 printf("Lux: %d\n",  recv_env.lux);
 \end{lstlisting}
+và việc ép kiểu này chỉ đúng nếu hai bên gửi và nhận có cùng cơ chế bộ nhớ hoặc big-endian hoặc little-endian thôi. Nếu khác kiểu thì không sử dụng được.
 \section{Debug}
 \paragraph{}
 Khi viết một chương trình thì nhất thiết phải có công cụ để theo dõi coi code của bạn nó đang làm cái gì ở trỏng. Nếu ở lập trình C thuần túy bằng cái IDE như DevC++ hoặc Visual Studio thì bạn chỉ cần gọi hàm printf ra và in cái gì trong đó bạn muốn. Còn trong lập trình nhúng thì con MCU của bạn nó chạy chứ không phải CPU của máy tính. Muốn MCU in ra được những dòng chữ lên màn hình desktop thì cần theo quy trình sau: MCU truyền qua uart, qua một module chuyển uart-usb đã cắm vào máy tính, một chương trình đọc cổng COM trên máy tính và hiển thị chuỗi kí tự nhận được.
@@ -629,19 +685,154 @@ float a_divide_b(int a, int b)
 
 \section{Các biến số}
 \paragraph{}
-Tất nhiên là khi lập trình bạn đều phải khai báo biến. Cho nên là sử dụng các biến số cẩn.
+Tất nhiên là khi lập trình bạn đều phải khai báo biến, rồi sử dụng các biến đó để lưu trữ, tính toán. Thế nên việc sử dụng cẩn thận các biến là điều rất quan trọng để chương trình có thể chạy được và ít phát sinh lỗi.
+\subsection{Đặt tên biến}
+\paragraph{}
+Cũng giống như việc đặt tên hàm, một biến được đặt tên để biến nó sinh ra để làm cái gì. Bạn có thể thấy cách mà mình đặt tên cho kiểu \textit{env\_t}, bao gồm \textit{temp, humi, lux}, nếu bạn sử dụng quen thì có thể biết từng biến trong đó lưu giá trị gì mà không bị nhầm lẫn (viết tắt của temperature, humidity, lux). Có nhiều bạn sử dụng các chữ cái như a, b, c... hoặc x1, x2 để đặt tên biến, nhưng mà tin mình đi, mấy cái đó đọc nhức mắt kinh khủng, đôi khi trong lúc code bạn cũng không nhớ khai báo nó để lưu cái gì nữa. Tại hại hơn là bạn lại lưu vào x1 giá trị đáng lí ra phải lưu vào x2.
+\paragraph{}
+Theo thói quen thì cái chữ cái như i, j... được dùng trong vòng lặp cho tiện. Điều này cũng không có vấn đề gì nhiều nếu bạn sử dụng quen nó.
+\subsection{Các lưu ý khi khai báo biến}
+\paragraph{}
+Khi khai báo và sử dụng biến nên chú ý những điểm sau:
+\begin{itemize}
+\item Tránh sử dụng biến toàn cục (global variable): biến toàn cục được khai báo bên ngoài hàm, là nơi mà bất kì hàm nào cũng có thể truy cập và chỉnh sửa nó. 
+\begin{lstlisting}
+int a; //this is a global variable
+
+void setup(){
+}
+
+void loop(){
+}
+\end{lstlisting}
+\paragraph{}
+Hãy tưởng tượng là trong file này của bạn có khoảng 20 hàm được khai báo, mà hàm nào cũng có quyền truy cập vào biến toàn cục này, nên bất cứ lúc nào nó cũng có thể bị thay đổi. Tệ hơn nữa nếu không phải do một mình bạn viết mà do vài người viết nên file code này, việc không hiểu rõ ý mà tự tiện truy cập vào biến toàn cục là chuyện bình thường.
+\paragraph{}
+Thế nên hãy hạn chế biến toàn cục hết mức có thể, và tốt nhất là không khai báo biến kiểu này càng tốt. Khi nhất thiết phải sử dụng biến toàn cục thì nên chú thích rõ những nơi nào được đọc, ghi biến này để tránh việc thay đổi biến mà không biết trước.
+\paragraph{}
+Biến toàn cục là đồ công cộng. Ai cũng đụng chạm nó được. Mà đồ công cộng thì không an toàn. Thế thôi.
+\item Hãy khởi tạo giá trị cho biến: Thay vì khai báo \textit{int a;} thì hãy khai báo \textit{int a=0;}. Đôi khi việc bạn khai báo biến thì CPU chỉ định vị biến này trong bộ nhớ mà không tự khởi tạo biến này với giá trị mặc định là 0 có thể gây lỗi, nhất là ngay sau đó bạn dùng phép toán \textit{or} chẳng hạn.
+\item Luôn chắc rằng biến của bạn có thể chứa đủ giá trị mà bạn muốn lưu vào trong đó. Ví dụ như việc sử dụng biến uint8\_t, với khoảng giá trị từ 0 tới 255, nếu tình cờ mà bạn ghi vào con số lớn hơn khoảng giá trị này thì nó sẽ xịt khói lập tức.
+\end{itemize}
+\subsection{Kiểu biến static}
+\subsection{Kiểu biến \textit{volatile}}
 
 \section{Chú thích}
 \paragraph{}
-Chú thích (comment) tưởng đơn giản nhưng lại là thành phần hại não trong khi viết chương trình. Bạn có thể thấy trong C thì chú thích đi sau dấu // hoặc /* */. Tại sao nó hại não. Vì nếu chú thích đúng cách thì chương trình rất dễ đọc và người khác (ngay cả bạn nữa) cũng nắm được đại ý nhanh chóng. Nhưng khổ cái là chương trình thay đổi liên tục, mà hễ thay đổi thì chỉnh sửa code lại thôi, không ai chịu sửa lại chú thích làm chi (vì sửa code không cũng đuối rồi). Nên làm cho người đọc tưởng là mình hiểu rồi nhưng một hồi đọc tới code thì thấy nó sai sai.
+Chú thích (comment) tưởng đơn giản nhưng lại là thành phần hại não trong khi viết chương trình. Bạn có thể thấy trong C thì chú thích đi sau dấu // hoặc /* */. Tại sao nó hại não? Vì nếu chú thích đúng cách thì chương trình rất dễ đọc và người khác (ngay cả bạn nữa) cũng nắm được đại ý nhanh chóng. Nhưng khổ cái là chương trình thay đổi liên tục, mà hễ thay đổi thì chỉnh sửa code lại thôi, không ai chịu sửa lại chú thích làm chi (vì sửa code không cũng đuối rồi). Nên làm cho người đọc tưởng là mình hiểu rồi nhưng một hồi đọc tới code thì thấy nó sai sai.
 \paragraph{}
 Thế nên cách chú thích tốt nhất là hạn chế nó hết mức có thể. Sử dụng tên hàm, tên biến như là một loại chú thích hiệu quả hơn.
 \paragraph{}
 Tất nhiên là bạn không nên bỏ hẳn nó đi, vì nếu sử dụng nó đúng cách thì nó đem lại hiệu quả rất nhiều. Các chương trình thường đặt chú thích lên đầu trang để giải thích khái quát coi chương trình đó đùng để làm gì. Trong file \textit{.h}, các chú thích được đặt trước tên hàm giải thích công dụng của hàm đó, để người sử dụng có thể sử dụng luôn thư viện mà không cần phải đọc tới file code. Đôi khi những đoạn code khó đọc, tính logic cao thì nên có chú thích để giải thích coi ý tưởng đằng sau đoạn code đó là gì, nó giải quyết vấn đề gì.
-\section{Tái cấu trúc}
+
+\section{Blocking vs. Non-blocking mode}
 \paragraph{}
-Tái cấu trúc (refactoring) hiểu nôm na là làm cho chương trình của bạn đẹp trai hơn. Sau một hồi viết cật lực, nạp xuống và chạy được rồi, sửa lỗi lặt vặt được hết thì đến lúc bạn nên làm lại cho chương trình nó dễ đọc hơn và dễ sửa hơn.
+Blocking là gì? Hãy xem qua chương trình chớp tắt led trong Arduino như sau:
+\begin{lstlisting}
+void loop() {
+  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(1000);                       // wait for a second
+  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+  delay(1000);                       // wait for a second
+}
+\end{lstlisting}
+\paragraph{}
+Có thể thấy là nó bật led, sử dụng hàm delay() trong 1 giây rồi tắt led, tiếp tục delay() và chương trình lặp lại liên tục.
+\paragraph{}
+Vấn đề là ở chỗ hàm delay(), chương trình đứng yên một chỗ và không làm gì cả, hay nói cách khác là nó bị \textbf{block} tại chỗ đó. Viết chương trình có chứa hàm tạm dừng một chỗ như delay() thì người ta gọi là \textbf{Blocking mode}. Trong thế giới nhúng, tài nguyên hạn chế nên chương trình đứng một chỗ như vậy là việc hết sức lãng phí. Thế nên có kiểu viết khác gọi là \textbf{Non-Blocking mode} nhằm làm cho chương trình chạy liên tục mà không bị đứng tại một điểm nào cả.
+\paragraph{}
+Ví dụ về viết kiểu Non-blocking cho chương trình chớp tắt led. Ý tưởng đằng sau này là lưu lại thời gian của lần bật/tắt led lần trước, rồi so sánh với thời điểm hiện tại, nếu nó vượt quá 1 giây chẳng hạn, thì tiến hành lần bật tắt tiếp theo.
+\begin{lstlisting}
+void loop() {
+static uint32_t last_action;
+  if(millis()-last_action>1000)
+  {
+    toggle_led(LED_BUILTIN);
+    last_action_millis=millis();
+  }
+}
+\end{lstlisting}
+\paragraph{}
+Như đoạn code trên, last\_action lưu lại thời gian của hoạt động bật/tắt led lần trước, lưu ý là nó phải được khai báo \textit{static} để không khởi tạo lại khi vòng loop bắt đầu vòng lặp mới. Và cả chương trình sẽ được viết như sau: 
+\begin{lstlisting}
+void setup() {
+  // initialize digital pin LED_BUILTIN as an output.
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void toggle_led(uint8_t led)
+{
+  uint8_t led_state=digitalRead(led);
+  if(led_state==HIGH)
+    digitalWrite(led, LOW);
+  else
+    digitalWrite(led, HIGH);
+}
+
+// the loop function runs over and over again forever
+void loop() {
+static uint32_t last_action;
+  if(millis()-last_action>1000)
+  {
+    toggle_led(LED_BUILTIN);
+    last_action=millis();
+  }
+}
+\end{lstlisting}
+\paragraph{}
+Với cách viết như trên thì chương trình không bị đứng ở bất cứ điểm nào. Trong hàm loop(), chương trình liên tục hỏi đã đến lúc bật/tắt led hay chưa, nếu đến lúc thì thực hiện bật/tắt và lưu lại thời điểm vừa thực hiện. Nếu chưa thì thoát xuống làm chuyện khác. Đến đây bạn có thể viết chương trình điều khiển 2 led như sau:
+
+\begin{lstlisting}
+
+void control_led_1(){
+  static uint32_t last_action;
+  if(millis()-last_action>1000)
+  {
+    toggle_led(led_1);
+    last_action=millis();
+  }	
+}
+
+void control_led_2(){
+  static uint32_t last_action;
+  if(millis()-last_action>1000)
+  {
+    toggle_led(led_2);
+    last_action=millis();
+  }	
+}
+
+void loop() {
+	control_led_1();
+	control_led_2();
+}
+\end{lstlisting}
+\paragraph{}
+Rồi đến đây thì bạn vừa có thể tiết kiệm được tài nguyên CPU, bằng cách làm nhiều tác vụ tuần tự nhau, vừa có thể thêm một số tính năng mới mà không cần phải đập đi xây lại, sugoi!!! Nhớ là mỗi tính năng bạn thêm vào đều phải đảm bảo tính Non-blocking he.
+\section{Máy trạng thái}
+\paragraph{}
+Máy trạng thái (state machine) là thứ rất thường gặp trong lập trình nhúng. Ví dụ bạn viết chương trình điều khiển một cái động cơ, thì nó sẽ có những trạng thái như là đang dừng, đang quay ngược chiều hoặc cùng chiều kim đồng hồ... Máy trạng thái có thể hiểu là sơ đồ tất cả các trạng thái của một đối tượng nào đó và những điều kiện để chuyển từ trạng thái này sang trạng thái khác. Dưới đây là một ví dụ về chớp tắt led.
+\begin{figure}[h!]
+	\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=5cm,
+                    semithick]
+
+  \node[initial,state] (A)                    	{$OFF$};
+  \node[state]         (B) [right of=A] 		{$ON$};
+
+  \path (A) edge [bend left]            node {500ms} (B)
+        (B) edge [bend left]            node {500ms} (A);
+ 
+\end{tikzpicture}
+\caption{Chớp tắt led.}
+\end{figure}
+\paragraph{}
+Đầu tiên bạn có thể thấy nó sẽ tắt led, và sau mỗi nửa giây nó lại đổi trạng thái một lần.
+\paragraph{}
+Các bạn có thể tham khảo về sơ đồ máy trạng thái kĩ hơn ở cuốn sách này \textit{\url{http://nxbdhqghcm.edu.vn/san-pham/1/sach/30/bia-quyet-lam-dep/1099/lap-trinh-he-thong-nhung.htm}}. Do trong đấy nói chi tiết nên mình sẽ không lặp lại nữa (do ông viết sách là sư phụ mình nên quảng cáo xíu :)).
+\begin{comment}
 \section{Lưu đồ giải thuật}
+
 \paragraph{}
 Có bạn nào viết lưu đồ giải thuật (flowchart) ra rồi mới code không, hay toàn làm ngược lại, code rồi mới viết lưu đồ ra cho có rồi đem nộp?
 \paragraph{}
@@ -708,7 +899,7 @@ Rồi giờ tới lưu đồ cho anh kia.
 
 
 \paragraph{}
-
+\end{comment}
 
 \chapter{Viết thư viện}
 \paragraph{}
@@ -941,6 +1132,5 @@ Tất nhiên là mình viết sơ sơ để các bạn dễ đọc thôi, còn n
 Hãy nghiên cứu phần này để cuộc sống nó dễ chịu hơn.
 \chapter{Quản lý phiên bản: GIT}
 
-\chapter{Blocking vs Non-blocking}
 
 \end{document}
