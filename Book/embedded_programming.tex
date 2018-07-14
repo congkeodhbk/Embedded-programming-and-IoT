@@ -37,7 +37,7 @@
 \tikzstyle{arrow} = [thick,->,>=stealth]
 \pagenumbering{gobble}
 \pagenumbering{arabic}
-\title{LẬP TRÌNH NHÚNG: chuyện chưa kể}
+\title{Lập Trình Nhúng: Chuyện Chưa Kể}
 \author{Nguyễn Thành Công}
 
 
@@ -52,7 +52,7 @@
  \chapter{Chém gió xíu }
 	\section{Về lập trình nhúng}
 		\paragraph{}
-Đặc trưng của lập trình nhúng là viết chương trình để điều khiển phần cứng, ví dụ như chương trình điều khiển động cơ bước chẳng hạn. Với phần mềm ứng dụng như trên máy tính mà phần cứng yêu cầu giống nhau (màn hình, chuột, cpu...) và đòi hỏi nặng về khả năng tính toán của cpu. Còn với chương trình nhúng thì phần cứng của nó cực kì đa dạng, khác nhau với mỗi ứng dụng như chương trình điều khiển động cơ hoặc chương trình đọc cảm biến, nó không đòi hỏi cpu phải tính toán quá nhiều, chỉ cần quản lý tốt phần cứng bên dưới. 
+Đặc trưng của lập trình nhúng là viết chương trình để điều khiển phần cứng, ví dụ như chương trình điều khiển động cơ bước chẳng hạn. Với phần mềm ứng dụng như trên máy tính mà phần cứng yêu cầu giống nhau (màn hình, chuột, CPU...) và đòi hỏi nặng về khả năng tính toán của CPU. Còn với chương trình nhúng thì phần cứng của nó cực kì đa dạng, khác nhau với mỗi ứng dụng như chương trình điều khiển động cơ hoặc chương trình đọc cảm biến, nó không đòi hỏi CPU phải tính toán quá nhiều, chỉ cần quản lý tốt phần cứng bên dưới. 
 		\paragraph{}
 Có 2 khái niệm là Firmware, ý chỉ chương trình nhúng, và Software, chương trình ứng dụng trên máy tính, được đưa ra để người lập trình dễ hình dung, nhưng không cần thiết phải phân biệt rõ ràng.
 		\paragraph{}
@@ -156,9 +156,9 @@ Do việc RAM được CPU sử dụng để thực hiện chương trình, đ�
 	
 	\section{Khai báo biến}
 	\paragraph{}
-Các kiểu biến thông thường khi lập trình C là char, int, long, float double. Nhưng trong lập trình nhúng, tài nguyên bộ nhớ hạn chế nên việc bạn biết các biến chiếm bao nhiêu ô nhớ là điều rất quan trọng. Thông thường, các biến được khai báo dưới dạng uint8\_t, int8\_t, uint16\_t, int16\_t... để sử dụng thì bạn cần  \#include <stdint.h>. Đoán xem mỗi kiểu sẽ chiếm bao nhiêu ô nhớ, và kiểu nào là kiểu có dấu, không đấu?
+Các kiểu biến thông thường khi lập trình C là char, int, long, float, double. Nhưng trong lập trình nhúng, tài nguyên bộ nhớ hạn chế nên việc bạn biết các biến chiếm bao nhiêu ô nhớ là điều rất quan trọng. Thông thường, các biến được khai báo dưới dạng uint8\_t, int8\_t, uint16\_t, int16\_t... để sử dụng thì bạn cần  \#include <stdint.h>. Đoán xem mỗi kiểu sẽ chiếm bao nhiêu ô nhớ, và kiểu nào là kiểu có dấu, không đấu?
 	\paragraph{}
-	Một điểm đặc biệt là kiểu uint8\_t thường được dùng để đại diện cho một ô nhớ (8-bit). Ví dụ khi khai báo uint8\_t array[3], thì có thể hiểu là khai báo 3 phần tử mảng array có kiểu là uint8\_t, hoặc cũng có thể hiểu là yêu cầu bộ nhớ cấp 3 ô nhớ kề nhau. Việc này thường được dùng để khai báo các bộ đệm trong các giao tiếp như uart, i2c, spi...
+	Một điểm đặc biệt là kiểu uint8\_t thường được dùng để đại diện cho một ô nhớ (8-bit). Ví dụ khi khai báo uint8\_t array[3], thì có thể hiểu là khai báo 3 phần tử mảng array có kiểu là uint8\_t, hoặc cũng có thể hiểu là yêu cầu bộ nhớ cấp 3 ô nhớ kề nhau. Các kiểu như byte hoặc char cũng có thể được dùng làm việc này nhưng mình vẫn thích sử dụng uint8\_t. Các khai báo các bộ đệm trong các giao tiếp như uart, i2c, spi... thường dùng kiểu biến này.
 	\paragraph{}
 	Thế nên hãy thường sử dụng các kiểu dữ liệu với bộ nhớ tường minh trên để kiểm soát bộ nhớ chặt chẽ hơn.\\
 \section{Kiểu dữ liệu tự định nghĩa}
@@ -406,7 +406,7 @@ Như vậy là cùng nhiêu đó ô nhớ nhưng \textbf{cách nhìn các ô nh�
 \paragraph{}
 Rồi đến đây các bạn có thể cảm nhận được sức mạnh của con trỏ rồi, bạn có thể \textbf{chạm} đến bất cứ vùng nhớ nào và truy xuất theo \textbf{kiểu} mà bạn muốn. Thiệc là dễ quá chừng :))
 \paragraph{}
-Có một cách hiểu khác thế này, mỗi khi khai báo một con trỏ với một kiểu dữ liệu nào đấy, bạn đang khai báo một cái mặt nạ, hay một cái cách để khai thác dữ liệu.
+Có một cách hiểu khác thế này, mỗi khi khai báo một con trỏ với một kiểu dữ liệu nào đấy, bạn đang khai báo một cái \textbf{mặt nạ}, hay một \textbf{cách}, một \textbf{phương thức} để khai thác dữ liệu.
 \begin{figure}[h!]
 	\centering
 	\begin{tikzpicture}[yscale=0.5, xscale=1.5]
@@ -429,7 +429,7 @@ Có một cách hiểu khác thế này, mỗi khi khai báo một con trỏ v�
 	\caption{The mask}
 \end{figure}
 \paragraph{}
-Bạn chưa thể đọc được dữ liệu nào cả vì mới chỉ khai báo cái cách truy cập dữ liệu thôi. Còn khi cấp địa chỉ cho con trỏ thì bạn đang ráp cái mặt nạ đó vào một hàng ô nhớ liên tục và sau có thể truy cập các ô nhớ đó theo cách này (hình 2.7).
+Bạn chưa thể đọc được dữ liệu nào cả vì mới chỉ khai báo cái cách truy cập dữ liệu thôi. Còn khi cấp địa chỉ cho con trỏ thì bạn đang ráp cái mặt nạ đó vào một hàng ô nhớ thực và sau có thể truy cập các ô nhớ đó theo cách này (hình 2.7).
 
 \begin{figure}[h!]
 	\centering
@@ -483,7 +483,7 @@ Trong thư viện trên mới chỉ có hàm debug() tương đương với prin
 \paragraph{}
 \chapter{Coding style}
 \paragraph{}
-Coding style là gì? Nếu như bạn thấy code của bạn rối tung rối mù, lấy code của thằng bạn đọc để fix bug cho nó mà đọc muốn rớt con mắt ra ngoài, hay thêm một tính năng mới rồi okie, đập đi hết cái mớ bạn code rồi xây lại.
+Coding style là gì? Nếu như bạn thấy code của bạn rối tung rối mù, lấy code của thằng bạn đọc để fix bug cho nó mà đọc muốn rớt con mắt ra ngoài, hay thêm một tính năng mới rồi okie, bỏ hết cái mớ code rồi ngồi code lại.
 \paragraph{}
 Và coding style giúp bạn giải quyết mấy chuyện đó, tuyệt vời!!! Và làm sao mà nó có thể làm được vậy?
 \paragraph{}
@@ -493,6 +493,8 @@ Có 3 yêu cầu chính mà người lập trình cần đáp ứng cho chương
   \item Dễ thay đổi: yếu tố chạy được là đáp ứng được tiêu chí đề ra. Nhưng mà với lập trình thực tế thì các tiêu chí đó liêu tục bị thay đổi. Giống như việc ông sếp thấy phương án này chua ăn quá nên đổi qua cái kia, ông khách hàng thì muốn thêm tính năng này, đề xuất cái kia. Ví dụ như bạn đi, làm một cái xe nhỏ nhỏ dò line, làm xong rồi muốn gắn cái camera vô xử lý ảnh cho chạy, làm xong rồi nữa thì muốn gắn thêm đèn chớp chớp cho vui chẳng hạn. Hoặc mục tiêu bạn đâu thực hiện xong rồi mà thấy nó chạy chưa ngon, muốn viết lại xíu để nâng cấp firmware lên, giờ nhìn vô cái đống bùng nhùng kia hông lẽ đập đi xây lại?
 	\item Dễ hiểu: vì các dự án thực tế đều cần làm nhóm cả. Bạn sử dụng code của người khác để viết thêm, người sau này sẽ dùng code của bạn thể phát triển, nâng cấp bảo trì chẳng hạn. Hoặc chính bạn sau một thời gian đọc lại code của mình có khi không biết ngày xưa mình vẽ bùa gì trong đây nữa. Nên code phải viết làm sao cho người khác có thể đọc được (tất nhiên thằng đó nó phải được được xíu, đừng có gà quá).
 \end{itemize}
+\paragraph{}
+Và coding style là cái cách bạn viết chương trình để đáp ứng các yêu cầu trên.
 \paragraph{}
 Có thể khẳng định thế này, lập trình không có khó, ngồi fix bug mới mệt. Thế nên việc có coding style sẽ làm cho cuộc sống của bạn dễ chịu hơn rất nhiều. Ngoài việc chịu khó ngồi code là còn phải đọc sách hoặc thỉnh giáo cách sư phụ để làm thế nào cho công việc nó hiệu quả hơn.
 \paragraph{}
@@ -638,13 +640,15 @@ while(1)
 	delay(10_minutes);
 }
 \end{lstlisting}
-Không nên nhét hàm delete\_data() vào bên trong send\_data() như muốn hiểu ngầm "gửi xong rồi xóa nó đi chứ để làm gì". Vì nhiều khi có việc cần đến nó. Việc viết tường mình, tránh những chỗ hiểu ngầm sẽ giúp người đọc nắm đủ các bước thực hiện của bạn. Hãy viết theo kiểu cho một người chưa biết gì về chương trình của bạn đọc. Và đặc biệt tránh kiểu viết trẻ trâu thích thể hiện, viết đoạn code thật ngầu, thật nhỏ xíu mà vẫn chạy ngon. Sau này chỉ khổ cho mấy người phải đọc lại nó.
+Không nên nhét hàm delete\_data() vào bên trong send\_data() như muốn hiểu ngầm "gửi xong rồi xóa nó đi chứ để làm gì". Vì nhiều khi có việc cần đến nó. Việc viết tường mình, tránh những chỗ hiểu ngầm sẽ giúp người đọc nắm đủ các bước thực hiện của bạn. 
 \paragraph{}
 Hàm được thực thi càng chính xác với cái tên của nó bao nhiêu thì code của bạn sẽ càng dễ đọc bấy nhiêu. 
 \paragraph{}
 Một vài ví dụ như khi viết vội có bạn đặt tên hàm kiểu ham\_a(), ham\_b(), hoặc func\_1(), func\_2(), mai mốt đọc lại xỉu.
 \paragraph{}
 Việc bạn đặt tên hàm rồi sau thấy củ chuối quá thì cũng đừng ngại đổi lại, mình nhiều khi cũng phải đổi 2-3 lần mới được cái tên vừa ý.
+\paragraph{}
+Hãy viết theo kiểu cho một người chưa biết gì về chương trình của bạn đọc. Và đặc biệt tránh kiểu viết trẻ trâu thích thể hiện, viết đoạn code thật ngầu, thật nhỏ xíu mà vẫn chạy ngon. Sau này chỉ khổ cho mấy người phải đọc lại nó.
 \subsection{Độ dài của hàm}
 \paragraph{}
 Nguyên tắc để dễ code dễ đọc: code ngắn thôi, với lại tên hàm đặt đúng với yêu cầu. 
@@ -669,7 +673,7 @@ float a_divide_b(int a, int b)
 \paragraph{}
 Rồi bỗng một ngày đẹp trời, một thanh niên lấy hàm bạn viết ra, rồi xài như sau: \textit{float result = a\_divide\_b(2, 0)}. Xong biên dịch thì không báo lỗi nhưng mà chạy cái nó xịt khói. Đây là lỗi chia cho 0, thành ra nó không tính được và chạy loạn xạ.
 \paragraph{}
-Thế nên với mỗi chương trình có truyền tham số vào, hãy nhớ là kiểm tra coi nó có hợp lệ hay không, nếu tính toán thì tham số đưa vào có thuộc tập xác định hay không... Bởi vì bạn sẽ không biết sau này người dùng hàm sẽ truyền cái gì vào trong đó nên phải kiểm tra lại. Nguyên tắc kiểm tra là : không tin cha con thằng nào cả. Đừng hi vọng họ sẽ truyền vào tham số hợp lệ, thường thì họ chả quan tâm đâu. Nên nhớ kiểm tra đầu vào hợp lệ thì mới thực thi hàm.
+Thế nên với mỗi chương trình có truyền tham số vào, hãy nhớ là kiểm tra coi nó có hợp lệ hay không, nếu tính toán thì tham số đưa vào có thuộc tập xác định hay không... Bởi vì bạn sẽ không biết sau này người nào đó (ngay cả bạn nữa) dùng hàm sẽ truyền cái gì vào trong đó nên phải kiểm tra lại. Nguyên tắc kiểm tra là : không tin cha con thằng nào cả. Đừng hi vọng ai đó sẽ truyền vào tham số hợp lệ, thường thì họ chả quan tâm đâu. Nên nhớ kiểm tra đầu vào hợp lệ thì mới thực thi hàm.
 \paragraph{}
 Hàm có kiểm tra tham số đầu vào:
 \begin{lstlisting}
@@ -690,7 +694,47 @@ Tất nhiên là khi lập trình bạn đều phải khai báo biến, rồi s�
 \paragraph{}
 Cũng giống như việc đặt tên hàm, một biến được đặt tên để biến nó sinh ra để làm cái gì. Bạn có thể thấy cách mà mình đặt tên cho kiểu \textit{env\_t}, bao gồm \textit{temp, humi, lux}, nếu bạn sử dụng quen thì có thể biết từng biến trong đó lưu giá trị gì mà không bị nhầm lẫn (viết tắt của temperature, humidity, lux). Có nhiều bạn sử dụng các chữ cái như a, b, c... hoặc x1, x2 để đặt tên biến, nhưng mà tin mình đi, mấy cái đó đọc nhức mắt kinh khủng, đôi khi trong lúc code bạn cũng không nhớ khai báo nó để lưu cái gì nữa. Tại hại hơn là bạn lại lưu vào x1 giá trị đáng lí ra phải lưu vào x2.
 \paragraph{}
-Theo thói quen thì cái chữ cái như i, j... được dùng trong vòng lặp cho tiện. Điều này cũng không có vấn đề gì nhiều nếu bạn sử dụng quen nó.
+Theo thói quen thì cái chữ cái như i, j... được dùng trong vòng lặp cho tiện. Điều này cũng không có vấn đề gì nhiều nếu bạn sử dụng quen nó. Nhưng còn cái loại biến khác thì hãy đặt cho nó cái tên gắn liền với chức năng của nó.
+\paragraph{}
+Một ví dụ về tìm số lớn nhất trong một mảng như sau:
+\begin{lstlisting}
+
+uint8_t array[100];
+void main(void){
+	//enter the array
+	uint8_t arr_max=0;
+	for(uint8_t i=0; i<100; i++){
+		if(arr_max < array[i]){
+			arr_max=array[i];
+		}
+	}
+	printf("Maximum value of array: %d\n", arr_max);
+}
+
+\end{lstlisting}
+
+\paragraph{}
+Đó là ví dụ về cách đặt tên viết với arr\_max chỉ giá trị lớn nhất của mảng (array's maximum value). Nhưng có một vấn đề là trong vòng lặp for, số 100 đó có nghĩa là gì? Chắc là số lượng của mảng. Chúng ta có thể biết vì đây là chương trình đơn giản. Nhưng còn nếu chương trình với những thuật toán phức tạp, vài cái vòng lặp chồng lên nhau, với lại chương trình mấy trăm dòng thì câu chuyện sẽ khác. Mình chắc là sẽ phải tìm một hồi mới ra coi số 100 đó là gì.
+\paragraph{}
+Thế nên trong code cũng không nên xuất hiện con số nào cả. Hãy đặt cho mỗi con số một cái tên.
+
+\begin{lstlisting}
+#define ARRAY_SIZE 100
+uint8_t array[ARRAY_SIZE];
+void main(void){
+	//enter the array
+	uint8_t arr_max=0;
+	for(uint8_t i=0; i<ARRAY_SIZE; i++){
+		if(arr_max < array[i]){
+			arr_max=array[i];
+		}
+	}
+	printf("Maximum value of array: %d\n", arr_max);
+}
+
+\end{lstlisting}
+\paragraph{}
+Các bạn có thể thấy là việc đọc nó giờ sẽ trở nên đơn giản hơn rất nhiều. Với lại mỗi lần muốn sửa lại kích thước mảng thì mình chỉ cần sửa một chỗ thôi.
 \subsection{Các lưu ý khi khai báo biến}
 \paragraph{}
 Khi khai báo và sử dụng biến nên chú ý những điểm sau:
@@ -715,8 +759,45 @@ Biến toàn cục là đồ công cộng. Ai cũng đụng chạm nó được.
 \item Luôn chắc rằng biến của bạn có thể chứa đủ giá trị mà bạn muốn lưu vào trong đó. Ví dụ như việc sử dụng biến uint8\_t, với khoảng giá trị từ 0 tới 255, nếu tình cờ mà bạn ghi vào con số lớn hơn khoảng giá trị này thì nó sẽ xịt khói lập tức.
 \end{itemize}
 \subsection{Kiểu biến static}
-\subsection{Kiểu biến \textit{volatile}}
+\paragraph{}
+Kiểu biến \textit{static} hay thường gọi là biến tĩnh. Nó được khởi tạo một lần và chạy suốt với chương trình đến khi chương trình kết thúc.
+\paragraph{}
+Có một ví dụ sau trong DevC++:
+\begin{lstlisting}
 
+void print_example(){
+	int a=0;
+	a++;
+	printf("a= %d\n", a);
+	
+	static int b=0;
+	b++;
+	printf("b= %d\n", b);
+}
+
+void main(void){
+	print_example();
+	print_example();
+}
+
+\end{lstlisting}
+\paragraph{}
+Ở lần gọi hàm print\_exmaple đầu tiên, nó sẽ in ra a=1, b=1, nhưng đến lần thứ 2, nó sẽ in ra a=1, b=2. 
+\paragraph{}
+Nếu như biến thường không có khai báo \textit{static}, nếu là biến được khai báo trong hàm thì khi kết thúc hàm biến đó sẽ bị mất đi, nếu gọi hàm lại thì nó sẽ được khai báo lại. Còn đối với kiểu biến
+\textit{static}, nó sẽ vẫn tồn tại khi kết thúc gọi hàm, và khi gọi hàm lần nữa, nó sẽ bắt đầu với kết quả từ lần gọi hàm lần trước. Hay nó cách khác, biến \textit{static} có thời gian sống như biến toàn cục nhưng phạm vi truy cập chỉ trong một hàm thôi. 
+\paragraph{}
+Việc mình đề cập tới nó ở đây vì sử dụng biến kiểu \textit{static} để hạn chế các biến toàn cục đi, quây biến lại trong một hàm nào đó thôi, và dùng khi nào cần lưu kết quả lại cho lần gọi hàm sau.
+\subsection{Kiểu biến volatile}
+\paragraph{}
+Biến volatile được khai báo khi biến đó có thể thay đổi giá trị không báo trước. Việc báo trước có nghĩa là bạn sẽ có lệnh gán như a=0 hoặc b=1 tường minh ở trong chương trình. Còn sau đây là các trường hợp biến thay đổi mà không báo trước như sau:
+\begin{itemize}
+\item Thanh ghi ngoại vi có ánh xạ đến ô nhớ (Memory-mapped peripheral registers), bạn có thể hiểu nôm na là biến đó lưu trữ trạng thái hiện tại của một chân I/O nào đó, nó có thể thay đổi do tác động bên ngoài.
+\item Biến toàn cục được truy xuất từ các tiến trình con xử lý ngắt: Chương trình của bạn có thể chia làm 2 phần, một phần là chương trình chính và một phần phục vụ ngắt. Khi có ngắt xảy ra, nó sẽ tạm dừng chương trình chính để thực hiện tác vụ ngắt tương ứng. Tác vụ ngắt này có thể thay đổi một biến toàn cục như là một cái cờ (flag) để chương trình chính biết là có ngắt xảy ra.
+\item Biến toàn cục được truy xuất từ nhiều tác vụ trong một ứng dụng đa luồng: người ta có thể tận dụng sức mạnh của MCU bằng viết chương trình đa luồng bằng cách sử dụng hệ điều hành như FREERTOS chẳng hạn, đại khái là viết 2 chương trình chính chạy đồng thời với nhau. Thì một biến toàn cục có thể được chương trình này thay đổi nhưng chương trình kia không biết khi nào.
+\end{itemize}
+\paragraph{}
+Bạn có thể xem thêm ở đây: \url{http://ktmt.github.io/blog/2013/05/09/y-nghia-cua-tu-khoa-volatile-trong-c/}
 \section{Chú thích}
 \paragraph{}
 Chú thích (comment) tưởng đơn giản nhưng lại là thành phần hại não trong khi viết chương trình. Bạn có thể thấy trong C thì chú thích đi sau dấu // hoặc /* */. Tại sao nó hại não? Vì nếu chú thích đúng cách thì chương trình rất dễ đọc và người khác (ngay cả bạn nữa) cũng nắm được đại ý nhanh chóng. Nhưng khổ cái là chương trình thay đổi liên tục, mà hễ thay đổi thì chỉnh sửa code lại thôi, không ai chịu sửa lại chú thích làm chi (vì sửa code không cũng đuối rồi). Nên làm cho người đọc tưởng là mình hiểu rồi nhưng một hồi đọc tới code thì thấy nó sai sai.
@@ -748,7 +829,7 @@ static uint32_t last_action;
   if(millis()-last_action>1000)
   {
     toggle_led(LED_BUILTIN);
-    last_action_millis=millis();
+    last_action=millis();
   }
 }
 \end{lstlisting}
@@ -1078,7 +1159,7 @@ void loop(){
 
 \end{lstlisting}
 \paragraph{}
-Chương trình chính ở setup() sẽ bật relay đó lên và trong loop() liên tục hỏi coi nó có timeout chưa, nếu có thì tắt relay đó đi. Lưu ý là hàm is\_relay\_on\_state\_timeout() chỉ trả về true nếu relay đó đang ON và đã hết thời gian, trả về false nếu đang OFF hoặc chưa timeout.
+Chương trình chính ở setup() sẽ khởi động biến relay và bật relay đó lên và trong loop() liên tục hỏi coi nó có timeout chưa, nếu có thì tắt relay đó đi. Lưu ý là hàm is\_relay\_on\_state\_timeout() chỉ trả về true nếu relay đó đang ON và đã hết thời gian, trả về false nếu đang OFF hoặc chưa timeout.
 \paragraph{}
 Bạn hoàn toàn có thể khai báo một mảng relay\_t relay[8] để điều khiển một lúc 8 cái relay. Mỗi cái cần một lần khởi tạo và gắn chân riêng, con trỏ truyền vào có thể là \&relay[0] để điều khiển relay số 0.
 \paragraph{}
@@ -1131,6 +1212,33 @@ Tất nhiên là mình viết sơ sơ để các bạn dễ đọc thôi, còn n
 \paragraph{}
 Hãy nghiên cứu phần này để cuộc sống nó dễ chịu hơn.
 \chapter{Quản lý phiên bản: GIT}
+\paragraph{}
+Cái này quan trọng lắm mà chưa có thời gian ngồi viết nữa, hazz. Các bạn nên tranh thủ kiếm người yêu đi, ngồi code miết ế thúi ra luôn ý.
+\newpage
+
+
+\begin{thebibliography}{9}
+\bibitem{Clean Code} 
+Robert C. Martin. 
+\textit{Clean Code: A Handbook of Agile Software Craftsmanship}. 
+ 
+\bibitem{Code Complete} 
+Steve McConnell.
+\textit{Code Complete: A Practical Handbook of Software Construction, Second Edition}.
+
+\bibitem{lập trình nhúng} 
+Hoàng Trang, Bùi Quốc Bảo.
+\textit{Lập trình hệ thống nhúng}.
+
+\bibitem{nhập môn lập trình}
+Trần Đan Thư, Nguyễn Thanh Phương, Đinh Bá Tiến, Trần Minh Triết.
+\textit{Nhập môn lập trình}.
+
+\bibitem{Kĩ Thuật Lập trình}
+Trần Đan Thư, Nguyễn Thanh Phương, Đinh Bá Tiến, Trần Minh Triết, Đặng Bình Phương.
+\textit{Kĩ thuật lập trình}.
+
+\end{thebibliography}
 
 
 \end{document}

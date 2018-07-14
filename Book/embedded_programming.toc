@@ -76,98 +76,111 @@
 \contentsline {paragraph}{}{21}{section*.61}
 \contentsline {paragraph}{}{22}{section*.62}
 \contentsline {paragraph}{}{22}{section*.63}
+\contentsline {paragraph}{}{22}{section*.64}
 \contentsline {section}{\numberline {3.1}Moudule h\IeC {\'o}a}{23}{section.3.1}
-\contentsline {paragraph}{}{23}{section*.64}
 \contentsline {paragraph}{}{23}{section*.65}
 \contentsline {paragraph}{}{23}{section*.66}
-\contentsline {paragraph}{}{24}{section*.67}
+\contentsline {paragraph}{}{23}{section*.67}
 \contentsline {paragraph}{}{24}{section*.68}
 \contentsline {paragraph}{}{24}{section*.69}
-\contentsline {paragraph}{}{25}{section*.70}
-\contentsline {section}{\numberline {3.2}C\IeC {\'\acircumflex }u tr\IeC {\'u}c ch\IeC {\uhorn }\IeC {\ohorn }ng tr\IeC {\`\i }nh ch\IeC {\'\i }nh v\IeC {\`a} c\IeC {\'a}ch g\IeC {\d o}i h\IeC {\`a}m}{25}{section.3.2}
+\contentsline {paragraph}{}{24}{section*.70}
 \contentsline {paragraph}{}{25}{section*.71}
+\contentsline {section}{\numberline {3.2}C\IeC {\'\acircumflex }u tr\IeC {\'u}c ch\IeC {\uhorn }\IeC {\ohorn }ng tr\IeC {\`\i }nh ch\IeC {\'\i }nh v\IeC {\`a} c\IeC {\'a}ch g\IeC {\d o}i h\IeC {\`a}m}{25}{section.3.2}
 \contentsline {paragraph}{}{25}{section*.72}
-\contentsline {paragraph}{}{26}{section*.73}
+\contentsline {paragraph}{}{25}{section*.73}
 \contentsline {paragraph}{}{26}{section*.74}
 \contentsline {paragraph}{}{26}{section*.75}
-\contentsline {paragraph}{}{27}{section*.76}
+\contentsline {paragraph}{}{26}{section*.76}
 \contentsline {paragraph}{}{27}{section*.77}
-\contentsline {section}{\numberline {3.3}H\IeC {\`a}m s\IeC {\'\ocircumflex }}{27}{section.3.3}
 \contentsline {paragraph}{}{27}{section*.78}
+\contentsline {section}{\numberline {3.3}H\IeC {\`a}m s\IeC {\'\ocircumflex }}{27}{section.3.3}
 \contentsline {paragraph}{}{27}{section*.79}
+\contentsline {paragraph}{}{27}{section*.80}
 \contentsline {subsection}{\numberline {3.3.1}\IeC {\DJ }\IeC {\d \abreve }t t\IeC {\^e}n h\IeC {\`a}m}{28}{subsection.3.3.1}
-\contentsline {paragraph}{}{28}{section*.80}
 \contentsline {paragraph}{}{28}{section*.81}
 \contentsline {paragraph}{}{28}{section*.82}
 \contentsline {paragraph}{}{28}{section*.83}
-\contentsline {paragraph}{}{29}{section*.84}
-\contentsline {subsection}{\numberline {3.3.2}\IeC {\DJ }\IeC {\d \ocircumflex } d\IeC {\`a}i c\IeC {\h u}a h\IeC {\`a}m}{29}{subsection.3.3.2}
-\contentsline {paragraph}{}{29}{section*.85}
+\contentsline {paragraph}{}{28}{section*.84}
+\contentsline {paragraph}{}{28}{section*.85}
 \contentsline {paragraph}{}{29}{section*.86}
+\contentsline {subsection}{\numberline {3.3.2}\IeC {\DJ }\IeC {\d \ocircumflex } d\IeC {\`a}i c\IeC {\h u}a h\IeC {\`a}m}{29}{subsection.3.3.2}
 \contentsline {paragraph}{}{29}{section*.87}
-\contentsline {subsection}{\numberline {3.3.3}Truy\IeC {\`\ecircumflex }n tham s\IeC {\'\ocircumflex }}{29}{subsection.3.3.3}
 \contentsline {paragraph}{}{29}{section*.88}
-\contentsline {subsection}{\numberline {3.3.4}B\IeC {\h a}o v\IeC {\d \ecircumflex } h\IeC {\`a}m s\IeC {\'\ocircumflex }}{29}{subsection.3.3.4}
 \contentsline {paragraph}{}{29}{section*.89}
-\contentsline {paragraph}{}{30}{section*.90}
+\contentsline {subsection}{\numberline {3.3.3}Truy\IeC {\`\ecircumflex }n tham s\IeC {\'\ocircumflex }}{29}{subsection.3.3.3}
+\contentsline {paragraph}{}{29}{section*.90}
+\contentsline {subsection}{\numberline {3.3.4}B\IeC {\h a}o v\IeC {\d \ecircumflex } h\IeC {\`a}m s\IeC {\'\ocircumflex }}{30}{subsection.3.3.4}
 \contentsline {paragraph}{}{30}{section*.91}
 \contentsline {paragraph}{}{30}{section*.92}
-\contentsline {section}{\numberline {3.4}C\IeC {\'a}c bi\IeC {\'\ecircumflex }n s\IeC {\'\ocircumflex }}{30}{section.3.4}
 \contentsline {paragraph}{}{30}{section*.93}
-\contentsline {subsection}{\numberline {3.4.1}\IeC {\DJ }\IeC {\d \abreve }t t\IeC {\^e}n bi\IeC {\'\ecircumflex }n}{31}{subsection.3.4.1}
-\contentsline {paragraph}{}{31}{section*.94}
+\contentsline {paragraph}{}{30}{section*.94}
+\contentsline {section}{\numberline {3.4}C\IeC {\'a}c bi\IeC {\'\ecircumflex }n s\IeC {\'\ocircumflex }}{31}{section.3.4}
 \contentsline {paragraph}{}{31}{section*.95}
-\contentsline {subsection}{\numberline {3.4.2}C\IeC {\'a}c l\IeC {\uhorn }u \IeC {\'y} khi khai b\IeC {\'a}o bi\IeC {\'\ecircumflex }n}{31}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.1}\IeC {\DJ }\IeC {\d \abreve }t t\IeC {\^e}n bi\IeC {\'\ecircumflex }n}{31}{subsection.3.4.1}
 \contentsline {paragraph}{}{31}{section*.96}
-\contentsline {paragraph}{}{32}{section*.97}
-\contentsline {paragraph}{}{32}{section*.98}
+\contentsline {paragraph}{}{31}{section*.97}
+\contentsline {paragraph}{}{31}{section*.98}
 \contentsline {paragraph}{}{32}{section*.99}
-\contentsline {subsection}{\numberline {3.4.3}Ki\IeC {\h \ecircumflex }u bi\IeC {\'\ecircumflex }n static}{33}{subsection.3.4.3}
-\contentsline {subsection}{\numberline {3.4.4}Ki\IeC {\h \ecircumflex }u bi\IeC {\'\ecircumflex }n \textit {volatile}}{33}{subsection.3.4.4}
-\contentsline {section}{\numberline {3.5}Ch\IeC {\'u} th\IeC {\'\i }ch}{33}{section.3.5}
-\contentsline {paragraph}{}{33}{section*.100}
-\contentsline {paragraph}{}{33}{section*.101}
+\contentsline {paragraph}{}{32}{section*.100}
+\contentsline {paragraph}{}{32}{section*.101}
+\contentsline {subsection}{\numberline {3.4.2}C\IeC {\'a}c l\IeC {\uhorn }u \IeC {\'y} khi khai b\IeC {\'a}o bi\IeC {\'\ecircumflex }n}{33}{subsection.3.4.2}
 \contentsline {paragraph}{}{33}{section*.102}
-\contentsline {section}{\numberline {3.6}Blocking vs. Non-blocking mode}{33}{section.3.6}
 \contentsline {paragraph}{}{33}{section*.103}
-\contentsline {paragraph}{}{34}{section*.104}
-\contentsline {paragraph}{}{34}{section*.105}
+\contentsline {paragraph}{}{33}{section*.104}
+\contentsline {paragraph}{}{33}{section*.105}
+\contentsline {subsection}{\numberline {3.4.3}Ki\IeC {\h \ecircumflex }u bi\IeC {\'\ecircumflex }n static}{34}{subsection.3.4.3}
 \contentsline {paragraph}{}{34}{section*.106}
 \contentsline {paragraph}{}{34}{section*.107}
-\contentsline {paragraph}{}{35}{section*.108}
-\contentsline {paragraph}{}{36}{section*.109}
-\contentsline {section}{\numberline {3.7}M\IeC {\'a}y tr\IeC {\d a}ng th\IeC {\'a}i}{36}{section.3.7}
-\contentsline {paragraph}{}{36}{section*.110}
-\contentsline {paragraph}{}{37}{section*.111}
-\contentsline {paragraph}{}{37}{section*.112}
-\contentsline {chapter}{\numberline {4}Vi\IeC {\'\ecircumflex }t th\IeC {\uhorn } vi\IeC {\d \ecircumflex }n}{39}{chapter.4}
-\contentsline {paragraph}{}{39}{section*.113}
-\contentsline {paragraph}{}{39}{section*.114}
-\contentsline {section}{\numberline {4.1}C\IeC {\'\acircumflex }u tr\IeC {\'u}c th\IeC {\uhorn } vi\IeC {\d \ecircumflex }n}{39}{section.4.1}
-\contentsline {paragraph}{}{39}{section*.115}
-\contentsline {paragraph}{}{40}{section*.116}
-\contentsline {paragraph}{}{40}{section*.117}
-\contentsline {paragraph}{}{41}{section*.118}
-\contentsline {paragraph}{}{41}{section*.119}
-\contentsline {paragraph}{}{41}{section*.120}
-\contentsline {paragraph}{}{42}{section*.121}
-\contentsline {paragraph}{}{42}{section*.122}
-\contentsline {paragraph}{}{42}{section*.123}
-\contentsline {section}{\numberline {4.2}Vi\IeC {\'\ecircumflex }t th\IeC {\uhorn } vi\IeC {\d \ecircumflex }n theo phong c\IeC {\'a}ch OOP}{43}{section.4.2}
-\contentsline {paragraph}{}{43}{section*.124}
-\contentsline {paragraph}{}{43}{section*.125}
-\contentsline {paragraph}{}{43}{section*.126}
-\contentsline {paragraph}{}{44}{section*.127}
-\contentsline {paragraph}{}{44}{section*.128}
-\contentsline {paragraph}{}{44}{section*.129}
-\contentsline {paragraph}{}{45}{section*.130}
-\contentsline {paragraph}{}{45}{section*.131}
-\contentsline {paragraph}{}{45}{section*.132}
-\contentsline {paragraph}{}{45}{section*.133}
-\contentsline {paragraph}{}{46}{section*.134}
-\contentsline {paragraph}{}{46}{section*.135}
-\contentsline {paragraph}{}{46}{section*.136}
-\contentsline {paragraph}{}{47}{section*.137}
-\contentsline {paragraph}{}{47}{section*.138}
-\contentsline {chapter}{\numberline {5}Qu\IeC {\h a}n l\IeC {\'y} phi\IeC {\^e}n b\IeC {\h a}n: GIT}{49}{chapter.5}
-\contentsline {chapter}{\numberline {6}Blocking vs Non-blocking}{51}{chapter.6}
+\contentsline {paragraph}{}{34}{section*.108}
+\contentsline {paragraph}{}{35}{section*.109}
+\contentsline {paragraph}{}{35}{section*.110}
+\contentsline {subsection}{\numberline {3.4.4}Ki\IeC {\h \ecircumflex }u bi\IeC {\'\ecircumflex }n volatile}{35}{subsection.3.4.4}
+\contentsline {paragraph}{}{35}{section*.111}
+\contentsline {paragraph}{}{36}{section*.112}
+\contentsline {section}{\numberline {3.5}Ch\IeC {\'u} th\IeC {\'\i }ch}{36}{section.3.5}
+\contentsline {paragraph}{}{36}{section*.113}
+\contentsline {paragraph}{}{36}{section*.114}
+\contentsline {paragraph}{}{36}{section*.115}
+\contentsline {section}{\numberline {3.6}Blocking vs. Non-blocking mode}{37}{section.3.6}
+\contentsline {paragraph}{}{37}{section*.116}
+\contentsline {paragraph}{}{37}{section*.117}
+\contentsline {paragraph}{}{37}{section*.118}
+\contentsline {paragraph}{}{37}{section*.119}
+\contentsline {paragraph}{}{38}{section*.120}
+\contentsline {paragraph}{}{38}{section*.121}
+\contentsline {paragraph}{}{39}{section*.122}
+\contentsline {section}{\numberline {3.7}M\IeC {\'a}y tr\IeC {\d a}ng th\IeC {\'a}i}{40}{section.3.7}
+\contentsline {paragraph}{}{40}{section*.123}
+\contentsline {paragraph}{}{40}{section*.124}
+\contentsline {paragraph}{}{40}{section*.125}
+\contentsline {chapter}{\numberline {4}Vi\IeC {\'\ecircumflex }t th\IeC {\uhorn } vi\IeC {\d \ecircumflex }n}{41}{chapter.4}
+\contentsline {paragraph}{}{41}{section*.126}
+\contentsline {paragraph}{}{41}{section*.127}
+\contentsline {section}{\numberline {4.1}C\IeC {\'\acircumflex }u tr\IeC {\'u}c th\IeC {\uhorn } vi\IeC {\d \ecircumflex }n}{41}{section.4.1}
+\contentsline {paragraph}{}{41}{section*.128}
+\contentsline {paragraph}{}{42}{section*.129}
+\contentsline {paragraph}{}{42}{section*.130}
+\contentsline {paragraph}{}{43}{section*.131}
+\contentsline {paragraph}{}{43}{section*.132}
+\contentsline {paragraph}{}{43}{section*.133}
+\contentsline {paragraph}{}{44}{section*.134}
+\contentsline {paragraph}{}{44}{section*.135}
+\contentsline {paragraph}{}{44}{section*.136}
+\contentsline {section}{\numberline {4.2}Vi\IeC {\'\ecircumflex }t th\IeC {\uhorn } vi\IeC {\d \ecircumflex }n theo phong c\IeC {\'a}ch OOP}{45}{section.4.2}
+\contentsline {paragraph}{}{45}{section*.137}
+\contentsline {paragraph}{}{45}{section*.138}
+\contentsline {paragraph}{}{45}{section*.139}
+\contentsline {paragraph}{}{46}{section*.140}
+\contentsline {paragraph}{}{46}{section*.141}
+\contentsline {paragraph}{}{46}{section*.142}
+\contentsline {paragraph}{}{47}{section*.143}
+\contentsline {paragraph}{}{47}{section*.144}
+\contentsline {paragraph}{}{47}{section*.145}
+\contentsline {paragraph}{}{47}{section*.146}
+\contentsline {paragraph}{}{48}{section*.147}
+\contentsline {paragraph}{}{48}{section*.148}
+\contentsline {paragraph}{}{48}{section*.149}
+\contentsline {paragraph}{}{49}{section*.150}
+\contentsline {paragraph}{}{49}{section*.151}
+\contentsline {chapter}{\numberline {5}Qu\IeC {\h a}n l\IeC {\'y} phi\IeC {\^e}n b\IeC {\h a}n: GIT}{51}{chapter.5}
+\contentsline {paragraph}{}{51}{section*.152}
