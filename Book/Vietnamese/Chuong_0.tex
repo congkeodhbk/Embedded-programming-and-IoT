@@ -1,4 +1,7 @@
-\chapter{Hello world}
+\section{Mục tiêu của tài liệu}
+
+Tài liệu này dành cho những bạn có định hướng theo đuổi con đường lập trình nhúng và cho các thiết bị IoT, không dành cho những bạn nào mới bắt đầu hoặc mới tìm hiểu. Ở đây mình sử dụng những kĩ năng, kinh nghiệm đã được áp dụng trong những dự án thực tế. Để đọc được tài liệu này bạn cần có kiến thức căn bản về C/C++, Arduino, điện tử.
+
 \newpage
 
 \section{Về lập trình nhúng}
@@ -7,25 +10,35 @@
     
 Có 2 khái niệm là \textit{Firmware}, ý chỉ chương trình nhúng, và \textit{Software}, chương trình ứng dụng trên máy tính, được đưa ra để người lập trình dễ hình dung, nhưng không cần thiết phải phân biệt rõ ràng.
     
-Khi lập trình hệ thống nhúng, việc biết rõ về phần cứng là điều cần thiết. Bởi bạn phải biết phần cứng của mình như thế nào thì bạn mới điều khiển hoặc quản lí tốt nó được. Tốt nhất là làm trong team hardware một thời gian rồi nhảy qua team firmware, hoặc làm song song cả hai bên nếu bạn có thể.
+Khi lập trình hệ thống nhúng, việc biết rõ về phần cứng là điều cần thiết. Bởi bạn phải biết phần cứng của mình như thế nào thì bạn mới điều khiển hoặc quản lí tốt nó được. Tốt nhất là làm trong team hardware một thời gian rồi chuyển sang team firmware, hoặc làm song song cả hai bên nếu bạn có thể.
 
 \section{Về ngôn ngữ C trong lập trình nhúng}
     
-Ngôn ngữ C cho phép tương tác rất mạnh tới phần cứng, mạnh thế nào thì hồi sau sẽ rõ, thế nên nó thường được lựa chọn trong các dự án lâp trình nhúng. Ngoài ra có thể dùng C++ và Java nhưng mình ít xài chúng nên không đề cập ở đây.
+Ngôn ngữ C cho phép tương tác rất mạnh tới phần cứng nên nó thường được lựa chọn trong các dự án lâp trình nhúng. Ngoài ra có thể dùng C++ và Java nhưng mình ít dùng chúng nên không đề cập ở đây.
     
-Việc học C cơ bản mình sẽ không đề cập tới vì tài liệu nó nhiều lắm, các bạn có để xem và làm vài bài tập sử dụng được ngôn ngữ này. Lưu ý là ranh giới giữa việc \textbf{biết} và \textbf{sử dụng được} ngôn ngữ C là việc bạn có làm bài tập hay không. Về cú pháp thì nó quanh đi quẩn lại chỉ là khai báo biến, rồi mấy vòng lặp for, while hoặc rẽ nhánh if, else chẳng hạn, nhưng \textbf{kỹ năng} sử dụng C để giải quyết một vấn đề thì cần nhiều bài tập để trau dồi.
+Việc học C cơ bản mình sẽ không đề cập tới vì tài liệu đã rất nhiều, các bạn có để xem và làm vài bài tập sử dụng được ngôn ngữ này. Lưu ý là ranh giới giữa việc \textit{biết} và \textit{sử dụng được} ngôn ngữ C là việc bạn có làm bài tập hay không. Về cú pháp thì nó quanh đi quẩn lại chỉ là khai báo biến, rồi mấy vòng lặp for, while hoặc rẽ nhánh if, else chẳng hạn, nhưng \textit{kỹ năng} sử dụng C để giải quyết một vấn đề thì cần nhiều bài tập để trau dồi.
     
-Tóm lại: \textit{bạn không thể đọc sách học bơi là biết bơi, không thể đọc kiếm phổ là thành cao thủ.}
 \section{Về phần cứng để demo}
 
-Trong phần này mình sẽ sử dụng 2 con Arduino Mega để demo cho nhanh. Bạn nên mua để dành nháp một vài cái project nào đấy. Mà thiệt tình thì nên hạn chế sử dụng Arduino vì nó làm bạn có thói quen sử dụng thư viện chùa với lại chẳng biết gì mấy về phần cứng, đến lúc Arduino chưa có thư viện thì không biết phải viết thế nào. Bạn có thể tìm hiểu các loại chip khác như STM32 (nó rất mạnh trong tầm giá của nó), PIC(nó bền và ổn định) hay xài kit Tiva cũng được. Ngoài ra phần thiên về lập trình không cần phần cứng sẽ sử dụng chương trình DevC++ (nhớ tạo project C, không cần C++), những cái cơ bản các bạn nên tự tìm hiểu, vì những cái đó tài liệu nó rất nhiều, và bạn cũng có thể tự mò cho quen.
+Trong phần này mình sẽ sử dụng 1 con Arduino Uno để demo những đoạn code có liên quan. Bạn nên mua để dành nháp một vài cái project nào đấy. Ưu điểm của nó là hỗ trợ cho những bạn mới bước chân vào lập trình, những phần phức tạp đã được làm sẵn. Bạn có thể viết ngay một ứng dụng nào đó mà không cần phải tìm hiểu nhiều.
 
-\textit{Arduino là món mì ăn liền, sử dụng nó nhanh chóng nhưng nó cũng đầy điểm yếu.}
-\section{Về Tiếng Anh, vâng tiếng Anh...}
+Và đó cũng chính là nhược điểm của Arduino. Nếu bạn ỷ lại nó mà không tìm hiểu sâu hơn thì khó lòng mà có thể tiến xa hơn được. Đặt trường hợp bạn phải làm việc với những dự án thực tế, có độ phức tạp cao, nếu dựa vào những thư viện Arduino cung cấp sẵn thì sẽ không thể hoàn thành được dự án.
+
+Bạn có thể tìm hiểu các loại chip khác như STM32 (nó rất mạnh trong tầm giá của nó), PIC(nó bền và ổn định) hoặc các dòng chip của Texas Instrument. 
+
+Khi có một đoạn code để demo thuần túy là C mình mình dùng phần mềm DevC++.
+
+\section{Về Tiếng Anh}
     
-Mấy ngành khác thì mình không rành chứ mà làm nhúng mà bạn không biết Tiếng Anh là tự níu chân mình lại. Vì mỗi linh kiện điện tử đều kèm theo một cái bảng thông tin đặc tính là datasheet, cái nào phức tạp thì sẽ kèm theo một cái hướng dẫn sử dụng là user manual. Và tất nhiên 96.69\% chúng được viết bằng tiếng Anh, còn lại là tiếng Trung Quốc. Và tin buồn là code trong lập trình nhúng đều biết bằng tiếng Anh, tin buồn hơn nữa là tài liệu, sách hướng dẫn, các diễn đàn sử dụng tiếng Anh rất nhiều và nhiều cái rất hay.
-    
-Tóm lại là không biết nó thì công việc của bạn bị cản trở rất nhiều, phụ thuộc rất nhiều vào google dịch củ chuối. Hãy dừng một bước để học tiếng anh và tiến 3 bước trong con đường sự nghiệp. Chí ít bạn phải đọc được datasheet mà không cần tra quá nhiều từ, đọc được cuốn sách như clean code chẳng hạn, hoặc viết email cho thằng bán linh kiện ở Trung Quốc vì kiểu gì sau này bạn cũng đặt hàng ở bên đó.
-    
-\textit{Nhớ rằng tiếng Anh là công cụ để sử dụng. Như người ta học đi xe máy để đi lại nhanh hơn. Hãy học tiếng Anh để làm việc ngon lành hơn.}
+Nếu bạn muốn theo đuổi lập trình chuyên nghiệp, kể cả lập trình nhúng hoặc các ngành công nghệ thông tin khác thì phải trau dồi tiếng Anh. Vì đặc điểm của ngành này có thể liệt kê ra như sau:
+
+\begin{itemize}
+    \item Bắt nguồn từ các nước Âu-Mỹ.
+    \item Thay đổi nhanh và liên tục.
+    \item Tài liệu, sách vở, cộng đồng, dự án có sẵn... đa số đều viết bằng tiếng Anh.
+\end{itemize}
+
+Để theo đuổi ngành thì bạn cần học những kiến thức mới để đáp ứng với thời cuộc, cần trao đổi với các đồng nghiệp khác để giải quyết những vấn đề, đôi khi là tìm cách gỡ lỗi trong chương trình.
+
+Đa số các lỗi bạn gặp khi lập trình đều đã có người mắc phải và có cách giải quyết ở một nơi nào đó, việc của bạn nếu bị kẹt là tìm trên Internet cách gỡ lỗi đó, và thường thì phải biết tiếng Anh. Việc mắc ở một lỗi nào đấy và không gỡ được làm bạn dễ chán nản.
 
