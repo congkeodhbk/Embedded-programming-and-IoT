@@ -1,0 +1,210 @@
+\chapter{Thư viện và mã nguồn tùy biến}
+
+Nếu bạn đi theo con đường lập trình chuyên nghiệp thì bạn phải chuẩn bị cho mình một bộ thư viện để khi cần thì có thể lấy ra sử dụng. Trên Arduino được hỗ trợ rất nhiều nhưng không có nghĩ là đúng và đủ. Tất cả thư viện đó đều có thể có lỗi và có những thư viện chưa được hỗ trợ. Đôi khi bạn gặp trường hợp thư viện đã có trên Arduino nhưng dự án của bạn lại sử dụng chip khác thì cần biết làm sao để chuyển từ thư viện Arduino sang loại chip mà bạn đang sử dụng.
+
+Mặc dù Arduino sử dụng thư viện C++ nhưng ở đây mình sẽ hướng dẫn các bạn viết thư viện thuần C, vì đa số các chip có trên thị trường đều mặc định sử dụng ngôn ngữ C.
+
+\section{Cấu trúc thư viện}
+
+Một thư viện có thể có rất nhiều file trong đó. Nhưng cơ bản thì nó có 2 file chính: file code \textit{.c} và file header \textit{.h}. File code để chứa các đoạn code viết sẵn của người khác và bạn chỉ cần dùng mà không cần viết lại. Nhưng file code thường rất dài và phức tạp, rất ít người có thể đọc từ đầu tới cuối, nên sinh ra file \textit{.h}. Nó là nơi khai báo hàm, tóm tắt lại bao gồm các hàm mà trong thư viện mà bạn có thể sử dụng, các cấu trúc dữ liệu... và đặc biệt là phải có các đoạn hướng dẫn sử dụng, để người dùng chỉ cần đọc hướng dẫn thôi là sử dụng được thư viện đó rồi.
+
+Ngoài ra còn nên có những project mẫu có sử dụng thư viện đó và chạy được, người lập trình sẽ dựa vào project mẫu mà phát triển tiếp. Như Arduino có thư mục \it{example} vậy.
+
+Một ví dụ về thư viện:
+\begin{lstlisting}
+//file example.h
+#ifndef _EXAMPLE_H
+#define _EXAMPLE_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+//Initiate example library 
+void example_init(void);
+
+//Example function
+void example_function(void);
+
+#ifdef __cplusplus
+extern }
+#endif
+
+#endif
+\end{lstlisting}
+
+\begin{lstlisting}
+//file example.c
+#include "example.h"
+
+void example_init(void){
+	//do something
+}
+
+void example_function(void){
+	//do something
+}
+
+\end{lstlisting}
+
+
+Trong đó đoạn macro
+\begin{lstlisting}
+//file example.h
+#ifndef _EXAMPLE_H
+#define _EXAMPLE_H
+.
+.
+.
+#endif
+\end{lstlisting}
+
+để tránh khai báo trùng lặp khi có lệnh \it{\#include} trùng lặp ở các file, mỗi file \textit{.h} nên có một đoạn này, và \it{\_EXAMPLE\_H} thay đổi tùy theo tên file của bạn.
+
+Còn đoạn
+\begin{lstlisting}
+//file example.h
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+.
+.
+#ifdef __cplusplus
+extern }
+#endif
+
+\end{lstlisting}
+
+dùng để tương thích giữa ngôn ngữ C và C++. Nếu bạn viết thư viện có các file code ngôn ngữ C, trong khi chương trình chính là ngôn ngữ C++, thì đoạn macro trên cho C++ biết các hàm bên trong thư viện được viết ở C.
+
+Các bạn có thể tìm hiểu thêm về bộ tiền biên dịch trong C (Preprocessor) theo đường link: 
+
+https://www.tutorialspoint.com/cprogramming/c\_preprocessors.htm
+
+\section{Viết thư viện theo phong cách OOP}
+
+Lập trình hướng đối tượng (OOP) là một bước tiến của lập trình cấu trúc ( ngôn ngữ C là hướng cấu trúc, C++ là hướng đối tượng). OOP có nhiều ưu điểm hơn, sử dụng được cho những chương trình lớn hơn. C không phải là ngôn ngữ hướng đối tượng nhưng bạn có thể bắt chước phong cách OOP để thư viện trở nên rõ ràng hơn.
+
+Ở chương này mình sẽ sử dụng con trỏ và máy trạng thái đã được trình bày ở các chương trước.
+
+Mình muốn viến thư viện điều khiển một cái relay (rờ le). Đây là một thiết bị công suất, dòng tải lớn, thường dùng để bật tắt các thiết bị như đèn điện hoặc mô tơ. Thư viện này có các tính năng sau:
+
+\begin{itemize}
+	\item Bật tắt bất kì lúc nào, và bật tắt nhiều thiết bị khác nhau.
+	\item Có thời gian timeout, nghĩa là bật một thời gian rồi tự động dừng, tránh trường hợp quên tắt.
+\end{itemize}
+
+Trước tiên là khai báo một struct cho mỗi relay:
+\begin{lstlisting}
+//relay.h
+
+//low active or high active
+#define ON HIGH
+#define OFF LOW
+typedef struct{
+	uint8_t pin;
+	uint8_t state;
+	uint32_t begin;
+	uint32_t timeout;
+}relay_t;
+\end{lstlisting}
+
+Các biến có vai trò sau:
+\begin{itemize}
+	\item \it{pin}: tên của pin sẽ điều khiển relay.
+	\item \it{state}: trạng thái hiện tại của relay.
+	\item \it{begin}: thời điểm relay chuyển từ OFF sang ON.
+	\item \it{timeout}: thời gian ON tối đa của relay, hết thời gian này thì tự chuyển sang OFF.
+\end{itemize}
+
+Sau đó sẽ khai báo các hàm sử dụng struct này:
+
+\begin{lstlisting}
+//relay.h
+
+void relay_init(relay_t *relay, uint8_t pin);
+void turn_relay_on(relay_t *relay,
+					uint32_t timeout);
+void turn_relay_off(relay_t *relay);
+bool is_relay_timeout(relay_t *relay);
+\end{lstlisting}
+
+Và rồi trong chương trình chính mình sẽ sử dụng nó như sau.
+\begin{lstlisting}
+
+#include "relay.h"
+
+relay_t relay;
+
+void setup(){
+	//pin 5 control this relay
+	relay_init(&relay, 5); 
+	delay(100);
+	turn_relay_on(&relay, 1000);
+}
+
+void loop(){
+	if(is_relay_timeout(&relay)){
+		turn_relay_off(&relay);
+	}
+}
+
+\end{lstlisting}
+
+Chương trình chính ở \it{setup()} sẽ khởi động biến relay và bật relay đó lên và trong \it{loop()} liên tục hỏi coi nó có timeout chưa, nếu có thì tắt relay đó đi. Lưu ý là hàm \it{is\_relay\_timeout()} chỉ trả về \it{true} nếu relay đó đang ON và đã hết thời gian, trả về \it{false} nếu đang \it{OFF} hoặc chưa \it{timeout}.
+
+Bạn hoàn toàn có thể khai báo một mảng \it{relay\_t relay[8]} để điều khiển một lúc 8 cái relay. Mỗi cái cần một lần khởi tạo và gắn chân riêng, con trỏ truyền vào có thể là \it{\&relay[0]} để điều khiển relay số 0.
+
+Cái tinh thần của OOP trong đây là bạn khai báo một biến với kiểu tự định nghĩa (coi nó như một đối tượng), trong đó lưu hết các thông tin liên quan của đối tượng, sau đó không động chạm gì đến thành phần bên trong của biến đó mà chỉ sử dụng các hàm được khai báo sẵn để tương tác với biến đó. Các thành phần bên trong biến sẽ được truy cập tại thư viện. 
+
+Viết thư viện theo kiểu này sẽ đảm bảo bao đóng của dữ liệu để đối tượng nó được an toàn. Như bạn thấy biến \it{state} trong kiểu \it{relay\_t} là một biến nội bộ lưu lại trạng thái của relay. Như hàm \it{turn\_relay\_on()} sẽ có lệnh \it{digitalWrite(pin, ON)} và gán biến \it{state=ON} bên trong. Nếu bạn tự tiện gán \it{relay.state=OFF} trong chương trình chính thì sẽ bị lỗi (xem code bên dưới).
+
+Việc bao đóng dữ liệu sẽ giúp các module độc lập hơn. Bạn không cần quan tâm trong biến \it{relay\_t} có cái gì ở trỏng. Chỉ cần khai báo, rồi gọi hàm truyền nó vào. Như vậy nó đảm bảo được nguyên tắc A biết B làm được cái gì chứ không biết B làm điều đó như thế nào.
+
+Sau đây là phần code cho relay đó:
+\begin{lstlisting}
+//relay.c
+void relay_init(relay_t *relay, uint8_t pin)
+{
+	relay->pin=pin;
+	pinMode(relay->pin, OUTPUT);
+	digitalWrite(relay->pin, OFF);
+	relay->state=OFF
+}
+
+void turn_relay_on(relay_t *relay,
+					uint32_t timeout)
+{
+	digitalWrite(relay->pin, ON);
+	relay->state=ON;
+	relay->begin=millis();
+	relay->timeout=timeout;
+}
+
+void turn_relay_off(relay_t *relay)
+{
+	digitalWrite(relay->pin, OFF);
+	relay->state=OFF;
+}
+
+bool is_relay_timeout(relay_t *relay)
+{
+	if(ON==relay->state) 
+	{
+		if((millis() - relay->begin)\
+						 > relay->timeout)
+			return true;
+	}
+	return false;
+}
+
+\end{lstlisting}
+
+\section{Mã nguồn tùy biến}
+
+@Todo
+
+\section{Mã nguồn độc lập phần cứng}
+
+@Todo

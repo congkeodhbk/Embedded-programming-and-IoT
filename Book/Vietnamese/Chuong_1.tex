@@ -81,7 +81,7 @@ void main(){
 
 \section{Khai báo biến}
 
-Các kiểu biến thông thường khi lập trình C là char, int, long, float, double. Nhưng trong lập trình nhúng, tài nguyên bộ nhớ hạn chế nên việc bạn biết các biến chiếm bao nhiêu ô nhớ là điều rất quan trọng. Thông thường, các biến được khai báo dưới dạng \it{uint8\_t}, \it{int8\_t}, \it{uint16\_t}, \it{int16\_t}... để sử dụng thì bạn cần thêm vào thư viện \it{\#include <stdint.h>}
+Các kiểu biến thông thường khi lập trình C là \it{char, int, long, float, double}. Nhưng trong lập trình nhúng, tài nguyên bộ nhớ hạn chế nên việc bạn biết các biến chiếm bao nhiêu ô nhớ là điều rất quan trọng. Thông thường, các biến được khai báo dưới dạng \it{uint8\_t}, \it{int8\_t}, \it{uint16\_t}, \it{int16\_t}... để sử dụng thì bạn cần thêm vào thư viện \it{\#include <stdint.h>}
 
 Một điểm đặc biệt là kiểu \it{uint8\_t} thường được dùng để đại diện cho một ô nhớ (8-bit). Ví dụ khi khai báo \it{uint8\_t array[3]}, thì có thể hiểu là khai báo 3 phần tử mảng array có kiểu là \it{uint8\_t}, hoặc cũng có thể hiểu là yêu cầu bộ nhớ cấp 3 ô nhớ kề nhau. Các kiểu như byte hoặc char cũng có thể được dùng làm việc này nhưng mình vẫn thích sử dụng \it{uint8\_t}. Các khai báo các bộ đệm trong các giao tiếp như uart, i2c, spi... thường dùng kiểu biến này.
 
@@ -220,7 +220,7 @@ int main(void) {
 }
 \end{lstlisting}
 
-Hai lần printf sẽ cho ra kết quả như nhau vì đã gán địa chỉ của a cho pa.
+Hai lần printf sẽ cho ra kết quả như nhau vì đã gán địa chỉ của \it{a} cho \it{pa}.
 
 Một con trỏ cần 2 thông tin sau để có thể hoạt động được: \textit{địa chỉ} và \textit{kiểu dữ liệu} nó sẽ trỏ tới. Như chương trình trên thì dòng số 6 sẽ cấp cho con trỏ kiểu dữ liệu, dòng số 7 cấp địa chỉ. 2 yếu tố trên giúp bạn có thể đi đến vùng nhớ mà bạn quan tâm sau đó có thể truy cập vùng nhớ đó theo cách bạn muốn.
 
