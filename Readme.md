@@ -1,14 +1,3 @@
-# Embedded programming and IoT
-
-Goal: to share my experience on real world embedded and IoT projects.
-
-Target: Intern, students, hobbiest.
-
-Required: basic knowledge on C/C++ programming, Arduino, electronic.
-
-Philosophy: simple and useful.
-
-For my bad English Writing skill, nice to have your feedbacks to have better book.
 
 # Lập trình nhúng và IoT 
 
