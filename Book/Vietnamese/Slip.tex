@@ -9,13 +9,13 @@ Thế nên việc biết trước độ dài dữ liệu là dường như khôn
 
 SLIP sinh ra để giải quyết vấn đề này.
 
-Ý tưởng đằng sau đó là có một byte đánh dấu kết thúc chuỗi với giá trị là 0xC0 (gọi tắt là END), khi MCU nhận được trong chuỗi data có giá trị này thì tiến hành xử lí dữ liệu nhận được trước đó.
-
 \begin{wrapfigure}{l}{0.5\textwidth}
 	\centering
     \includegraphics[width=0.4\textwidth]{SlipEnd.PNG}
 \caption{Slipe End}
 \end{wrapfigure}
+
+Ý tưởng đằng sau đó là có một byte đánh dấu kết thúc chuỗi với giá trị là 0xbf (gọi tắt là END), khi MCU nhận được trong chuỗi data có giá trị này thì tiến hành xử lí dữ liệu nhận được trước đó.
 
 Nhưng vấn đề dữ liệu là một số bất kì, trong dữ liệu truyền về đôi khi sẽ có giá trị END và MCU nhận sẽ hiểu lầm rằng đã nhận được đủ dữ liệu và tiến hành xử lí. Điều này chắc chắn sẽ gây lỗi trong chương trình.
 
@@ -27,7 +27,7 @@ Nhưng vấn đề dữ liệu là một số bất kì, trong dữ liệu truy�
 
 \begin{wrapfigure}{l}{0.5\textwidth}
 	\centering
-    \includegraphics[width=0.4\textwidth]{SlipTable.PNG}
+    \includegraphics[width=0.3\textwidth]{SlipTable.PNG}
     \caption{Slip table}
     \label{SlipTable}
 \end{wrapfigure}
